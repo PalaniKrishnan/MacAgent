@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		32B57C69234F3DB800B6EAA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */; };
+		32B57C6B234F3DB800B6EAA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B57C6A234F3DB800B6EAA4 /* ViewController.swift */; };
+		32B57C6D234F3DB800B6EAA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */; };
+		32B57C70234F3DB800B6EAA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32B57C6E234F3DB800B6EAA4 /* Main.storyboard */; };
+		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
+		6F0E0D922AC56D24003C0B00 /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		6F0E0D952AC56D26003C0B00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEF38125C6D943001E8D03 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		843B39AA296EBA7F00CE114B /* authModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39A8296EBA7F00CE114B /* authModes.swift */; };
+		843B39AB296EBA7F00CE114B /* authModes.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39A9296EBA7F00CE114B /* authModes.xib */; };
+		843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39AC296EBA9200CE114B /* enrollRFID.swift */; };
+		843B39B3296EBA9300CE114B /* enrollRFID.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39AD296EBA9300CE114B /* enrollRFID.xib */; };
+		843B39B4296EBA9300CE114B /* enrollPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39AE296EBA9300CE114B /* enrollPIN.swift */; };
+		843B39B5296EBA9300CE114B /* enrollPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39AF296EBA9300CE114B /* enrollPhone.xib */; };
+		843B39B6296EBA9300CE114B /* enrollPIN.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39B0296EBA9300CE114B /* enrollPIN.xib */; };
+		843B39B7296EBA9300CE114B /* enrollPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39B1296EBA9300CE114B /* enrollPhone.swift */; };
+		843B39C6296EF0B500CE114B /* pcProx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843B39C5296EF0B400CE114B /* pcProx.cpp */; };
+		846F43402929F7C700058205 /* AuthxMacOSAgent.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32B57C65234F3DB800B6EAA4 /* AuthxMacOSAgent.app */; };
+		84AAD50229291C0A0046E835 /* AuthxSignIn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AAD50129291C0A0046E835 /* AuthxSignIn.xib */; };
+		84AAD50429291C240046E835 /* AuthxSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AAD50329291C240046E835 /* AuthxSignIn.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		846F433F2929F7B800058205 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /Users/Shared/authx;
+			dstSubfolderSpec = 0;
+			files = (
+				846F43402929F7C700058205 /* AuthxMacOSAgent.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		32B57C65234F3DB800B6EAA4 /* AuthxMacOSAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthxMacOSAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		32B57C6A234F3DB800B6EAA4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		32B57C6F234F3DB800B6EAA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		32B57C71234F3DB800B6EAA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenDirectory.framework; path = System/Library/Frameworks/OpenDirectory.framework; sourceTree = SDKROOT; };
+		32DFB1AC25BD6F4300AD79B3 /* LDAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LDAP.framework; path = System/Library/Frameworks/LDAP.framework; sourceTree = SDKROOT; };
+		32FEF38125C6D943001E8D03 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		32FEF38425C6E662001E8D03 /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
+		32FEF38525C6E67A001E8D03 /* AuthxMacOSAgent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuthxMacOSAgent-Bridging-Header.h"; sourceTree = "<group>"; };
+		32FEF38625C6E67A001E8D03 /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
+		843B39A8296EBA7F00CE114B /* authModes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = authModes.swift; sourceTree = "<group>"; };
+		843B39A9296EBA7F00CE114B /* authModes.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = authModes.xib; sourceTree = "<group>"; };
+		843B39AC296EBA9200CE114B /* enrollRFID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollRFID.swift; sourceTree = "<group>"; };
+		843B39AD296EBA9300CE114B /* enrollRFID.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = enrollRFID.xib; sourceTree = "<group>"; };
+		843B39AE296EBA9300CE114B /* enrollPIN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollPIN.swift; sourceTree = "<group>"; };
+		843B39AF296EBA9300CE114B /* enrollPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = enrollPhone.xib; sourceTree = "<group>"; };
+		843B39B0296EBA9300CE114B /* enrollPIN.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = enrollPIN.xib; sourceTree = "<group>"; };
+		843B39B1296EBA9300CE114B /* enrollPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollPhone.swift; sourceTree = "<group>"; };
+		843B39C4296EF0B400CE114B /* pcProx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcProx.h; sourceTree = "<group>"; };
+		843B39C5296EF0B400CE114B /* pcProx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pcProx.cpp; sourceTree = "<group>"; };
+		84AAD50129291C0A0046E835 /* AuthxSignIn.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthxSignIn.xib; sourceTree = "<group>"; };
+		84AAD50329291C240046E835 /* AuthxSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthxSignIn.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32B57C62234F3DB800B6EAA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F0E0D952AC56D26003C0B00 /* Security.framework in Frameworks */,
+				6F0E0D922AC56D24003C0B00 /* OpenDirectory.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		32B57C5C234F3DB800B6EAA4 = {
+			isa = PBXGroup;
+			children = (
+				843B39C5296EF0B400CE114B /* pcProx.cpp */,
+				843B39C4296EF0B400CE114B /* pcProx.h */,
+				32B57C67234F3DB800B6EAA4 /* AuthxMacOSAgent */,
+				32B57C66234F3DB800B6EAA4 /* Products */,
+				32DFB1A925BD6EFA00AD79B3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		32B57C66234F3DB800B6EAA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32B57C65234F3DB800B6EAA4 /* AuthxMacOSAgent.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32B57C67234F3DB800B6EAA4 /* AuthxMacOSAgent */ = {
+			isa = PBXGroup;
+			children = (
+				843B39B1296EBA9300CE114B /* enrollPhone.swift */,
+				843B39AF296EBA9300CE114B /* enrollPhone.xib */,
+				843B39AE296EBA9300CE114B /* enrollPIN.swift */,
+				843B39B0296EBA9300CE114B /* enrollPIN.xib */,
+				843B39AC296EBA9200CE114B /* enrollRFID.swift */,
+				843B39AD296EBA9300CE114B /* enrollRFID.xib */,
+				843B39A8296EBA7F00CE114B /* authModes.swift */,
+				843B39A9296EBA7F00CE114B /* authModes.xib */,
+				32FEF38625C6E67A001E8D03 /* CryptLib.m */,
+				32FEF38425C6E662001E8D03 /* CryptLib.h */,
+				32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */,
+				32B57C6A234F3DB800B6EAA4 /* ViewController.swift */,
+				84AAD50329291C240046E835 /* AuthxSignIn.swift */,
+				84AAD50129291C0A0046E835 /* AuthxSignIn.xib */,
+				32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */,
+				32B57C6E234F3DB800B6EAA4 /* Main.storyboard */,
+				32B57C71234F3DB800B6EAA4 /* Info.plist */,
+				32FEF38525C6E67A001E8D03 /* AuthxMacOSAgent-Bridging-Header.h */,
+			);
+			path = AuthxMacOSAgent;
+			sourceTree = "<group>";
+		};
+		32DFB1A925BD6EFA00AD79B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32FEF38125C6D943001E8D03 /* Security.framework */,
+				32DFB1AC25BD6F4300AD79B3 /* LDAP.framework */,
+				32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		32B57C64234F3DB800B6EAA4 /* AuthxMacOSAgent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32B57C74234F3DB800B6EAA4 /* Build configuration list for PBXNativeTarget "AuthxMacOSAgent" */;
+			buildPhases = (
+				32B57C61234F3DB800B6EAA4 /* Sources */,
+				32B57C62234F3DB800B6EAA4 /* Frameworks */,
+				32B57C63234F3DB800B6EAA4 /* Resources */,
+				846F433F2929F7B800058205 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AuthxMacOSAgent;
+			productName = zKeyRegistration;
+			productReference = 32B57C65234F3DB800B6EAA4 /* AuthxMacOSAgent.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		32B57C5D234F3DB800B6EAA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 1500;
+				ORGANIZATIONNAME = "";
+				TargetAttributes = {
+					32B57C64234F3DB800B6EAA4 = {
+						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 1320;
+					};
+				};
+			};
+			buildConfigurationList = 32B57C60234F3DB800B6EAA4 /* Build configuration list for PBXProject "AuthxMacOSAgent" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 32B57C5C234F3DB800B6EAA4;
+			productRefGroup = 32B57C66234F3DB800B6EAA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32B57C64234F3DB800B6EAA4 /* AuthxMacOSAgent */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		32B57C63234F3DB800B6EAA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843B39B5296EBA9300CE114B /* enrollPhone.xib in Resources */,
+				843B39AB296EBA7F00CE114B /* authModes.xib in Resources */,
+				843B39B3296EBA9300CE114B /* enrollRFID.xib in Resources */,
+				32B57C6D234F3DB800B6EAA4 /* Assets.xcassets in Resources */,
+				84AAD50229291C0A0046E835 /* AuthxSignIn.xib in Resources */,
+				843B39B6296EBA9300CE114B /* enrollPIN.xib in Resources */,
+				32B57C70234F3DB800B6EAA4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		32B57C61234F3DB800B6EAA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */,
+				32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */,
+				843B39B7296EBA9300CE114B /* enrollPhone.swift in Sources */,
+				843B39AA296EBA7F00CE114B /* authModes.swift in Sources */,
+				843B39C6296EF0B500CE114B /* pcProx.cpp in Sources */,
+				32B57C6B234F3DB800B6EAA4 /* ViewController.swift in Sources */,
+				843B39B4296EBA9300CE114B /* enrollPIN.swift in Sources */,
+				84AAD50429291C240046E835 /* AuthxSignIn.swift in Sources */,
+				32B57C69234F3DB800B6EAA4 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		32B57C6E234F3DB800B6EAA4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				32B57C6F234F3DB800B6EAA4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		32B57C72234F3DB800B6EAA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		32B57C73234F3DB800B6EAA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		32B57C75234F3DB800B6EAA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6KD3FWB58U;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = AuthxMacOSAgent/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_LDFLAGS = (
+					"-L",
+					./Lib,
+					"-lpcProxAPI",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		32B57C76234F3DB800B6EAA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6KD3FWB58U;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = AuthxMacOSAgent/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_LDFLAGS = (
+					"-L",
+					./Lib,
+					"-lpcProxAPI",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32B57C60234F3DB800B6EAA4 /* Build configuration list for PBXProject "AuthxMacOSAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32B57C72234F3DB800B6EAA4 /* Debug */,
+				32B57C73234F3DB800B6EAA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32B57C74234F3DB800B6EAA4 /* Build configuration list for PBXNativeTarget "AuthxMacOSAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32B57C75234F3DB800B6EAA4 /* Debug */,
+				32B57C76234F3DB800B6EAA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 32B57C5D234F3DB800B6EAA4 /* Project object */;
+}
