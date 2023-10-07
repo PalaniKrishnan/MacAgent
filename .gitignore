@@ -1,0 +1,130 @@
+
+AuthxCP/Podfile.lock
+AuthxCP/Pods/Alamofire/LICENSE
+AuthxCP/Pods/Alamofire/README.md
+AuthxCP/Pods/Alamofire/Source/AFError.swift
+AuthxCP/Pods/Alamofire/Source/Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/AlamofireExtended.swift
+AuthxCP/Pods/Alamofire/Source/AuthenticationInterceptor.swift
+AuthxCP/Pods/Alamofire/Source/CachedResponseHandler.swift
+AuthxCP/Pods/Alamofire/Source/Combine.swift
+AuthxCP/Pods/Alamofire/Source/Concurrency.swift
+AuthxCP/Pods/Alamofire/Source/DispatchQueue+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/EventMonitor.swift
+AuthxCP/Pods/Alamofire/Source/HTTPHeaders.swift
+AuthxCP/Pods/Alamofire/Source/HTTPMethod.swift
+AuthxCP/Pods/Alamofire/Source/MultipartFormData.swift
+AuthxCP/Pods/Alamofire/Source/MultipartUpload.swift
+AuthxCP/Pods/Alamofire/Source/NetworkReachabilityManager.swift
+AuthxCP/Pods/Alamofire/Source/Notifications.swift
+AuthxCP/Pods/Alamofire/Source/OperationQueue+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/ParameterEncoder.swift
+AuthxCP/Pods/Alamofire/Source/ParameterEncoding.swift
+AuthxCP/Pods/Alamofire/Source/Protected.swift
+AuthxCP/Pods/Alamofire/Source/RedirectHandler.swift
+AuthxCP/Pods/Alamofire/Source/Request.swift
+AuthxCP/Pods/Alamofire/Source/RequestCompression.swift
+AuthxCP/Pods/Alamofire/Source/RequestInterceptor.swift
+AuthxCP/Pods/Alamofire/Source/RequestTaskMap.swift
+AuthxCP/Pods/Alamofire/Source/Response.swift
+AuthxCP/Pods/Alamofire/Source/ResponseSerialization.swift
+AuthxCP/Pods/Alamofire/Source/Result+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/RetryPolicy.swift
+AuthxCP/Pods/Alamofire/Source/ServerTrustEvaluation.swift
+AuthxCP/Pods/Alamofire/Source/Session.swift
+AuthxCP/Pods/Alamofire/Source/SessionDelegate.swift
+AuthxCP/Pods/Alamofire/Source/StringEncoding+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/URLConvertible+URLRequestConvertible.swift
+AuthxCP/Pods/Alamofire/Source/URLEncodedFormEncoder.swift
+AuthxCP/Pods/Alamofire/Source/URLRequest+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/URLSessionConfiguration+Alamofire.swift
+AuthxCP/Pods/Alamofire/Source/Validation.swift
+AuthxCP/Pods/Manifest.lock
+AuthxCP/Pods/Pods.xcodeproj/project.pbxproj
+AuthxCP/Pods/Pods.xcodeproj/xcuserdata/pkrishnan.xcuserdatad/xcschemes/Alamofire.xcscheme
+AuthxCP/Pods/Pods.xcodeproj/xcuserdata/pkrishnan.xcuserdatad/xcschemes/Pods-AuthxCP.xcscheme
+AuthxCP/Pods/Pods.xcodeproj/xcuserdata/pkrishnan.xcuserdatad/xcschemes/SwiftSoup.xcscheme
+AuthxCP/Pods/Pods.xcodeproj/xcuserdata/pkrishnan.xcuserdatad/xcschemes/xcschememanagement.plist
+AuthxCP/Pods/SwiftSoup/LICENSE
+AuthxCP/Pods/SwiftSoup/README.md
+AuthxCP/Pods/SwiftSoup/Sources/ArrayExt.swift
+AuthxCP/Pods/SwiftSoup/Sources/Attribute.swift
+AuthxCP/Pods/SwiftSoup/Sources/Attributes.swift
+AuthxCP/Pods/SwiftSoup/Sources/BinarySearch.swift
+AuthxCP/Pods/SwiftSoup/Sources/BooleanAttribute.swift
+AuthxCP/Pods/SwiftSoup/Sources/CharacterExt.swift
+AuthxCP/Pods/SwiftSoup/Sources/CharacterReader.swift
+AuthxCP/Pods/SwiftSoup/Sources/Cleaner.swift
+AuthxCP/Pods/SwiftSoup/Sources/Collector.swift
+AuthxCP/Pods/SwiftSoup/Sources/CombiningEvaluator.swift
+AuthxCP/Pods/SwiftSoup/Sources/Comment.swift
+AuthxCP/Pods/SwiftSoup/Sources/Connection.swift
+AuthxCP/Pods/SwiftSoup/Sources/CssSelector.swift
+AuthxCP/Pods/SwiftSoup/Sources/DataNode.swift
+AuthxCP/Pods/SwiftSoup/Sources/DataUtil.swift
+AuthxCP/Pods/SwiftSoup/Sources/Document.swift
+AuthxCP/Pods/SwiftSoup/Sources/DocumentType.swift
+AuthxCP/Pods/SwiftSoup/Sources/Element.swift
+AuthxCP/Pods/SwiftSoup/Sources/Elements.swift
+AuthxCP/Pods/SwiftSoup/Sources/Entities.swift
+AuthxCP/Pods/SwiftSoup/Sources/Evaluator.swift
+AuthxCP/Pods/SwiftSoup/Sources/Exception.swift
+AuthxCP/Pods/SwiftSoup/Sources/FormElement.swift
+AuthxCP/Pods/SwiftSoup/Sources/HtmlTreeBuilder.swift
+AuthxCP/Pods/SwiftSoup/Sources/HtmlTreeBuilderState.swift
+AuthxCP/Pods/SwiftSoup/Sources/HttpStatusException.swift
+AuthxCP/Pods/SwiftSoup/Sources/Mutex.swift
+AuthxCP/Pods/SwiftSoup/Sources/Node.swift
+AuthxCP/Pods/SwiftSoup/Sources/NodeTraversor.swift
+AuthxCP/Pods/SwiftSoup/Sources/NodeVisitor.swift
+AuthxCP/Pods/SwiftSoup/Sources/OrderedSet.swift
+AuthxCP/Pods/SwiftSoup/Sources/ParseError.swift
+AuthxCP/Pods/SwiftSoup/Sources/ParseErrorList.swift
+AuthxCP/Pods/SwiftSoup/Sources/Parser.swift
+AuthxCP/Pods/SwiftSoup/Sources/ParseSettings.swift
+AuthxCP/Pods/SwiftSoup/Sources/Pattern.swift
+AuthxCP/Pods/SwiftSoup/Sources/QueryParser.swift
+AuthxCP/Pods/SwiftSoup/Sources/SerializationException.swift
+AuthxCP/Pods/SwiftSoup/Sources/SimpleDictionary.swift
+AuthxCP/Pods/SwiftSoup/Sources/StreamReader.swift
+AuthxCP/Pods/SwiftSoup/Sources/String.swift
+AuthxCP/Pods/SwiftSoup/Sources/StringBuilder.swift
+AuthxCP/Pods/SwiftSoup/Sources/StringUtil.swift
+AuthxCP/Pods/SwiftSoup/Sources/StructuralEvaluator.swift
+AuthxCP/Pods/SwiftSoup/Sources/SwiftSoup.swift
+AuthxCP/Pods/SwiftSoup/Sources/Tag.swift
+AuthxCP/Pods/SwiftSoup/Sources/TextNode.swift
+AuthxCP/Pods/SwiftSoup/Sources/Token.swift
+AuthxCP/Pods/SwiftSoup/Sources/Tokeniser.swift
+AuthxCP/Pods/SwiftSoup/Sources/TokeniserState.swift
+AuthxCP/Pods/SwiftSoup/Sources/TokenQueue.swift
+AuthxCP/Pods/SwiftSoup/Sources/TreeBuilder.swift
+AuthxCP/Pods/SwiftSoup/Sources/UnfairLock.swift
+AuthxCP/Pods/SwiftSoup/Sources/UnicodeScalar.swift
+AuthxCP/Pods/SwiftSoup/Sources/Validate.swift
+AuthxCP/Pods/SwiftSoup/Sources/Whitelist.swift
+AuthxCP/Pods/SwiftSoup/Sources/XmlDeclaration.swift
+AuthxCP/Pods/SwiftSoup/Sources/XmlTreeBuilder.swift
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire-dummy.m
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire-Info.plist
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire-prefix.pch
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire.modulemap
+AuthxCP/Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-acknowledgements.markdown
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-acknowledgements.plist
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-dummy.m
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-frameworks.sh
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-Info.plist
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP-umbrella.h
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP.debug.xcconfig
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP.modulemap
+AuthxCP/Pods/Target Support Files/Pods-AuthxCP/Pods-AuthxCP.release.xcconfig
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup-dummy.m
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup-Info.plist
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup-prefix.pch
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup-umbrella.h
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup.debug.xcconfig
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup.modulemap
+AuthxCP/Pods/Target Support Files/SwiftSoup/SwiftSoup.release.xcconfig
