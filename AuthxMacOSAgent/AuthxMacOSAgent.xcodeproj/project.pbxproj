@@ -11,9 +11,9 @@
 		32B57C6B234F3DB800B6EAA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B57C6A234F3DB800B6EAA4 /* ViewController.swift */; };
 		32B57C6D234F3DB800B6EAA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */; };
 		32B57C70234F3DB800B6EAA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32B57C6E234F3DB800B6EAA4 /* Main.storyboard */; };
+		32DFB1AB25BD6EFA00AD79B3 /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */; };
+		32FEF38225C6D943001E8D03 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEF38125C6D943001E8D03 /* Security.framework */; };
 		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
-		6F0E0D922AC56D24003C0B00 /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6F0E0D952AC56D26003C0B00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEF38125C6D943001E8D03 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		843B39AA296EBA7F00CE114B /* authModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39A8296EBA7F00CE114B /* authModes.swift */; };
 		843B39AB296EBA7F00CE114B /* authModes.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39A9296EBA7F00CE114B /* authModes.xib */; };
 		843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39AC296EBA9200CE114B /* enrollRFID.swift */; };
@@ -73,8 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F0E0D952AC56D26003C0B00 /* Security.framework in Frameworks */,
-				6F0E0D922AC56D24003C0B00 /* OpenDirectory.framework in Frameworks */,
+				32FEF38225C6D943001E8D03 /* Security.framework in Frameworks */,
+				32DFB1AB25BD6EFA00AD79B3 /* OpenDirectory.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,12 +115,12 @@
 				32FEF38425C6E662001E8D03 /* CryptLib.h */,
 				32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */,
 				32B57C6A234F3DB800B6EAA4 /* ViewController.swift */,
-				84AAD50329291C240046E835 /* AuthxSignIn.swift */,
-				84AAD50129291C0A0046E835 /* AuthxSignIn.xib */,
 				32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */,
 				32B57C6E234F3DB800B6EAA4 /* Main.storyboard */,
 				32B57C71234F3DB800B6EAA4 /* Info.plist */,
 				32FEF38525C6E67A001E8D03 /* AuthxMacOSAgent-Bridging-Header.h */,
+				84AAD50129291C0A0046E835 /* AuthxSignIn.xib */,
+				84AAD50329291C240046E835 /* AuthxSignIn.swift */,
 			);
 			path = AuthxMacOSAgent;
 			sourceTree = "<group>";
@@ -356,7 +356,6 @@
 		32B57C75234F3DB800B6EAA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -374,7 +373,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
-					"$(PROJECT_DIR)/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				OTHER_LDFLAGS = (
@@ -386,9 +384,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -398,7 +393,6 @@
 		32B57C76234F3DB800B6EAA4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -416,7 +410,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
-					"$(PROJECT_DIR)/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				OTHER_LDFLAGS = (
@@ -428,9 +421,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};

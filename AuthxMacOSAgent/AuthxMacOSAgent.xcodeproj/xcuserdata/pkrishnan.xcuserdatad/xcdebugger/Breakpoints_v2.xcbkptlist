@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "032EA343-8107-420B-B5F1-7343EEC1DE72"
+   uuid = "0C9CB823-0C28-435D-8F15-90C984BF9CBB"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD09C582-2634-42B7-ABBA-D26AD9076AD1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AuthxMacOSAgent/authModes.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "GetRFID()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CD09C582-2634-42B7-ABBA-D26AD9076AD1 - b4f1eafca9f0eb3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AuthxMacOSAgent.authModes.getPhoneForUser() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Downloads/authx-src/AuthxMacOSAgent/AuthxMacOSAgent/authModes.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "237"
+                  endingLineNumber = "237"
+                  offsetFromSymbolStart = "420">
+               </Location>
+               <Location
+                  uuid = "CD09C582-2634-42B7-ABBA-D26AD9076AD1 - 84d1e58a1969b559"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AuthxMacOSAgent.authModes.GetRFID() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Downloads/authx-src/AuthxMacOSAgent/AuthxMacOSAgent/authModes.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "236"
+                  endingLineNumber = "236"
+                  offsetFromSymbolStart = "1436">
+               </Location>
+               <Location
+                  uuid = "CD09C582-2634-42B7-ABBA-D26AD9076AD1 - 2e8ce27bd6da5a8a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AuthxMacOSAgent.authModes.GetRFID() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Desktop/MacAgent/AuthxMacOSAgent/AuthxMacOSAgent/authModes.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "236"
+                  endingLineNumber = "236"
+                  offsetFromSymbolStart = "1436">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FC531AA5-DCBB-45C4-8D4D-03C7D693E274"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AuthxMacOSAgent/AuthxSignIn.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "getAuth(endUrl:userID:authID:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

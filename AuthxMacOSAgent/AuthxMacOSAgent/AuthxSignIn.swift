@@ -467,29 +467,34 @@ class AuthxSignIn: NSWindowController {
                 self.stopTimer()
                // sRFIDStatus.textColor = NSColor.green
                 sRFIDStatus.stringValue = "ID found start authentication please wait."
-                getUserID(userName: sUsername)
-                let rfID = String("\(nRFID)")
-                let bReturn = self.getAuth(endUrl: "AuthenticateRFID", userID: self.sMainUserID, authID: rfID)
-                if(!bReturn)
-                {
-                    print("authentication failed")
-                    self.infoMsg.isHidden=false
-                    self.infoMsg.textColor = NSColor.red
-                    self.infoMsg.stringValue = "RFID authentication failed."
-                    
-                } else {
-                    self.infoMsg.isHidden=false
-                    self.infoMsg.textColor = NSColor.black
-                    self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
-                }
-                                
-            }
+
+              }
             }
         }
         else
         {
             self.bTResult=false;
             self.stopTimer()
+            
+            getUserID(userName: sUsername)
+            let rfID = String("\(nRFID)")
+         //   let bReturn = self.getAuth(endUrl: "AuthenticateRFID", userID: self.sMainUserID, authID: rfID)
+            let bReturn = self.getAuth(endUrl: "EnrollRFID", userID: self.sMainUserID, authID: rfID)
+
+            
+            if(!bReturn)
+            {
+                print("authentication failed")
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.red
+                self.infoMsg.stringValue = "RFID authentication failed."
+                
+            } else {
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.black
+                self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
+            }
+            
             //dialogOK(question: "Information", text: "Mobile successfully added", alterStyle: "info")
             //NotificationCenter.default.post(name: Notification.Name.Action.CallVC1Method, object: ["command": "load_phone_factors"])
             super.close()
