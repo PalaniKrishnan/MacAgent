@@ -155,12 +155,15 @@ class enrollRFID: NSWindowController {
         {
                         
             var sOutFound:String = shell("/Users/Shared/getrfid --getid")
+            print(sOutFound)
+            
             if sOutFound.contains("-")
             {
                 sOutFound="1001"
             }
             
             nRFID = Int32(sOutFound);//shell("/User/Shared/getrfid --getid")
+            print(String(nRFID))
             
             if(nRFID==1001)
             {

@@ -135,6 +135,7 @@ class ViewController: NSViewController {
                         if arrayWithHost.count > 2 {
                             self.sAppHost = arrayWithHost[0]
                             self.sAppAPI = splitedArr[0]+"."+arrayWithHost[1]+"."+arrayWithHost[2]
+                            self.view.window?.makeFirstResponder(self.txtUser)
                         }
                     }
                 }
@@ -171,11 +172,12 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         load_app_setting()
-        
     }
+    
     
     override func viewDidAppear() {
         self.view.window?.center()
+        //self.view.window?.makeFirstResponder(txtUser)
     }
     
     func dialogOK(question: String, text: String, alterStyle:String) -> Void {
@@ -233,21 +235,14 @@ class ViewController: NSViewController {
 //            self.nauthModes?.sAppAPI = self.sAppAPI
 //            self.nauthModes?.sAppHost = self.sAppHost
             add_app_setting()
-          //  self.nauthModes?.showWindow (self)
             
-            self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn" )
+            self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
             self.nAuthxSignIn?.sUsername = txtUser.stringValue
             self.nAuthxSignIn?.sPassword = txtPassword.stringValue
-
-//            self.nAuthxSignIn?.sAppID = self.sAppID
-//            self.nAuthxSignIn?.sAppKey = self.sAppKey
-//            self.nAuthxSignIn?.sAppURL = self.sAppURL
-//            self.nAuthxSignIn?.sAppAPI = self.sAppAPI
-//            self.nAuthxSignIn?.sAppHost = self.sAppHost
-            self.nAuthxSignIn?.showWindow (self)
-           // add_app_setting()
-            
+             self.nAuthxSignIn?.showWindow (self)
+            self.view.window?.orderOut(self)
             self.view.window?.close()
+            
         }
         
         //var nActiveID:Int = Int(GetRFIDActiveID());
