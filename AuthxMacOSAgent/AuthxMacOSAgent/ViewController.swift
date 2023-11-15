@@ -16,7 +16,9 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var txtUser: NSTextField!
     @IBOutlet weak var txtPassword: NSSecureTextField!
-    
+    @IBOutlet weak var authCustomView: NSView!
+    @IBOutlet weak var singleUserModeCustomView: NSView!
+
     public var usertype : String = "local"
     public var domain : String = ""
     
@@ -209,6 +211,11 @@ class ViewController: NSViewController {
         catch {/* error handling here */}
         
         return true;
+    }
+    
+    @IBAction func networkLogon_click(_ sender: Any) {
+        self.singleUserModeCustomView.isHidden = true
+        self.authCustomView.isHidden = false
     }
     
     @IBAction func rbtnSave_click(_ sender: Any) {
