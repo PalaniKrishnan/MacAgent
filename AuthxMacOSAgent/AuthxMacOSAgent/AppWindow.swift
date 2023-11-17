@@ -61,6 +61,7 @@ class AppWindow: NSWindow {
         let bottomMsgLbl = NSTextField(frame: NSRect(x: (frame.width/2) - 100, y: 10, width: 200, height: 60))
         bottomMsgLbl.font = NSFont(name: "helvetica", size: 14)
         bottomMsgLbl.alignment = .center
+        bottomMsgLbl.isEditable = false
         bottomMsgLbl.lineBreakMode = .byWordWrapping
         bottomMsgLbl.textColor = .gray
         bottomMsgLbl.isBordered = false
@@ -79,6 +80,7 @@ class AppWindow: NSWindow {
         let poweredByLbl = NSTextField(frame: NSRect(x: frame.width - 160, y: 25, width: 100, height: 20))
         poweredByLbl.font = NSFont(name: "helvetica", size: 15)
         poweredByLbl.alignment = .left
+        poweredByLbl.isEditable = false
         poweredByLbl.lineBreakMode = .byWordWrapping
         poweredByLbl.textColor = .gray
         poweredByLbl.isBordered = false

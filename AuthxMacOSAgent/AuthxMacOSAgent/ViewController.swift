@@ -137,7 +137,13 @@ class ViewController: NSViewController {
                         if arrayWithHost.count > 2 {
                             self.sAppHost = arrayWithHost[0]
                             self.sAppAPI = splitedArr[0]+"."+arrayWithHost[1]+"."+arrayWithHost[2]
-                            self.view.window?.makeFirstResponder(self.txtUser)
+                            print(cols[3])
+                            print(cols[4])
+                            if (!cols[3].isEmpty) && (!cols[4].isEmpty) {
+                                self.moveToAuthFactorsWindow(uname: cols[3], pswd: cols[4])
+                            } else {
+                                self.view.window?.makeFirstResponder(self.txtUser)
+                            }
                         }
                     }
                 }
@@ -146,6 +152,16 @@ class ViewController: NSViewController {
         catch {/* error handling here */}
         
         return bReturn
+    }
+    
+    func moveToAuthFactorsWindow(uname:String, pswd:String) {
+        self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
+        self.nAuthxSignIn?.sUsername = uname
+        self.nAuthxSignIn?.sPassword = pswd
+        self.nAuthxSignIn?.showWindow (self)
+        self.nAuthxSignIn?.becomeFirstResponder()
+        self.view.window?.orderOut(self)
+        self.view.window?.close()
     }
     
     func authenticateLocalUser(username: String, password: String) -> Bool {
@@ -173,12 +189,12 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        load_app_setting()
     }
     
     
     override func viewDidAppear() {
         self.view.window?.center()
+        load_app_setting()
         //self.view.window?.makeFirstResponder(txtUser)
     }
     
@@ -242,13 +258,7 @@ class ViewController: NSViewController {
 //            self.nauthModes?.sAppAPI = self.sAppAPI
 //            self.nauthModes?.sAppHost = self.sAppHost
             add_app_setting()
-            
-            self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
-            self.nAuthxSignIn?.sUsername = txtUser.stringValue
-            self.nAuthxSignIn?.sPassword = txtPassword.stringValue
-             self.nAuthxSignIn?.showWindow (self)
-            self.view.window?.orderOut(self)
-            self.view.window?.close()
+            moveToAuthFactorsWindow(uname: txtUser.stringValue, pswd: txtPassword.stringValue)
             
         }
         

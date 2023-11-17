@@ -690,7 +690,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="663" height="522"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <subviews>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVC-Oa-DHd">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="bVC-Oa-DHd">
                                 <rect key="frame" x="104" y="64" width="456" height="394"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="4xa-zx-FBm">
@@ -806,7 +806,7 @@ Gw
                                     <constraint firstAttribute="bottom" secondItem="pcr-ba-xD4" secondAttribute="bottom" constant="20" symbolic="YES" id="scF-Gt-fey"/>
                                 </constraints>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="0Mp-5z-ZFy">
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Mp-5z-ZFy">
                                 <rect key="frame" x="104" y="64" width="456" height="394"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zdk-qu-KjO">
@@ -815,7 +815,8 @@ Gw
                                             <constraint firstAttribute="width" constant="100" id="dn0-BX-HZ3"/>
                                             <constraint firstAttribute="height" constant="80" id="t7T-LI-gU7"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="networklogin" id="Ufm-Gv-IFZ"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="RFID_ICO" id="Ufm-Gv-IFZ"/>
+                                        <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-rO-JzS">
                                         <rect key="frame" x="173" y="141" width="110" height="16"/>
@@ -902,7 +903,7 @@ Gw
         </scene>
     </scenes>
     <resources>
-        <image name="networklogin" width="860" height="666"/>
+        <image name="RFID_ICO" width="115" height="143"/>
         <image name="topheadin_back" width="586" height="204"/>
     </resources>
 </document>
