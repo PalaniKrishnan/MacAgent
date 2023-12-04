@@ -17,7 +17,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var txtUser: NSTextField!
     @IBOutlet weak var txtPassword: NSSecureTextField!
     @IBOutlet weak var authCustomView: NSView!
-    @IBOutlet weak var singleUserModeCustomView: NSView!
 
     public var usertype : String = "local"
     public var domain : String = ""
@@ -38,7 +37,7 @@ class ViewController: NSViewController {
     var sCompanyID:String!
     var guid = NSUUID().uuidString.lowercased()
 
-    func setUserInfo(userName:String) -> Void {
+    func setUserInfo(userName:String, paswrd:String) -> Void {
       //  var sUserID:String=""
         let APIUrl = sAppAPI + "Login/LoginAsync"
         let url = URL(string: APIUrl)
@@ -91,10 +90,10 @@ class ViewController: NSViewController {
                     if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
                         //let sAccess_token = json["access_token"] as? String
                         
-                        self.sUserUID = json["UniqueUserId"] as! String
-                        self.sUserID = json["UserId"] as! String
-                        self.sCompanyID = json["CompanyId"] as! String
-                                                
+                        self.sUserUID = json["UniqueUserId"] as? String
+                        self.sUserID = json["UserId"] as? String
+                        self.sCompanyID = json["CompanyId"] as? String
+                        self.moveToAuthFactorsWindow(uname: userName, pswd: paswrd)
                         defer { sem.signal() }
                         
                     }
@@ -110,9 +109,8 @@ class ViewController: NSViewController {
         //return sUserID;
     }
     
-    func load_app_setting() -> Bool{
+    func loadAppSetting() {
         
-        let bReturn:Bool = false
         let fileURL = NSURL(string: "file:///Users/Shared/authx_security.ini")
         //writing
         do {
@@ -140,8 +138,9 @@ class ViewController: NSViewController {
                             print(cols[3])
                             print(cols[4])
                             if (!cols[3].isEmpty) && (!cols[4].isEmpty) {
-                                self.moveToAuthFactorsWindow(uname: cols[3], pswd: cols[4])
+                                self.setUserInfo(userName:cols[3], paswrd: cols[4])
                             } else {
+                                self.authCustomView.isHidden = false
                                 self.view.window?.makeFirstResponder(self.txtUser)
                             }
                         }
@@ -151,17 +150,19 @@ class ViewController: NSViewController {
         }
         catch {/* error handling here */}
         
-        return bReturn
     }
     
     func moveToAuthFactorsWindow(uname:String, pswd:String) {
-        self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
-        self.nAuthxSignIn?.sUsername = uname
-        self.nAuthxSignIn?.sPassword = pswd
-        self.nAuthxSignIn?.showWindow (self)
-        self.nAuthxSignIn?.becomeFirstResponder()
-        self.view.window?.orderOut(self)
-        self.view.window?.close()
+        DispatchQueue.main.async {
+            self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
+            self.nAuthxSignIn?.sMainUserID = self.sUserUID
+            self.nAuthxSignIn?.sUserID = self.sUserID
+            self.nAuthxSignIn?.sCompanyID = self.sCompanyID
+            self.nAuthxSignIn?.showWindow (self)
+           // self.nAuthxSignIn?.becomeFirstResponder()
+            self.view.window?.orderOut(self)
+            self.view.window?.close()
+        }
     }
     
     func authenticateLocalUser(username: String, password: String) -> Bool {
@@ -194,7 +195,7 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         self.view.window?.center()
-        load_app_setting()
+        loadAppSetting()
         //self.view.window?.makeFirstResponder(txtUser)
     }
     
@@ -229,10 +230,6 @@ class ViewController: NSViewController {
         return true;
     }
     
-    @IBAction func networkLogon_click(_ sender: Any) {
-        self.singleUserModeCustomView.isHidden = true
-        self.authCustomView.isHidden = false
-    }
     
     @IBAction func rbtnSave_click(_ sender: Any) {
 
@@ -244,22 +241,8 @@ class ViewController: NSViewController {
         }
         else
         {
-            setUserInfo(userName:txtUser.stringValue)
-//            self.nauthModes = authModes(windowNibName: "authModes" )
-//            self.nauthModes?.sUsername = txtUser.stringValue
-//
-//            self.nauthModes?.sUserUID = self.sUserUID
-//            self.nauthModes?.sUserID = self.sUserID
-//            self.nauthModes?.sCompanyID = self.sCompanyID
-//
-//            self.nauthModes?.sAppID = self.sAppID
-//            self.nauthModes?.sAppKey = self.sAppKey
-//            self.nauthModes?.sAppURL = self.sAppURL
-//            self.nauthModes?.sAppAPI = self.sAppAPI
-//            self.nauthModes?.sAppHost = self.sAppHost
             add_app_setting()
-            moveToAuthFactorsWindow(uname: txtUser.stringValue, pswd: txtPassword.stringValue)
-            
+            setUserInfo(userName:txtUser.stringValue, paswrd: txtPassword.stringValue)
         }
         
         //var nActiveID:Int = Int(GetRFIDActiveID());

@@ -6,6 +6,15 @@
 //
 
 import Cocoa
+import SwiftUI
+
+enum HostingBarCategories: Hashable {
+    case Screen1
+    case Screen2
+    case Screen3
+    case Screen4
+    case Screen5
+}
 
 class AppWindow: NSWindow {
     
@@ -31,9 +40,9 @@ class AppWindow: NSWindow {
         bottomView.layer?.backgroundColor = .white
         self.contentView?.addSubview(bottomView)
         
-        if let powerImage = NSImage(named: "authxLogo")
+        if let authLogo = NSImage(named: "authxLogo")
         {
-            let button = NSButton(image: powerImage, target: self, action: #selector(powerClicked))
+            let button = NSButton(image: authLogo, target: self, action: #selector(authLogoClicked))
             button.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
             button.frame = NSRect(x: 20, y: frame.height-90, width: 80, height: 80)
             button.isBordered = false
@@ -94,8 +103,11 @@ class AppWindow: NSWindow {
             self.contentView?.addSubview(logoImageView)
         }
         
-        
         return true
+    }
+    
+    @objc func authLogoClicked() {
+        print("authLogo clicked")
     }
     
     @objc func powerClicked() {
@@ -107,3 +119,5 @@ class AppWindow: NSWindow {
     }
     
 }
+
+

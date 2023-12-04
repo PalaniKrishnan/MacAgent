@@ -64,9 +64,9 @@ class authModes: NSWindowController, NSWindowDelegate {
     func LoadAllFactors() {
         nProgessIndicator.isHidden=false
         nProgessIndicator.startAnimation(self)
-        getPhoneForUser()
-        GetUserPin()
-        GetRFID()
+//        getPhoneForUser()
+//        GetUserPin()
+//        GetRFID()
         nProgessIndicator.stopAnimation(self)
         nProgessIndicator.isHidden=true
     }
