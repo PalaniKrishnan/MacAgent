@@ -6,17 +6,15 @@
 //
 
 import Cocoa
-import SwiftUI
 
-enum HostingBarCategories: Hashable {
-    case Screen1
-    case Screen2
-    case Screen3
-    case Screen4
-    case Screen5
-}
+import IOKit
+import IOKit.pwr_mgt
+
 
 class AppWindow: NSWindow {
+    
+    var companyLogoButton: NSButton!
+    var companyLogoUpdate:(()->())? = nil
     
     override var canBecomeKey: Bool {
         self.setFrame(self.screen!.frame, display: true)
@@ -25,7 +23,7 @@ class AppWindow: NSWindow {
             return false
         }
         self.contentView?.frame = NSRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-        self.contentView?.layer?.contents = NSImage(named: "passwordless-auth")
+        self.contentView?.layer?.contents = NSImage(named: "maxresdefault")
         
         let topViewFrame = NSRect(x: 0, y: frame.size.height-100, width: frame.size.width, height: 100)
         let topView = NSView(frame: topViewFrame)
@@ -40,14 +38,13 @@ class AppWindow: NSWindow {
         bottomView.layer?.backgroundColor = .white
         self.contentView?.addSubview(bottomView)
         
-        if let authLogo = NSImage(named: "authxLogo")
-        {
-            let button = NSButton(image: authLogo, target: self, action: #selector(authLogoClicked))
-            button.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-            button.frame = NSRect(x: 20, y: frame.height-90, width: 80, height: 80)
-            button.isBordered = false
-            self.contentView?.addSubview(button)
-        }
+       
+        companyLogoButton = NSButton(title: "", target: self, action: #selector(authLogoClicked))
+        companyLogoButton.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+        companyLogoButton.frame = NSRect(x: 20, y: frame.height-90, width: 80, height: 80)
+        companyLogoButton.isBordered = false
+        self.contentView?.addSubview(companyLogoButton)
+        self.companyLogoUpdate?()
         
         if let powerImage = NSImage(systemSymbolName: "power.circle", accessibilityDescription: nil)
         {
@@ -111,6 +108,9 @@ class AppWindow: NSWindow {
     }
     
     @objc func powerClicked() {
+        let port = IOPMFindPowerManagement(mach_port_t(MACH_PORT_NULL))
+        IOPMSleepSystem(port)
+        IOServiceClose(port)
         print("power clicked")
     }
     

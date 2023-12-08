@@ -9,8 +9,33 @@ import Foundation
 import AppKit
 import SwiftUI
 import OpenDirectory
+import Security.AuthorizationPlugin
+import SecurityInterface
 
-class AuthxSignIn: NSWindowController {
+enum AuthFactors: Int {
+    case Password = 0
+    case Finger = 1
+    case Face = 2
+    case PalmPush = 3
+    case Palm = 4
+    case FacePush = 5
+    case Push = 6
+    case Totp = 7
+    case Rfid = 10
+    case Sms = 11
+    case Call = 12
+    case HardwareToken = 14
+    case SoftwareToken = 15
+    case RemoteLock = 17
+    case Pin = 21
+}
+
+class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
+    
+    
+    var mechCallbacks: AuthorizationCallbacks?
+    var mechEngine: AuthorizationEngineRef?
+    var mechView: SFAuthorizationPluginView?
     
     var sAppID:String = ""
     var sAppKey:String = ""
@@ -28,9 +53,21 @@ class AuthxSignIn: NSWindowController {
     public var usertype : String = "local"
     public var domain : String = ""
     
+    @IBOutlet weak var appContainerWindow: AppWindow!
+
     @IBOutlet weak var txtUsername: NSTextField!
     @IBOutlet weak var txtPassword: NSTextField!
-    @IBOutlet weak var txtPin: NSTextField!
+    
+    @IBOutlet weak var txtPin1: NSTextField!
+    @IBOutlet weak var txtPin2: NSTextField!
+    @IBOutlet weak var txtPin3: NSTextField!
+    @IBOutlet weak var txtPin4: NSTextField!
+    @IBOutlet weak var txtPin5: NSTextField!
+    @IBOutlet weak var txtPin6: NSTextField!
+    
+    private var digit: Int?
+
+
     @IBOutlet weak var infoMsg: NSTextField!
     @IBOutlet weak var instructionMsg: NSTextField!
     @IBOutlet weak var UserName: NSTextField!
@@ -46,6 +83,18 @@ class AuthxSignIn: NSWindowController {
     @IBOutlet weak var rightView: NSView!
 
     @IBOutlet weak var authModeImageView: NSImageView!
+    var companyLogoImage: NSImage?
+
+    @IBOutlet weak var rfidButton: NSButton!
+    @IBOutlet weak var pushButton: NSButton!
+    @IBOutlet weak var totpButton: NSButton!
+    @IBOutlet weak var pinButton: NSButton!
+    @IBOutlet weak var smsButton: NSButton!
+    @IBOutlet weak var callButton: NSButton!
+    
+    @IBOutlet weak var pinCancelButton: NSButton!
+    @IBOutlet weak var localAuthSubmitButton: NSButton!
+    @IBOutlet weak var localAuthCancelButton: NSButton!
 
     var nRFID:Int32!
     var timer: Timer?
@@ -60,6 +109,38 @@ class AuthxSignIn: NSWindowController {
     
     override func windowDidLoad() {
         super.windowDidLoad()
+        
+//        self.window?.level = .screenSaver
+//        self.window?.orderFrontRegardless()
+//        self.window?.canBecomeVisibleWithoutLogin=true
+//        
+//        self.window?.titlebarAppearsTransparent = true
+//        self.window?.isMovable = false
+//        
+//        self.window?.makeKeyAndOrderFront(self)
+        
+        txtPin1.delegate = self
+        txtPin2.delegate = self
+        txtPin3.delegate = self
+        txtPin4.delegate = self
+        txtPin5.delegate = self
+        txtPin6.delegate = self
+                                 
+        self.pinCancelButton.wantsLayer = true
+        self.pinCancelButton.layer?.borderColor = NSColor.white.cgColor
+        self.pinCancelButton.layer?.borderWidth = 1
+        self.pinCancelButton.layer?.cornerRadius = 5
+        
+        self.localAuthSubmitButton.wantsLayer = true
+        self.localAuthSubmitButton.layer?.borderColor = NSColor.white.cgColor
+        self.localAuthSubmitButton.layer?.borderWidth = 1
+        self.localAuthSubmitButton.layer?.cornerRadius = 5
+        
+        self.localAuthCancelButton.wantsLayer = true
+        self.localAuthCancelButton.layer?.borderColor = NSColor.white.cgColor
+        self.localAuthCancelButton.layer?.borderWidth = 1
+        self.localAuthCancelButton.layer?.cornerRadius = 5
+        
         self.leftView.wantsLayer = true
         self.leftView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.6).cgColor
         self.rightView.wantsLayer = true
@@ -75,17 +156,85 @@ class AuthxSignIn: NSWindowController {
         getAuthXFactorsList()
         closeLeftSidebar()
         closeRightSideBar()
-//        NSEvent.addGlobalMonitorForEvents(matching: NSEvent.EventTypeMask.mouseMoved, handler: {(mouseEvent:NSEvent) in
-//                let position = mouseEvent.locationInWindow
-//            print(position)
-//                if position.x < 100 {
-//                    self.openSidebar()
-//                } else {
-//                    self.closeSidebar()
-//                }
-//        })
-        
-        //sMainUserID = getUserID(userName: "Administrator")
+        logoUpdateListener()
+    }
+    
+    func logoUpdateListener() {
+        appContainerWindow.companyLogoUpdate = {
+            DispatchQueue.main.async {
+                self.appContainerWindow.companyLogoButton.image = self.companyLogoImage
+            }
+        }
+    }
+    
+    func moveMouseFocusBackward(textField:NSTextField) {
+        switch textField {
+        case txtPin2:
+            txtPin2.resignFirstResponder()
+            txtPin1.becomeFirstResponder()
+        case txtPin3:
+            txtPin3.resignFirstResponder()
+            txtPin2.becomeFirstResponder()
+        case txtPin4:
+            txtPin4.resignFirstResponder()
+            txtPin3.becomeFirstResponder()
+        case txtPin5:
+            txtPin5.resignFirstResponder()
+            txtPin4.becomeFirstResponder()
+        case txtPin6:
+            txtPin6.resignFirstResponder()
+            txtPin5.becomeFirstResponder()
+        default:
+            break
+        }
+    }
+    
+    func moveMouseFocusForward(textField:NSTextField) {
+        switch textField {
+        case txtPin1:
+            txtPin1.resignFirstResponder()
+            txtPin2.becomeFirstResponder()
+        case txtPin2:
+            txtPin2.resignFirstResponder()
+            txtPin3.becomeFirstResponder()
+        case txtPin3:
+            txtPin3.resignFirstResponder()
+            txtPin4.becomeFirstResponder()
+        case txtPin4:
+            txtPin4.resignFirstResponder()
+            txtPin5.becomeFirstResponder()
+        case txtPin5:
+            txtPin5.resignFirstResponder()
+            txtPin6.becomeFirstResponder()
+        case txtPin6:
+            txtPin6.resignFirstResponder()
+            guard !txtPin1.stringValue.isEmpty, !txtPin2.stringValue.isEmpty, !txtPin3.stringValue.isEmpty, !txtPin4.stringValue.isEmpty, !txtPin5.stringValue.isEmpty, !txtPin6.stringValue.isEmpty else {
+                return
+            }
+            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtPin1.stringValue, txtPin2.stringValue,txtPin3.stringValue, txtPin4.stringValue,txtPin5.stringValue, txtPin6.stringValue)
+            self.submit_pin_authentication(value: oneTimeCode)
+        default:
+            break
+        }
+
+    }
+                          
+    func controlTextDidChange(_ obj: Notification) {
+        let textField = obj.object as! NSTextField
+        print(textField.stringValue)
+        if textField.stringValue.isEmpty {
+            self.moveMouseFocusBackward(textField: textField)
+        } else if (textField.stringValue.count == 1 && Int(textField.stringValue) != nil) {
+            self.moveMouseFocusForward(textField: textField)
+            } else {
+                let firstChar = textField.stringValue.removeFirst()
+                if Int(String(firstChar)) != nil {
+                    textField.stringValue = String(firstChar)
+                    self.moveMouseFocusForward(textField: textField)
+                } else {
+                    textField.stringValue = ""
+                }
+            }
     }
     
     @IBAction func leftSideBarBtnClicked (_ sender: Any) {
@@ -371,11 +520,18 @@ class AuthxSignIn: NSWindowController {
                 do {
                     // make sure this JSON is in the format we expect
                     if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
-                        //let response_code = json["response_code"] as! Int
-                        //sUserID = json["UniqueUserId"] as! String
-//                        if(response_code==1){
-//                            
-//                        }
+                        if let response_code = json["code"] as?  Int, response_code == 1 {
+                           // self.companyLogoImage = nil
+                            if let companyConfiguration = json["companyConfiguration"] as? Dictionary<String,AnyObject>, let companyLogoString = companyConfiguration["companyLogo"] as? String, let logoUrl = URL(string: companyLogoString) {
+                                let logoData = try Data(contentsOf: logoUrl)
+                                self.companyLogoImage = NSImage(data: logoData)
+                                DispatchQueue.main.async {
+                                    self.appContainerWindow.companyLogoButton.image = self.companyLogoImage
+                                }
+                                
+                            }
+                        }
+
                         defer { sem.signal() }
                         
                     }
@@ -479,11 +635,18 @@ class AuthxSignIn: NSWindowController {
                 do {
                     // make sure this JSON is in the format we expect
                     if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
-                        //let response_code = json["response_code"] as! Int
+                        let response_code = json["Code"] as! Int
                         //sUserID = json["UniqueUserId"] as! String
-//                        if(response_code==1){
-//
-//                        }
+                        if(response_code==1), let authFactors = json["UserAuthFactor"] as? Array<AnyObject> {
+                             print(authFactors)
+                            for factorDic in authFactors   {
+                                if let authFactorDic = factorDic as? Dictionary<String, Any>, let factor = authFactorDic["AuthFactor"] as? Int, let factorValue = AuthFactors(rawValue: factor) {
+                                    DispatchQueue.main.async {
+                                        self.enableAuthFactosWith(factor: factorValue)
+                                    }
+                                }
+                            }
+                        }
                         defer { sem.signal() }
                         
                     }
@@ -498,74 +661,34 @@ class AuthxSignIn: NSWindowController {
         sem.wait()
     }
     
-    
-    /*
-    func setAuth(userID:String,authMode:String) -> Bool {
-        var bReturn:Bool=false
-        let APIUrl = sAppAPI + "Authenticate"
-        let url = URL(string: APIUrl)
-        
-        guard let requestUrl = url else { fatalError() }
-        // Create URL Request
-        var request = URLRequest(url: requestUrl)
-        // Specify HTTP Method to use
-        request.httpMethod = "POST"
-        // Send HTTP Request
-        request.timeoutInterval=10.0
-        request.setValue(sAppID, forHTTPHeaderField: "ApplicationId")
-        request.setValue(sAppKey, forHTTPHeaderField: "ApplicationKey")
-        request.setValue(sAppHost, forHTTPHeaderField: "CompanyHostName")
-        request.setValue(guid, forHTTPHeaderField: "CorrelationId")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        var body = Data()
-        let bodyContent = "{\"user_name\":\""+userID+"\",\"authentication_id\":\""+authMode+"\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\"testmachine\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
-        
-        body.append(bodyContent.data(using: String.Encoding.utf8)!)
-        
-        request.httpBody = body
-        
-        let sem = DispatchSemaphore.init(value: 0)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            //self.lblProcessing.isHidden=true
-            // Check if Error took place
-            
-            if let error = error {
-                defer { sem.signal() }
-                //print("Error took place \(error)")
-                //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
-                return
-            }
-            
-            // Convert HTTP Response Data to a simple String
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                //var replaced = dataString.replacingOccurrences(of: "\"", with: "")
-                //replaced = replaced.replacingOccurrences(of: "\\", with: "\"")
-                bReturn=true;
-                let data1 = Data(dataString.utf8)
-                //print("Recevied Data: \(dataString)")
-                do {
-                    // make sure this JSON is in the format we expect
-                    if let json = try JSONSerialization.jsonObject(with: data1, options:.allowFragments) as? [String: Any] {
-                        //let sAccess_token = json["access_token"] as? String
-                        //sUserID = json["UniqueUserId"] as! String
-                        bReturn=true;
-                        defer { sem.signal() }
-                        
-                    }
-                } catch let error as NSError {
-                    defer { sem.signal() }
-                    print("Failed to load: \(error.localizedDescription)")
-                }
-            }
+    func enableAuthFactosWith(factor:AuthFactors) {
+        switch factor {
+        case .Password:
+            break
+        case .Push:
+            pushButton.isHidden = false
+            break
+        case .Totp:
+            totpButton.isHidden = false
+            break
+        case .Pin:
+            pinButton.isHidden = false
+            break
+        case .Rfid:
+            rfidButton.isHidden = false
+            break
+        case .Sms:
+            smsButton.isHidden = false
+            break
+        case .Call:
+            callButton.isHidden = false
+            break
+        default:
+            break
         }
-        
-        task.resume()
-        sem.wait()
-        return bReturn;
     }
-    */
+    
+
      
     func getAuth(endUrl:String, userID:String, authID:String) -> Bool {
         var bReturn:Bool=false
@@ -659,88 +782,7 @@ class AuthxSignIn: NSWindowController {
         return bReturn;
     }
     
-    
-    func setUserInfo(userName:String, paswrd:String) -> Void {
-      //  var sUserID:String=""
-        let APIUrl = sAppAPI + "Login/LoginAsync"
-        let url = URL(string: APIUrl)
-        //let guid = NSUUID().uuidString.lowercased()
-        guard let requestUrl = url else { fatalError() }
-        // Create URL Request
-        var request = URLRequest(url: requestUrl)
-        // Specify HTTP Method to use
-        request.httpMethod = "POST"
-        // Send HTTP Request
-        request.timeoutInterval=10.0
-        request.setValue(sAppID, forHTTPHeaderField: "ApplicationId")
-        request.setValue(sAppKey, forHTTPHeaderField: "ApplicationKey")
-        request.setValue(sAppHost, forHTTPHeaderField: "CompanyHostName")
-        request.setValue(guid, forHTTPHeaderField: "PcIdentifier")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        var body = Data()
-        let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Windows\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\"testmachine\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
-        
-        body.append(bodyContent.data(using: String.Encoding.utf8)!)
-        
-        request.httpBody = body
-        print(request.allHTTPHeaderFields)
-        let str = String(decoding: request.httpBody!, as: UTF8.self)
-        print(str)
-        let sem = DispatchSemaphore.init(value: 0)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            //self.lblProcessing.isHidden=true
-            // Check if Error took place
-            print(response.debugDescription)
-            if let error = error {
-                defer { sem.signal() }
-                //print("Error took place \(error)")
-                //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
-                return
-            }
-            
-            // Convert HTTP Response Data to a simple String
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print(dataString)
-                var replaced = dataString.replacingOccurrences(of: "\"", with: "")
-                replaced = replaced.replacingOccurrences(of: "\\", with: "\"")
-                
-                let data1 = Data(replaced.utf8)
-
-                do {
-                    // make sure this JSON is in the format we expect
-                    if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
-                        //let sAccess_token = json["access_token"] as? String
-                        
-                        self.sMainUserID = json["UniqueUserId"] as? String
-                        self.sUserID = json["UserId"] as? String
-                        self.sCompanyID = json["CompanyId"] as? String
-                        self.sUsername = userName
-                        self.sPassword = paswrd
-                        DispatchQueue.main.async {
-                            self.UserName.stringValue = self.sUsername
-                            self.txtUsername.stringValue = ""
-                            self.txtPassword.stringValue = ""
-                            self.getAuthXSettings()
-                            self.getAuthXFactorsList()
-                            self.closeRightSideBar()
-                        }
-                        defer { sem.signal() }
-                        
-                    }
-                } catch let error as NSError {
-                    defer { sem.signal() }
-                    print("Failed to load: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        task.resume()
-        sem.wait()
-        //return sUserID;
-    }
-    
     func authenticateLocalUser(username: String, password: String) -> Bool {
         do {
             let session = ODSession()
@@ -764,49 +806,11 @@ class AuthxSignIn: NSWindowController {
         }
     }
     
-    func dialogOK(question: String, text: String, alterStyle:String) -> Void {
-        let alert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = text
-        
-        if(alterStyle=="error"){
-            alert.alertStyle = NSAlert.Style.critical
-        }
-        else if(alterStyle=="info"){
-            alert.alertStyle = NSAlert.Style.informational
-        }
-        alert.addButton(withTitle: "ok")
-        alert.runModal()
-    }
-    
-    func add_app_setting() -> Bool{
-        
-        var UpdatedContent:String=""
-        let fileURL = NSURL(string: "file:///Users/Shared/authx_security.ini")
-        
-        do {
-            var newUser:String = self.sAppID + "," + self.sAppKey + "," + self.sAppURL
-            newUser = newUser + "," + txtUsername.stringValue + "," + txtPassword.stringValue
-            UpdatedContent.append(newUser)
-            try UpdatedContent.write(to: fileURL! as URL, atomically: false, encoding: .utf8)
-        }
-        catch {/* error handling here */}
-        
-        return true;
-    }
     
     @IBAction func submit_password_click(_ sender: Any) {
-        let success = authenticateLocalUser(username: txtUsername.stringValue, password: txtPassword.stringValue)
-        
-        if !success {
-            dialogOK(question: "User Authenticate", text: "Invalid username/password.", alterStyle:"error")
-            return
-        }
-        else
-        {
-            self.add_app_setting()
-            setUserInfo(userName: self.txtUsername.stringValue, paswrd: self.txtPassword.stringValue)
-        }
+        let userNametempdata = sUsername + "\0"
+        let passwordTempdata = sPassword + "\0"
+        self.process_login(userName:userNametempdata,passWord:passwordTempdata)
     }
     
     @IBAction func cancel_password_click(_ sender: Any) {
@@ -815,9 +819,9 @@ class AuthxSignIn: NSWindowController {
         self.closeRightSideBar()
     }
     
-    @IBAction func submit_pin_click(_ sender: Any) {
+    func submit_pin_authentication(value:String) {
        // getUserID(userName: sUsername)
-        let bReturn = getAuth(endUrl: "Authenticate", userID: sMainUserID, authID: txtPin.stringValue)
+        let bReturn = getAuth(endUrl: "Authenticate", userID: sMainUserID, authID: value)
         if(!bReturn)
         {
             print("authentication failed")
@@ -829,11 +833,21 @@ class AuthxSignIn: NSWindowController {
             self.infoMsg.isHidden=false
             self.infoMsg.textColor = NSColor.black
             self.infoMsg.stringValue = "PIN authentication done.Logging you in please wait."
+            let userNametempdata = sUsername + "\0"
+            let passwordTempdata = sPassword + "\0"
+            self.process_login(userName:userNametempdata,passWord:passwordTempdata)
         }
     }
     
     @IBAction func cancel_pin_click(_ sender: Any) {
        // tabPassword.isHidden=false
+        self.txtPin1.stringValue = ""
+        self.txtPin2.stringValue = ""
+        self.txtPin3.stringValue = ""
+        self.txtPin4.stringValue = ""
+        self.txtPin5.stringValue = ""
+        self.txtPin6.stringValue = ""
+
         tabPin.isHidden=true
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
@@ -864,6 +878,9 @@ class AuthxSignIn: NSWindowController {
              self.infoMsg.isHidden=false
              self.infoMsg.textColor = NSColor.black
              self.infoMsg.stringValue = "PUSH authentication done.Logging you in please wait."
+             let userNametempdata = sUsername + "\0"
+             let passwordTempdata = sPassword + "\0"
+             self.process_login(userName:userNametempdata,passWord:passwordTempdata)
          }
     }
     
@@ -880,6 +897,7 @@ class AuthxSignIn: NSWindowController {
     @IBAction func pin_click(_ sender: Any) {
        // tabPassword.isHidden=true
         tabPin.isHidden=false
+        txtPin1.becomeFirstResponder()
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -888,6 +906,7 @@ class AuthxSignIn: NSWindowController {
     
     @IBAction func passcode_click(_ sender: Any) {
         tabPin.isHidden=false
+        txtPin1.becomeFirstResponder()
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -897,6 +916,7 @@ class AuthxSignIn: NSWindowController {
     func displayedPhoneCallingAuthInstructions(completion: @escaping (Bool)->()) {
         DispatchQueue.main.async {
             self.tabPin.isHidden=false
+            self.txtPin1.becomeFirstResponder()
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -927,6 +947,7 @@ class AuthxSignIn: NSWindowController {
     func displayedPhoneSMSAuthInstructions(completion: @escaping (Bool)->()) {
         DispatchQueue.main.async {
             self.tabPin.isHidden=false
+            self.txtPin1.becomeFirstResponder()
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -1073,6 +1094,9 @@ class AuthxSignIn: NSWindowController {
                             self.infoMsg.isHidden=false
                             self.infoMsg.textColor = NSColor.black
                             self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
+                            let userNametempdata = sUsername + "\0"
+                            let passwordTempdata = sPassword + "\0"
+                            self.process_login(userName:userNametempdata,passWord:passwordTempdata)
                         }
                      }
                 }
@@ -1098,6 +1122,53 @@ class AuthxSignIn: NSWindowController {
         if timer != nil {
             timer?.invalidate()
             timer = nil
+        }
+    }
+    
+    
+    func process_login(userName:String,passWord:String ) {
+        
+        //self.infoMsg.isHidden=false
+        self.infoMsg.stringValue = ""
+        let success = authenticateLocalUser(username: userName, password: passWord)
+        if(!success)
+        {
+            self.infoMsg.isHidden=false
+            self.infoMsg.textColor = NSColor.red
+            self.infoMsg.stringValue = "The username/password you entered is invalid."
+            //self.showNSAlert(message: "The password you entered is invalid. Please check password and try again.")
+        }
+        else
+        {
+            //self.infoMsg.isHidden=false
+            //self.infoMsg.textColor = NSColor.black
+            //self.infoMsg.stringValue = "Logging you in please wait."
+            //self.passwordlessUserLabel.stringValue="Logging in, please wait..."
+            //progressIndicator.isHidden=false
+            let userNametempdata = userName
+            let userNamedata = userNametempdata.data(using: .utf8)
+            var userNamevalue = AuthorizationValue(length: (userNamedata?.count)!, data: UnsafeMutableRawPointer(mutating: (userNamedata! as NSData).bytes.bindMemory(to: Void.self, capacity: (userNamedata?.count)!)))
+            
+            let passwordTempdata = passWord
+            let passwordData = passwordTempdata.data(using: .utf8)
+            var passwordValue = AuthorizationValue(length: (passwordData?.count)!, data: UnsafeMutableRawPointer(mutating: (passwordData! as NSData).bytes.bindMemory(to: Void.self, capacity: (passwordData?.count)!)))
+                        
+            var error = mechCallbacks?.SetContextValue(mechEngine!,kAuthorizationEnvironmentUsername,.extractable, &userNamevalue)
+            error = mechCallbacks?.SetContextValue(mechEngine!,kAuthorizationEnvironmentPassword,.extractable, &passwordValue)
+            error = mechCallbacks?.SetResult(mechEngine!,.allow)
+            
+            if(error==noErr)
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.mechView?.callbacks().deallocate()
+                }
+                //self.window?.close()
+                //self.backgroundWindow.close()
+                //NSApp.stopModal()
+            } else {
+                self.window?.orderOut(self)
+                self.window?.close()
+            }
         }
     }
     
