@@ -1128,8 +1128,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     func process_login(userName:String,passWord:String ) {
         
-        //self.infoMsg.isHidden=false
-        self.infoMsg.stringValue = ""
         let success = authenticateLocalUser(username: userName, password: passWord)
         if(!success)
         {
@@ -1162,12 +1160,17 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.mechView?.callbacks().deallocate()
                 }
-                //self.window?.close()
-                //self.backgroundWindow.close()
-                //NSApp.stopModal()
+                self.window?.close()
+               // self.backgroundWindow.close()
+                NSApp.stopModal()
             } else {
                 self.window?.orderOut(self)
                 self.window?.close()
+                //self.infoMsg.isHidden=false
+                //self.infoMsg.stringValue = ""
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    exit(-1)
+                }
             }
         }
     }

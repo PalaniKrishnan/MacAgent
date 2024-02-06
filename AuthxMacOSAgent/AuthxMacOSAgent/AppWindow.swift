@@ -116,6 +116,9 @@ class AppWindow: NSWindow {
     
     @objc func helpClicked() {
         print("help clicked")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            exit(-1)
+        }
     }
     
 }
