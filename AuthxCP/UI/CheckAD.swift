@@ -12,7 +12,7 @@ import Security.AuthorizationPlugin
 import SecurityInterface
 
 class CheckAD: NSObject {
-    @objc var signIn: AuthxLogIn!
+    @objc var signIn: AuthxSignIn!
     
     let mechCallbacks: AuthorizationCallbacks
     let mechEngine: AuthorizationEngineRef
@@ -21,7 +21,7 @@ class CheckAD: NSObject {
     @objc func run() {
         
         //NSApp.activate(ignoringOtherApps: true)
-        signIn = AuthxLogIn(windowNibName: NSNib.Name("AuthxLogIn"))
+        signIn = AuthxSignIn(windowNibName: NSNib.Name("AuthxSignIn"))
         signIn.mechCallbacks = mechCallbacks
         signIn.mechEngine = mechEngine
         signIn.mechView = mechView

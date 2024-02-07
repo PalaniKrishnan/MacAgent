@@ -16,6 +16,8 @@
 		4895C5210A780E1800ABC00C /* AuthPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4895C51E0A780E1800ABC00C /* AuthPlugin.m */; };
 		4895C5220A780E1800ABC00C /* zKeyCPPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4895C51F0A780E1800ABC00C /* zKeyCPPlugin.m */; };
 		4895C52C0A780E8800ABC00C /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4895C52B0A780E8800ABC00C /* SecurityInterface.framework */; };
+		6FAD3C252B72692800ECA4DF /* AuthxSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAD3C232B72692800ECA4DF /* AuthxSignIn.swift */; };
+		6FAD3C262B72692800ECA4DF /* AuthxSignIn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FAD3C242B72692800ECA4DF /* AuthxSignIn.xib */; };
 		844207042900F82800D49838 /* NoLoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844207032900F82800D49838 /* NoLoWindow.swift */; };
 		844207082900FB2800D49838 /* CheckAD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844207072900FB2800D49838 /* CheckAD.swift */; };
 		84425FCB2902490F00509BBE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84425FC82902490F00509BBE /* CustomTextField.swift */; };
@@ -36,8 +38,6 @@
 		84425FE82902494B00509BBE /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84425FE02902494B00509BBE /* CommonFunctions.swift */; };
 		84425FE92902494B00509BBE /* SymmetricCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84425FE12902494B00509BBE /* SymmetricCrypto.swift */; };
 		845AC0C42902D09A002A2F9A /* AuthxCP.bundle in Copy Files */ = {isa = PBXBuildFile; fileRef = 8D5B49B6048680CD000E48DA /* AuthxCP.bundle */; };
-		846F4355292A54B300058205 /* AuthxSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F4353292A54B300058205 /* AuthxSignIn.swift */; };
-		846F4356292A54B300058205 /* AuthxSignIn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846F4354292A54B300058205 /* AuthxSignIn.xib */; };
 		8490CFED292CF23D00A4BB78 /* AuthxLogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8490CFEB292CF23D00A4BB78 /* AuthxLogIn.swift */; };
 		8490CFEE292CF23D00A4BB78 /* AuthxLogIn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8490CFEC292CF23D00A4BB78 /* AuthxLogIn.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -87,6 +87,8 @@
 		4895C52B0A780E8800ABC00C /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = /System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<absolute>"; };
 		4895C5680A78111400ABC00C /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
 		58EDEC0716E343E073C10240 /* Pods_AuthxCP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthxCP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FAD3C232B72692800ECA4DF /* AuthxSignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthxSignIn.swift; sourceTree = "<group>"; };
+		6FAD3C242B72692800ECA4DF /* AuthxSignIn.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthxSignIn.xib; sourceTree = "<group>"; };
 		843B39C3296EE8E000CE114B /* libpcProxAPI.dylib.7.5.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; name = libpcProxAPI.dylib.7.5.1; path = lib/libpcProxAPI.dylib.7.5.1; sourceTree = "<group>"; };
 		844207022900F82800D49838 /* AuthxCP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuthxCP-Bridging-Header.h"; sourceTree = "<group>"; };
 		844207032900F82800D49838 /* NoLoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoLoWindow.swift; sourceTree = "<group>"; };
@@ -108,8 +110,6 @@
 		84425FDF2902494B00509BBE /* WebServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebServiceManager.swift; path = CommonClasses/WebServiceManager.swift; sourceTree = "<group>"; };
 		84425FE02902494B00509BBE /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonFunctions.swift; path = CommonClasses/CommonFunctions.swift; sourceTree = "<group>"; };
 		84425FE12902494B00509BBE /* SymmetricCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SymmetricCrypto.swift; path = CommonClasses/SymmetricCrypto.swift; sourceTree = "<group>"; };
-		846F4353292A54B300058205 /* AuthxSignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthxSignIn.swift; sourceTree = "<group>"; };
-		846F4354292A54B300058205 /* AuthxSignIn.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthxSignIn.xib; sourceTree = "<group>"; };
 		8490CFEB292CF23D00A4BB78 /* AuthxLogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthxLogIn.swift; sourceTree = "<group>"; };
 		8490CFEC292CF23D00A4BB78 /* AuthxLogIn.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthxLogIn.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* AuthxCP.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthxCP.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,8 +257,8 @@
 			children = (
 				8490CFEB292CF23D00A4BB78 /* AuthxLogIn.swift */,
 				8490CFEC292CF23D00A4BB78 /* AuthxLogIn.xib */,
-				846F4353292A54B300058205 /* AuthxSignIn.swift */,
-				846F4354292A54B300058205 /* AuthxSignIn.xib */,
+				6FAD3C232B72692800ECA4DF /* AuthxSignIn.swift */,
+				6FAD3C242B72692800ECA4DF /* AuthxSignIn.xib */,
 				844207072900FB2800D49838 /* CheckAD.swift */,
 				844207032900F82800D49838 /* NoLoWindow.swift */,
 			);
@@ -369,7 +369,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				320AF0292355AEBE0008639A /* AuthxCP.nib in Resources */,
-				846F4356292A54B300058205 /* AuthxSignIn.xib in Resources */,
+				6FAD3C262B72692800ECA4DF /* AuthxSignIn.xib in Resources */,
 				329138B725CEA1FD00CD3E58 /* assets.xcassets in Resources */,
 				8490CFEE292CF23D00A4BB78 /* AuthxLogIn.xib in Resources */,
 			);
@@ -417,11 +417,11 @@
 				844207082900FB2800D49838 /* CheckAD.swift in Sources */,
 				84425FCC2902490F00509BBE /* CustomButton.swift in Sources */,
 				84425FCD2902490F00509BBE /* CustomView.swift in Sources */,
+				6FAD3C252B72692800ECA4DF /* AuthxSignIn.swift in Sources */,
 				84425FD82902493600509BBE /* UserSigninModel.swift in Sources */,
 				844207042900F82800D49838 /* NoLoWindow.swift in Sources */,
 				84425FE52902494B00509BBE /* StoryboardHelper.swift in Sources */,
 				32377A8025CEF40700480FD1 /* CryptLib.m in Sources */,
-				846F4355292A54B300058205 /* AuthxSignIn.swift in Sources */,
 				84425FE22902494B00509BBE /* Constant.swift in Sources */,
 				4895C5220A780E1800ABC00C /* zKeyCPPlugin.m in Sources */,
 				84425FE62902494B00509BBE /* WebServiceBuilder.swift in Sources */,

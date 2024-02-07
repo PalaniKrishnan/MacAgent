@@ -155,9 +155,9 @@ class ViewController: NSViewController {
     func moveToAuthFactorsWindow(uname:String, pswd:String) {
         DispatchQueue.main.async {
             self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
-            self.nAuthxSignIn?.sMainUserID = self.sUserUID
-            self.nAuthxSignIn?.sUserID = self.sUserID
-            self.nAuthxSignIn?.sCompanyID = self.sCompanyID
+//            self.nAuthxSignIn?.sMainUserID = self.sUserUID
+//            self.nAuthxSignIn?.sUserID = self.sUserID
+//            self.nAuthxSignIn?.sCompanyID = self.sCompanyID
             self.nAuthxSignIn?.showWindow (self)
            // self.nAuthxSignIn?.becomeFirstResponder()
             self.view.window?.orderOut(self)

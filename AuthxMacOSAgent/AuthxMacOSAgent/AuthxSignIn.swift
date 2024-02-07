@@ -152,11 +152,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         tabRFID.isHidden=true
         txtUsername.becomeFirstResponder()
         
-        getAuthXSettings()
-        getAuthXFactorsList()
-        closeLeftSidebar()
-        closeRightSideBar()
-        logoUpdateListener()
+        self.getAuthXSettings()
+        self.getAuthXFactorsList()
+        self.closeLeftSidebar()
+        self.closeRightSideBar()
+        self.logoUpdateListener()
+        
     }
     
     func logoUpdateListener() {
@@ -334,19 +335,22 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                         if arrayWithHost.count > 2 {
                             self.sAppHost = arrayWithHost[0]
                             self.sAppAPI = splitedArr[0]+"."+arrayWithHost[1]+"."+arrayWithHost[2]
+                            print(cols[3])
+                            print(cols[4])
+                            if (!cols[3].isEmpty) && (!cols[4].isEmpty) {
+                                self.sUsername=cols[3]
+                                self.sPassword=cols[4]
+                                DispatchQueue.main.async {
+                                    self.UserName.stringValue = self.sUsername
+                                }
+                                self.getUserID(userName:self.sUsername)
+                            } else {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    exit(-1)
+                                }
+                            }
                         }
                     }
-                }
-                if (!cols[3].isEmpty)
-                {
-                    self.sUsername=cols[3]
-                    DispatchQueue.main.async {
-                        self.UserName.stringValue = self.sUsername
-                    }
-                }
-                if (!cols[4].isEmpty)
-                {
-                    self.sPassword=cols[4]
                 }
             }
         }
@@ -416,7 +420,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                           //let sAccess_token = json["access_token"] as? String
                           
                           self.sMainUserID = json["UniqueUserId"] as! String
-                                                  
+                          self.sUserID = json["UserId"] as? String
+                          self.sCompanyID = json["CompanyId"] as? String
+                          
+                          
                           defer { sem.signal() }
                           
                       }
@@ -431,6 +438,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
           sem.wait()
           //return sUserID;
       }
+    
+    
     
     func getAuthXSettings() {
         let APIUrl = sAppAPI + "GetAppAuthSettings"
@@ -1160,9 +1169,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.mechView?.callbacks().deallocate()
                 }
-                self.window?.close()
+              //  self.window?.close()
                // self.backgroundWindow.close()
-                NSApp.stopModal()
+                //NSApp.stopModal()
             } else {
                 self.window?.orderOut(self)
                 self.window?.close()
