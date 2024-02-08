@@ -15,6 +15,7 @@
 		32FEF38225C6D943001E8D03 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEF38125C6D943001E8D03 /* Security.framework */; };
 		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
 		6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */; };
+		6F5E6F292B75128E0053E686 /* pcProx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843B39C5296EF0B400CE114B /* pcProx.cpp */; };
 		6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */; };
 		843B39AA296EBA7F00CE114B /* authModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39A8296EBA7F00CE114B /* authModes.swift */; };
 		843B39AB296EBA7F00CE114B /* authModes.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39A9296EBA7F00CE114B /* authModes.xib */; };
@@ -24,7 +25,6 @@
 		843B39B5296EBA9300CE114B /* enrollPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39AF296EBA9300CE114B /* enrollPhone.xib */; };
 		843B39B6296EBA9300CE114B /* enrollPIN.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39B0296EBA9300CE114B /* enrollPIN.xib */; };
 		843B39B7296EBA9300CE114B /* enrollPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39B1296EBA9300CE114B /* enrollPhone.swift */; };
-		843B39C6296EF0B500CE114B /* pcProx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843B39C5296EF0B400CE114B /* pcProx.cpp */; };
 		846F43402929F7C700058205 /* AuthxMacOSAgent.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32B57C65234F3DB800B6EAA4 /* AuthxMacOSAgent.app */; };
 		84AAD50229291C0A0046E835 /* AuthxSignIn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AAD50129291C0A0046E835 /* AuthxSignIn.xib */; };
 		84AAD50429291C240046E835 /* AuthxSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AAD50329291C240046E835 /* AuthxSignIn.swift */; };
@@ -219,12 +219,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F5E6F292B75128E0053E686 /* pcProx.cpp in Sources */,
 				6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */,
 				843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */,
 				32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */,
 				843B39B7296EBA9300CE114B /* enrollPhone.swift in Sources */,
 				843B39AA296EBA7F00CE114B /* authModes.swift in Sources */,
-				843B39C6296EF0B500CE114B /* pcProx.cpp in Sources */,
 				32B57C6B234F3DB800B6EAA4 /* ViewController.swift in Sources */,
 				6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */,
 				843B39B4296EBA9300CE114B /* enrollPIN.swift in Sources */,

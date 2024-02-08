@@ -157,7 +157,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.closeLeftSidebar()
         self.closeRightSideBar()
         self.logoUpdateListener()
-        
+        self.rfid_click(self)
     }
     
     func logoUpdateListener() {
@@ -243,7 +243,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         guard let btn = sender as? NSButton else {
             return
         }
-
         if self.leftView.isHidden == true {
             self.openLeftSidebar()
             btn.image = NSImage(named: "hide_sidebar")
@@ -279,6 +278,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         let containerFrame = splitView.frame
         centerView.frame.size = NSMakeSize(containerFrame.size.width, containerFrame.size.height)
         splitView.display()
+        self.rfid_click(self)
     }
 
     func openLeftSidebar () {
@@ -1051,7 +1051,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             }
             
             nRFID = Int32(sOutFound);//shell("/User/Shared/getrfid --getid")
-            
+            print(String(nRFID))
+
             if(nRFID==1001)
             {
                 sRFIDStatus.textColor = NSColor.red
