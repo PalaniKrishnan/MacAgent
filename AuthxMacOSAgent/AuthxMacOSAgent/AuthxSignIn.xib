@@ -32,12 +32,12 @@
                 <outlet property="tabRFID" destination="IcA-Hz-iiB" id="dTu-VX-rkV"/>
                 <outlet property="totpButton" destination="C2Z-Xh-WCf" id="MnT-Cc-kvr"/>
                 <outlet property="txtPassword" destination="5Yx-9a-Rzn" id="MX3-t4-KKw"/>
-                <outlet property="txtPin1" destination="9jE-gJ-Rcu" id="k3T-NP-NsG"/>
-                <outlet property="txtPin2" destination="TuY-fw-RTe" id="fKo-0Q-cZA"/>
-                <outlet property="txtPin3" destination="rCx-tc-jmu" id="3LT-fm-o5d"/>
-                <outlet property="txtPin4" destination="lOb-TY-ZIm" id="h4B-yI-PYO"/>
-                <outlet property="txtPin5" destination="jWS-rd-JJc" id="PRd-kO-Flc"/>
-                <outlet property="txtPin6" destination="vPz-xQ-ziU" id="Csu-6g-cw2"/>
+                <outlet property="txtPin1" destination="Lrp-dB-Wcl" id="Tl2-OH-Q8z"/>
+                <outlet property="txtPin2" destination="gVb-3M-GcQ" id="Eun-xl-JMh"/>
+                <outlet property="txtPin3" destination="wrl-Mn-CvW" id="Ll8-eE-Me4"/>
+                <outlet property="txtPin4" destination="S7R-Xs-2Ff" id="Qr5-NL-iRD"/>
+                <outlet property="txtPin5" destination="NMv-ps-GoS" id="UKe-r9-Pvh"/>
+                <outlet property="txtPin6" destination="Te0-CU-Gqh" id="kB7-Ib-K5x"/>
                 <outlet property="txtUsername" destination="6cY-RY-ryY" id="Sdw-f2-30a"/>
             </connections>
         </customObject>
@@ -256,60 +256,78 @@ Gw
                                                     <rect key="frame" x="0.0" y="0.0" width="687" height="84"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="9jE-gJ-Rcu">
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lrp-dB-Wcl">
                                                             <rect key="frame" x="241" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="9na-5W-91w">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="ZBB-3J-ymO">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="TuY-fw-RTe">
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gVb-3M-GcQ">
                                                             <rect key="frame" x="276" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="mD6-fI-Lqj">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="V0N-x6-62R">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="rCx-tc-jmu">
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wrl-Mn-CvW">
                                                             <rect key="frame" x="311" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="hoy-5s-2Hv">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="ShI-wk-daO">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="lOb-TY-ZIm">
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S7R-Xs-2Ff">
                                                             <rect key="frame" x="346" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="qSW-Vn-sH5">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="f8g-Lq-kZv">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="jWS-rd-JJc">
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMv-ps-GoS">
                                                             <rect key="frame" x="381" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="flH-ru-msf">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="0TQ-Iq-8zO">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" contentType="oneTimeCode" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-xQ-ziU">
-                                                            <rect key="frame" x="416" y="47" width="30" height="30"/>
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-CU-Gqh">
+                                                            <rect key="frame" x="416" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="bQE-rs-Lru">
-                                                                <font key="font" size="20" name="HelveticaNeue"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="ecU-AC-NAv">
+                                                                <font key="font" metaFont="system" size="19"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="bb9-pR-aqF">
                                                             <rect key="frame" x="241" y="5" width="205" height="30"/>
                                                             <buttonCell key="cell" type="bevel" title="CANCEL" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="Qbz-pH-kAQ">

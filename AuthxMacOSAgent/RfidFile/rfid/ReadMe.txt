@@ -61,6 +61,7 @@ NOTE:
  --help          print this help
  --getid         give raw data of card which being read
  --getESN        read the ESN from the reader
+ --get-actid     give active card data(to stop execution press Ctrl+C)
 
 NOTE:
 	1. You need to set the path of pcProxAPI.dll before running the application.

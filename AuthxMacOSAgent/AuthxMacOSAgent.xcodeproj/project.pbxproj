@@ -15,7 +15,6 @@
 		32FEF38225C6D943001E8D03 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEF38125C6D943001E8D03 /* Security.framework */; };
 		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
 		6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */; };
-		6F5E6F292B75128E0053E686 /* pcProx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843B39C5296EF0B400CE114B /* pcProx.cpp */; };
 		6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */; };
 		843B39AA296EBA7F00CE114B /* authModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39A8296EBA7F00CE114B /* authModes.swift */; };
 		843B39AB296EBA7F00CE114B /* authModes.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39A9296EBA7F00CE114B /* authModes.xib */; };
@@ -58,6 +57,7 @@
 		32FEF38625C6E67A001E8D03 /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
 		6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
 		6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWindowController.swift; sourceTree = "<group>"; };
+		6FC4DC9A2B7B51A7001A9DDE /* AuthxMacOSAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AuthxMacOSAgent.entitlements; sourceTree = "<group>"; };
 		843B39A8296EBA7F00CE114B /* authModes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = authModes.swift; sourceTree = "<group>"; };
 		843B39A9296EBA7F00CE114B /* authModes.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = authModes.xib; sourceTree = "<group>"; };
 		843B39AC296EBA9200CE114B /* enrollRFID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollRFID.swift; sourceTree = "<group>"; };
@@ -66,8 +66,6 @@
 		843B39AF296EBA9300CE114B /* enrollPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = enrollPhone.xib; sourceTree = "<group>"; };
 		843B39B0296EBA9300CE114B /* enrollPIN.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = enrollPIN.xib; sourceTree = "<group>"; };
 		843B39B1296EBA9300CE114B /* enrollPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollPhone.swift; sourceTree = "<group>"; };
-		843B39C4296EF0B400CE114B /* pcProx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcProx.h; sourceTree = "<group>"; };
-		843B39C5296EF0B400CE114B /* pcProx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pcProx.cpp; sourceTree = "<group>"; };
 		84AAD50129291C0A0046E835 /* AuthxSignIn.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthxSignIn.xib; sourceTree = "<group>"; };
 		84AAD50329291C240046E835 /* AuthxSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthxSignIn.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,8 +86,6 @@
 		32B57C5C234F3DB800B6EAA4 = {
 			isa = PBXGroup;
 			children = (
-				843B39C5296EF0B400CE114B /* pcProx.cpp */,
-				843B39C4296EF0B400CE114B /* pcProx.h */,
 				32B57C67234F3DB800B6EAA4 /* AuthxMacOSAgent */,
 				32B57C66234F3DB800B6EAA4 /* Products */,
 				32DFB1A925BD6EFA00AD79B3 /* Frameworks */,
@@ -107,6 +103,7 @@
 		32B57C67234F3DB800B6EAA4 /* AuthxMacOSAgent */ = {
 			isa = PBXGroup;
 			children = (
+				6FC4DC9A2B7B51A7001A9DDE /* AuthxMacOSAgent.entitlements */,
 				843B39B1296EBA9300CE114B /* enrollPhone.swift */,
 				843B39AF296EBA9300CE114B /* enrollPhone.xib */,
 				843B39AE296EBA9300CE114B /* enrollPIN.swift */,
@@ -219,7 +216,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F5E6F292B75128E0053E686 /* pcProx.cpp in Sources */,
 				6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */,
 				843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */,
 				32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */,
@@ -366,8 +362,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AuthxMacOSAgent/AuthxMacOSAgent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -381,17 +378,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/lib",
 				);
+				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				OTHER_LDFLAGS = (
-					"-L",
-					./Lib,
-					"-lpcProxAPI",
-				);
+				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REEXPORTED_LIBRARY_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -403,8 +399,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AuthxMacOSAgent/AuthxMacOSAgent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -418,17 +415,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/lib",
 				);
+				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				OTHER_LDFLAGS = (
-					"-L",
-					./Lib,
-					"-lpcProxAPI",
-				);
+				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.authx.AuthxMacOSAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REEXPORTED_LIBRARY_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuthxMacOSAgent/AuthxMacOSAgent-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};

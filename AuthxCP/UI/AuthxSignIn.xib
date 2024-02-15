@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AuthxSignIn" customModule="AuthxMacOSAgent" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="AuthxSignIn" customModule="AuthxCP" customModuleProvider="target">
             <connections>
                 <outlet property="CompanyName" destination="155-ed-sDN" id="xed-OY-6gl"/>
                 <outlet property="UserName" destination="txJ-0U-6lE" id="AD5-BW-4Ry"/>
@@ -43,7 +43,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Auth Factors" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g" customClass="AppWindow" customModule="AuthxMacOSAgent" customModuleProvider="target">
+        <window title="Auth Factors" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g" customClass="AppWindow" customModule="AuthxCP" customModuleProvider="target">
             <windowStyleMask key="styleMask" fullSizeContentView="YES"/>
             <rect key="contentRect" x="196" y="0.0" width="878" height="811"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>

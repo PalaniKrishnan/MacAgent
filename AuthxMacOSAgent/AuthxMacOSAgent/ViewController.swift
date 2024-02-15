@@ -74,6 +74,11 @@ class ViewController: NSViewController {
                 defer { sem.signal() }
                 //print("Error took place \(error)")
                 //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
+                DispatchQueue.main.async {
+                    self.authCustomView.isHidden = false
+                    self.view.window?.makeFirstResponder(self.txtUser)
+                }
+                
                 return
             }
             
@@ -100,6 +105,10 @@ class ViewController: NSViewController {
                 } catch let error as NSError {
                     defer { sem.signal() }
                     print("Failed to load: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.authCustomView.isHidden = false
+                        self.view.window?.makeFirstResponder(self.txtUser)
+                    }
                 }
             }
         }

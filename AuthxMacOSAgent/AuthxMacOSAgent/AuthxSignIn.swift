@@ -58,12 +58,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var txtUsername: NSTextField!
     @IBOutlet weak var txtPassword: NSTextField!
     
-    @IBOutlet weak var txtPin1: NSTextField!
-    @IBOutlet weak var txtPin2: NSTextField!
-    @IBOutlet weak var txtPin3: NSTextField!
-    @IBOutlet weak var txtPin4: NSTextField!
-    @IBOutlet weak var txtPin5: NSTextField!
-    @IBOutlet weak var txtPin6: NSTextField!
+    @IBOutlet weak var txtPin1: NSSecureTextField!
+    @IBOutlet weak var txtPin2: NSSecureTextField!
+    @IBOutlet weak var txtPin3: NSSecureTextField!
+    @IBOutlet weak var txtPin4: NSSecureTextField!
+    @IBOutlet weak var txtPin5: NSSecureTextField!
+    @IBOutlet weak var txtPin6: NSSecureTextField!
     
     private var digit: Int?
 
@@ -101,7 +101,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     var bTResult=false
     var sRFID:String!="0"
     var isRFIDenrolled = false
-    var isRFIDauthenticated = false
 
     @IBOutlet weak var sRFIDStatus: NSTextField!
 
@@ -685,6 +684,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             break
         case .Rfid:
             rfidButton.isHidden = false
+            self.isRFIDenrolled = true
             break
         case .Sms:
             smsButton.isHidden = false
@@ -700,7 +700,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
      
     func getAuth(endUrl:String, userID:String, authID:String) -> Bool {
-        var bReturn:Bool=false
+        var success:Bool=false
         let APIUrl = sAppAPI + endUrl
         let url = URL(string: APIUrl)
         //let guid = NSUUID().uuidString.lowercased()
@@ -735,7 +735,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         print(parameters)
             
         guard let postData = (try? JSONSerialization.data(withJSONObject: parameters, options: [])) else  {
-            return bReturn
+            return success
         }
             
         request.httpBody = postData
@@ -750,7 +750,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 defer { sem.signal() }
                 print("Error took place \(error)")
                 //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
-                bReturn=false
+                success=false
                 return
             }
             
@@ -768,11 +768,17 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                         let response_code = json["response_code"] as! Int
                         //sUserID = json["UniqueUserId"] as! String
                         if(response_code==1){
-                            bReturn = true
+                            success = true
                             if endUrl == "EnrollRFID" {
-                                self.isRFIDenrolled = true
+                                self.rfid_enrollemnt(success: true)
                             } else if endUrl == "AuthenticateRFID" {
-                                self.isRFIDauthenticated = true
+                                self.rfid_authentication(success: true)
+                            }
+                        } else {
+                            if endUrl == "EnrollRFID" {
+                                self.rfid_enrollemnt(success: false)
+                            } else if endUrl == "AuthenticateRFID" {
+                                self.rfid_authentication(success: false)
                             }
                         }
                         defer { sem.signal() }
@@ -780,7 +786,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                     }
                 } catch let error as NSError {
                     defer { sem.signal() }
-                    bReturn=false
+                    success=false
                     print("Failed to load: \(error.localizedDescription)")
                 }
             }
@@ -788,7 +794,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         
         task.resume()
         sem.wait()
-        return bReturn;
+        return success;
     }
     
         
@@ -830,8 +836,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     func submit_pin_authentication(value:String) {
        // getUserID(userName: sUsername)
-        let bReturn = getAuth(endUrl: "Authenticate", userID: sMainUserID, authID: value)
-        if(!bReturn)
+        let success = getAuth(endUrl: "Authenticate", userID: sMainUserID, authID: value)
+        if(!success)
         {
             print("authentication failed")
             self.infoMsg.isHidden=false
@@ -875,8 +881,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @objc func AuthenticatePush() {
         // getUserID(userName: sUsername)
-        let bReturn = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "PUSH")
-         if(!bReturn)
+        let success = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "PUSH")
+         if(!success)
          {
              print("authentication failed")
              self.infoMsg.isHidden=false
@@ -936,8 +942,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @objc func AuthenticatePhoneCall() {
         // getUserID(userName: sUsername)
-        let bReturn = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "CALL")
-         if(!bReturn)
+        let success = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "CALL")
+         if(!success)
          {
              print("call failed")
          } else {
@@ -967,8 +973,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @objc func AuthenticatePhoneSMS() {
         // getUserID(userName: sUsername)
-        let bReturn = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "SMS")
-         if(!bReturn)
+        let success = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "SMS")
+         if(!success)
          {
              print("sms failed")
          } else {
@@ -1000,6 +1006,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         tabPin.isHidden=true
         tabRFID.isHidden=false
         grantPermissions()
+       // self.startTimer()
         self.infoMsg.stringValue = ""
         self.instructionMsg.stringValue = "Tap your Card"
         self.authModeImageView.image = NSImage(named: "RFID_ICO")
@@ -1014,6 +1021,44 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.instructionMsg.stringValue = ""
         self.authModeImageView.image = nil
         self.stopTimer()
+    }
+    
+    func rfid_enrollemnt(success:Bool) {
+        DispatchQueue.main.async {
+            if(!success)
+            {
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.red
+                self.infoMsg.stringValue = "RFID enrollment failed."
+                
+            } else {
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.black
+                self.infoMsg.stringValue = "RFID enrollment done"
+                self.isRFIDenrolled = true
+                self.rfidButton.isHidden = false
+            }
+        }
+    }
+    
+    func rfid_authentication(success:Bool) {
+        DispatchQueue.main.async {
+            if(!success)
+            {
+                print("authentication failed")
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.red
+                self.infoMsg.stringValue = "RFID authentication failed."
+                
+            } else {
+                self.infoMsg.isHidden=false
+                self.infoMsg.textColor = NSColor.black
+                self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
+                let userNametempdata = self.sUsername + "\0"
+                let passwordTempdata = self.sPassword + "\0"
+                self.process_login(userName:userNametempdata,passWord:passwordTempdata)
+            }
+        }
     }
     
     
@@ -1038,79 +1083,28 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
         if(self.bTResult==false)
         {
-            
-          //  nRFID = GetActiveRFID()
-            var sOutFound:String = shell("/Users/Shared/activerfid --getid")
-            
-            if sOutFound.contains("-")
-            {
-                sRFIDStatus.textColor = NSColor.red
-                sRFIDStatus.stringValue = sOutFound
-                
-                sOutFound="1001"
-            }
-            
-            nRFID = Int32(sOutFound);//shell("/User/Shared/getrfid --getid")
-            print(String(nRFID))
+           //nRFID = GetActiveRFID()
 
-            if(nRFID==1001)
+            let sOutFound:String = shell("/Users/Shared/authx/readercomm --getid")
+            print(sOutFound)
+            if sOutFound.contains("Reader not connected")
             {
                 sRFIDStatus.textColor = NSColor.red
                 sRFIDStatus.stringValue = "Reader not connected"
-            }
-            else if(nRFID==0)
-            {
+            } else if sOutFound.contains("No id found"){
                 sRFIDStatus.textColor = NSColor.blue
-                sRFIDStatus.stringValue = "No id found, Please put card on the reader."
-            }
-            else
-            {
+              //  sRFIDStatus.stringValue = sOutFound
+                sRFIDStatus.stringValue = "Tap your card."
+            } else {
                 self.stopTimer()
-               // sRFIDStatus.textColor = NSColor.green
+                
+               // nRFID = Int64(sOutFound);//shell("/User/Shared/getrfid --getid")
+               // print(String(nRFID))
+                
+                sRFIDStatus.textColor = NSColor.green
                 sRFIDStatus.stringValue = "ID found start authentication please wait."
-                
-               // getUserID(userName: sUsername)
-                
-                if let rfID = nRFID {
-                    
-                    let bReturn = self.getAuth(endUrl: "EnrollRFID", userID: self.sMainUserID, authID: String(rfID))
-                   // let bReturn = self.getAuth(endUrl: "AuthenticateRFID", userID: self.sMainUserID, authID: rfID)
 
-
-                    if isRFIDenrolled {
-                        
-                        if(!bReturn)
-                        {
-                            self.infoMsg.isHidden=false
-                            self.infoMsg.textColor = NSColor.red
-                            self.infoMsg.stringValue = "RFID enrollment failed."
-                            
-                        } else {
-                            self.infoMsg.isHidden=false
-                            self.infoMsg.textColor = NSColor.black
-                            self.infoMsg.stringValue = "RFID enrollment done"
-                        }
-                                            
-                    } else if isRFIDauthenticated {
-                        
-                        if(!bReturn)
-                        {
-                            print("authentication failed")
-                            self.infoMsg.isHidden=false
-                            self.infoMsg.textColor = NSColor.red
-                            self.infoMsg.stringValue = "RFID authentication failed."
-                            
-                        } else {
-                            self.infoMsg.isHidden=false
-                            self.infoMsg.textColor = NSColor.black
-                            self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
-                            let userNametempdata = sUsername + "\0"
-                            let passwordTempdata = sPassword + "\0"
-                            self.process_login(userName:userNametempdata,passWord:passwordTempdata)
-                        }
-                     }
-                }
-                
+                let success = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: sOutFound)
               }
         }
         else
@@ -1176,8 +1170,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             } else {
                 self.window?.orderOut(self)
                 self.window?.close()
-                //self.infoMsg.isHidden=false
-                //self.infoMsg.stringValue = ""
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     exit(-1)
                 }
