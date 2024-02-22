@@ -1,5 +1,5 @@
-// rf IDEAS, Inc. Proprietary and Confidential
-// Copyright © 2023 rf IDEAS, Inc. as an unpublished work.
+// RF IDeas, Inc. Proprietary and Confidential
+// Copyright © 2016 RF IDeas, Inc. as an unpublished work.
 // All Rights Reserved
 
 
@@ -39,8 +39,6 @@ typedef        hid_device*  HANDLE;
 __asm__(".symver memcpy,memcpy@GLIBC_2.2.5");	//Linux 64
 #elif __i386__
 __asm__(".symver memcpy,memcpy@GLIBC_2.0");		//Linux 32
-#elif __aarch64__
-__asm__(".symver memcpy,memcpy@GLIBC_2.17");    //arm 64
 #else
 __asm__(".symver memcpy,memcpy@GLIBC_2.4");		//arm
 #endif
@@ -623,20 +621,6 @@ sRangeInfo //++ Used for pcProx Sonar
   short pad7;
 } tsRangeInfo;
 
-//-----------------------------------------------------------------------------
-#if defined (__linux__) || defined(__APPLE__)
-#define __event 
-#else
-#endif
-
-typedef struct
-#ifdef __GNUC__
-__attribute__((packed))
-#endif
-sourceEvent {
-public:
-    __event void sendData(int); // Event for the sending data to the application
-} tSourceEvent;
 ///
 
 typedef short BSHRT;  // a 16-bit Boolean
@@ -658,11 +642,6 @@ USBWEJAPI_API BYTE USBWEJAPICC GetRawPayload_index(short index);
 USBWEJAPI_API unsigned long USBWEJAPICC GetVidPidFilterMask(int n);
 USBWEJAPI_API unsigned long USBWEJAPICC GetVidPidFilterCompare(int n);
 USBWEJAPI_API BSHRT  USBWEJAPICC BeepNow(BYTE count, BSHRT longBeep);
-USBWEJAPI_API BOOL   USBWEJAPICC Bootload(char* fwFileName);
-USBWEJAPI_API const char* USBWEJAPICC CheckRulesAndBootload(char* fwFileName);
-USBWEJAPI_API short  USBWEJAPICC setSourceEvent(tSourceEvent* source);
-USBWEJAPI_API short  USBWEJAPICC CheckTamperedFirmwareFile(char* fwFileName);
-USBWEJAPI_API short  USBWEJAPICC GenerateSecureFirmwareFile(char* fwFileName);
 USBWEJAPI_API short  USBWEJAPICC ChkAddArrival(char *pBuf);
 USBWEJAPI_API BSHRT  USBWEJAPICC ChkDelRemoval(char *szName);
 USBWEJAPI_API BSHRT  USBWEJAPICC ComConnect(long* plDID);
@@ -720,7 +699,6 @@ USBWEJAPI_API long   USBWEJAPICC Ping(void);
 USBWEJAPI_API DWORD  USBWEJAPICC QuickReadSerialPort(char *buf, DWORD count);
 USBWEJAPI_API BSHRT  USBWEJAPICC ReadCfg(void);
 USBWEJAPI_API BSHRT  USBWEJAPICC ReadDevCfgFmFile(char *szFileName);
-USBWEJAPI_API BSHRT  USBWEJAPICC ReadDevCfgFromSecureFile(char *szFileName);
 USBWEJAPI_API WORD   USBWEJAPICC ReadDevTypeFromFile(char *szFileName);
 USBWEJAPI_API DWORD  USBWEJAPICC ReadSerialPort(char *buf, DWORD count);
 USBWEJAPI_API BSHRT  USBWEJAPICC ResetFactoryDflts(void);
@@ -761,7 +739,6 @@ USBWEJAPI_API BSHRT  USBWEJAPICC USBDisconnect(void);
 USBWEJAPI_API BSHRT  USBWEJAPICC VirtualComSearchRange(WORD iMin, WORD iMax);
 USBWEJAPI_API BSHRT  USBWEJAPICC WriteCfg(void);
 USBWEJAPI_API BSHRT  USBWEJAPICC WriteDevCfgToFile(char *szFileName);
-USBWEJAPI_API BSHRT  USBWEJAPICC WriteDevCfgToSecureFile(char *szFileName);
 USBWEJAPI_API DWORD  USBWEJAPICC WriteSerialPort(char *buf, DWORD count);
 USBWEJAPI_API short  USBWEJAPICC chkAddArrival_char(short index, char c);
 USBWEJAPI_API short  USBWEJAPICC chkDelRemoval_char(short index, char c);
@@ -849,7 +826,6 @@ USBWEJAPI_API short  USBWEJAPICC getLEDCtrl_iRedLEDState();
 USBWEJAPI_API short  USBWEJAPICC getLibraryVersion_Build(void);
 USBWEJAPI_API short  USBWEJAPICC getLibraryVersion_Major(void);
 USBWEJAPI_API short  USBWEJAPICC getLibraryVersion_Minor(void);
-USBWEJAPI_API const char * USBWEJAPICC getLibraryVersion_Beta(void);
 USBWEJAPI_API const char * USBWEJAPICC getPartNumberString(void);
 USBWEJAPI_API char   USBWEJAPICC getPartNumberString_char(short index);
 USBWEJAPI_API short  USBWEJAPICC getTimeParms_ExFeatures01(void);
@@ -1002,7 +978,6 @@ USBWEJAPI_API bool USBWEJAPICC WriteEV1FileRefrence(BYTE *keyValue, int keyLengt
 //ITT: Secure API
 USBWEJAPI_API bool USBWEJAPICC WriteSecureData(BYTE *blobBuffer, int blobLen);
 USBWEJAPI_API bool USBWEJAPICC ReadSecureData(BYTE *headerBuffer, BYTE *dataBuffer);
-USBWEJAPI_API short USBWEJAPICC LoadIniFile(char* fileName);
 //ITT: BTLE
 USBWEJAPI_API BSHRT USBWEJAPICC SetBTLEConfiguration(BSHRT level);
 USBWEJAPI_API short USBWEJAPICC GetBTLEConfiguration();
@@ -1018,10 +993,6 @@ USBWEJAPI_API BSHRT USBWEJAPICC WriteBaudRate(BSHRT baudrateCode);
 #endif
 #else
 typedef BSHRT  (USBWEJAPICC *BeepNow)(BYTE count, BSHRT longBeep);
-typedef BOOL   (USBWEJAPICC* Bootload)(char* fwFileName);
-typedef const char* (USBWEJAPICC* CheckRulesAndBootload)(char* fwFileName);
-typedef short  (USBWEJAPICC* CheckTamperedFirmwareFile)(char* fwFileName);
-typedef short  (USBWEJAPICC* GenerateSecureFirmwareFile)(char* fwFileName);
 typedef short  (USBWEJAPICC *ChkAddArrival)(char *pBuf);
 typedef BSHRT  (USBWEJAPICC *ChkDelRemoval)(char *szName);
 typedef BSHRT  (USBWEJAPICC *ComConnect)(long* plDID);
@@ -1209,7 +1180,6 @@ typedef short  (USBWEJAPICC *getLEDCtrl_iRedLEDState)();
 typedef short  (USBWEJAPICC *getLibraryVersion_Build)(void);
 typedef short  (USBWEJAPICC *getLibraryVersion_Major)(void);
 typedef short  (USBWEJAPICC *getLibraryVersion_Minor)(void);
-typedef const char * (USBWEJAPICC *getLibraryVersion_Beta)(void);
 typedef const char * (USBWEJAPICC *getPartNumberString)(void);
 typedef char   (USBWEJAPICC *getPartNumberString_char)(short index);
 typedef short  (USBWEJAPICC *getTimeParms_ExFeatures01)(void);
@@ -1364,7 +1334,6 @@ typedef BSHRT (USBWEJAPICC *IsBTLEPresent)();
 //ITT: Secure API
 typedef bool (USBWEJAPICC *WriteSecureData)(BYTE *blobBuffer, int blobLen);
 typedef bool (USBWEJAPICC *ReadSecureData)(BYTE *headerBuffer, BYTE *dataBuffer);
-typedef short (USBWEJAPICC *LoadIniFile)(char* fileName);
 // [API_END_TAG]
 typedef void  (USBWEJAPICC *SetMarkerFunction)(RFPRXLOG pfLog);
 //
@@ -1403,20 +1372,6 @@ typedef BSHRT(USBWEJAPICC *WriteBaudRate)(BSHRT baudrateCode);
 // ReadFile error when No Device Connected              0x60000000
 // GetFullFWVersion                                     0x70000000
 // Secure Configuration                                 0x81000000
-// Secrure Token fails                                  0x91000000
-//
-// Bootload Process Error codes :-  
-//                                          
-// Failed Entry into BL Mode                            0x90100000
-// Failed UsbDriver_RecvFR() for GateON char            0x90200000
-// GateON char differs from expected                    0x90300000
-// SendLine() : No response or unrecognized response    0x90400000
-// Reader not in scope of current Bootloader process    0x90500000
-// Reader Rejected Bootload File                        0x90600000  
-// Reader Failed Bootload                               0x90700000
-// Error in Opening firmware File                       0x90800000
-// Failure while sending the line to the reader         0x90900000
-//
 //-------------------------------------
 // Private Interface Error bits (OR'd w/public bits):
 //-------------------------------------
@@ -1632,5 +1587,5 @@ typedef BSHRT(USBWEJAPICC *WriteBaudRate)(BSHRT baudrateCode);
 
 #endif
 
-// Copyright © rf IDEAS, Inc. Proprietary and confidential.
+// Copyright © RF IDeas, Inc. Proprietary and confidential.
 // EOF

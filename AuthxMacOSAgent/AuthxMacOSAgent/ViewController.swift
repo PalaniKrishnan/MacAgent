@@ -36,6 +36,8 @@ class ViewController: NSViewController {
     var sUserID:String!
     var sCompanyID:String!
     var guid = NSUUID().uuidString.lowercased()
+    let computerName = ProcessInfo.processInfo.hostName
+
 
     func setUserInfo(userName:String, paswrd:String) -> Void {
       //  var sUserID:String=""
@@ -56,7 +58,7 @@ class ViewController: NSViewController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var body = Data()
-        let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Windows\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\"testmachine\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
+        let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Windows\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
         
         body.append(bodyContent.data(using: String.Encoding.utf8)!)
         
@@ -157,7 +159,10 @@ class ViewController: NSViewController {
                 }
             }
         }
-        catch {/* error handling here */}
+        catch {
+            
+            /* error handling here */
+        }
         
     }
     
@@ -215,7 +220,17 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         self.view.window?.center()
-        loadAppSetting()
+        //loadAppSetting()
+      //  if self.add_app_setting() {
+            DispatchQueue.main.async {
+                self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
+                self.nAuthxSignIn?.showWindow (self)
+                self.view.window?.orderOut(self)
+                self.view.window?.close()
+            }
+//        } else {
+//            print("add_app_is_not_loaded")
+//        }
         //self.view.window?.makeFirstResponder(txtUser)
     }
     
@@ -234,7 +249,7 @@ class ViewController: NSViewController {
         alert.runModal()
     }
     
-    func add_app_setting() -> Bool{
+    func add_app_setting() -> Bool {
         
         var UpdatedContent:String=""
         let fileURL = NSURL(string: "file:///Users/Shared/authx_security.ini")
@@ -245,7 +260,9 @@ class ViewController: NSViewController {
             UpdatedContent.append(newUser)
             try UpdatedContent.write(to: fileURL! as URL, atomically: false, encoding: .utf8)
         }
-        catch {/* error handling here */}
+        catch {/* error handling here */
+            return false
+        }
         
         return true;
     }

@@ -66,6 +66,7 @@ int main(int argc, const char * argv[]) {
         NSError * error;
         NSString * stringFromFile;
         NSString * stringFilepath = @"outfile.plist";
+        
         stringFromFile = [[NSString alloc] initWithContentsOfFile:stringFilepath
                                                          encoding:NSWindowsCP1250StringEncoding
                                                             error:&error];

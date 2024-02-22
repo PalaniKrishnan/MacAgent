@@ -15,6 +15,7 @@ class AppWindow: NSWindow {
     
     var companyLogoButton: NSButton!
     var companyLogoUpdate:(()->())? = nil
+    var helpClicks:(()->())? = nil
     
     override var canBecomeKey: Bool {
         self.setFrame(self.screen!.frame, display: true)
@@ -23,7 +24,9 @@ class AppWindow: NSWindow {
             return false
         }
         self.contentView?.frame = NSRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-        self.contentView?.layer?.contents = NSImage(named: "maxresdefault")
+       // self.contentView?.layer?.contents = NSImage(named: "maxresdefault")
+       // self.contentView?.layer?.backgroundColor = NSColor.blue.cgColor
+
         
         let topViewFrame = NSRect(x: 0, y: frame.size.height-100, width: frame.size.width, height: 100)
         let topView = NSView(frame: topViewFrame)
@@ -116,9 +119,7 @@ class AppWindow: NSWindow {
     
     @objc func helpClicked() {
         print("help clicked")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exit(-1)
-        }
+        self.helpClicks?()
     }
     
 }
