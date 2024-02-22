@@ -172,21 +172,6 @@ class ViewController: NSViewController {
             self.nAuthxSignIn?.showWindow (self)
             self.view.window?.orderOut(self)
             self.view.window?.close()
-            
-//            self.nauthModes = authModes(windowNibName: "authModes" )
-//            self.nauthModes?.sUsername = txtUser.stringValue
-//            
-//            self.nauthModes?.sUserUID = self.sUserUID
-//            self.nauthModes?.sUserID = self.sUserID
-//            self.nauthModes?.sCompanyID = self.sCompanyID
-//            
-//            self.nauthModes?.sAppID = self.sAppID
-//            self.nauthModes?.sAppKey = self.sAppKey
-//            self.nauthModes?.sAppURL = self.sAppURL
-//            add_app_setting()
-//            self.nauthModes?.showWindow (self)
-//            self.view.window?.close()
-
         }
     }
     
@@ -220,18 +205,7 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         self.view.window?.center()
-        //loadAppSetting()
-      //  if self.add_app_setting() {
-            DispatchQueue.main.async {
-                self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
-                self.nAuthxSignIn?.showWindow (self)
-                self.view.window?.orderOut(self)
-                self.view.window?.close()
-            }
-//        } else {
-//            print("add_app_is_not_loaded")
-//        }
-        //self.view.window?.makeFirstResponder(txtUser)
+        loadAppSetting()
     }
     
     func dialogOK(question: String, text: String, alterStyle:String) -> Void {
