@@ -14,8 +14,8 @@
             filePath = "AuthxMacOSAgent/AuthxSignIn.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
             landmarkName = "load_app_setting()"
             landmarkType = "7">
             <Locations>

@@ -16,6 +16,7 @@
                 <outlet property="authModeImageView" destination="qWq-Mj-MIb" id="i58-Wl-Iyi"/>
                 <outlet property="callButton" destination="Hev-D8-UUy" id="oLM-MV-qTT"/>
                 <outlet property="contentWindow" destination="QvC-M9-y7g" id="KrM-y6-d7c"/>
+                <outlet property="eyeButton" destination="HBQ-pg-7dJ" id="ddW-wJ-eHk"/>
                 <outlet property="helpDeskField" destination="uRf-s2-LHl" id="Gjs-ZI-8fT"/>
                 <outlet property="helpView" destination="EYb-hC-abg" id="xAE-93-8Ks"/>
                 <outlet property="infoMsg" destination="eyh-dR-h8b" id="pip-Sh-HcI"/>
@@ -393,7 +394,7 @@ Gw
                                                             </buttonCell>
                                                             <color key="contentTintColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
-                                                                <action selector="hideShowClicked:" target="-2" id="joW-QP-gKV"/>
+                                                                <action selector="eyeIconClicked:" target="-2" id="joW-QP-gKV"/>
                                                             </connections>
                                                         </button>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="bb9-pR-aqF">

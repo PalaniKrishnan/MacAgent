@@ -103,17 +103,27 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var pinCancelButton: NSButton!
     @IBOutlet weak var localAuthSubmitButton: NSButton!
     @IBOutlet weak var localAuthCancelButton: NSButton!
+    
+    @IBOutlet weak var eyeButton: NSButton!
 
     var nRFID:Int32!
     var timer: Timer?
-    var bTResult=false
-    var sRFID:String!="0"
-    var isRFIDenrolled = false
-    var isSecurePin = true
-
-
-    //@IBOutlet weak var sRFIDStatus: NSTextField!
     
+    var isRFIDenrolled = false
+    
+    var isSecurePin : Bool = true {
+        didSet {
+            if isSecurePin {
+                eyeButton.image = NSImage(named: "view-icon")
+                showSecurePinFields()
+                hidePlainPinFields()
+            } else {
+                eyeButton.image = NSImage(named: "hidepswd")
+                showPlainPinFields()
+                hideSecurePinFields()
+            }
+        }
+    }
     
     @IBOutlet weak var appVersionField: NSTextField!
     @IBOutlet weak var machineNameField: NSTextField!
@@ -431,21 +441,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         txtPlainPin6.isHidden = true
     }
     
-    @IBAction func hideShowClicked (_ sender: Any) {
-        guard let btn = sender as? NSButton else {
-            return
-        }
+    @IBAction func eyeIconClicked (_ sender: Any) {
         isSecurePin = !isSecurePin
-        print(btn.state.rawValue)
-        if isSecurePin {
-            btn.image = NSImage(named: "view-icon")
-            showSecurePinFields()
-            hidePlainPinFields()
-        } else {
-            btn.image = NSImage(named: "hidepswd")
-            showPlainPinFields()
-            hideSecurePinFields()
-        }
     }
     
     @IBAction func closeHelpClicked (_ sender: Any) {
@@ -1322,20 +1319,16 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @objc func loop() {
 
-        if(self.bTResult==false)
-        {
            nRFID = GetActiveRFID()
             print(nRFID as Any)
             if(nRFID==1001)
             {
                 self.instructionMsg.textColor = NSColor.red
-              //  sRFIDStatus.stringValue = "Reader not connected"
                 self.instructionMsg.stringValue = "Reader not connected"
             }
             else if(nRFID==0)
             {
                 self.instructionMsg.textColor = NSColor.blue
-              //  sRFIDStatus.stringValue = "Tap your card."
                 self.instructionMsg.stringValue = "Tap your Card"
             }
             else
@@ -1346,16 +1339,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 let success = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: String(nRFID))
             }
 
-        }
-        else
-        {
-            self.bTResult=false;
-            self.stopTimer()
-            //dialogOK(question: "Information", text: "Mobile successfully added", alterStyle: "info")
-            //NotificationCenter.default.post(name: Notification.Name.Action.CallVC1Method, object: ["command": "load_phone_factors"])
-            super.close()
-        }
     }
+
     func startTimer() {
         
         if timer == nil {
