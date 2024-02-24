@@ -14,26 +14,57 @@
             filePath = "AuthxMacOSAgent/AuthxSignIn.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "563"
+            endingLineNumber = "563"
             landmarkName = "load_app_setting()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E74A661F-56A7-467D-8488-8FBFC57399E0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AuthxMacOSAgent/AuthxSignIn.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "windowDidLoad()"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D252492B-3111-4493-9394-5D3B29917800 - 8c7accd6fb3a2e4a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.String, inout Swift.Bool) -&gt; () in AuthxMacOSAgent.AuthxSignIn.load_app_setting() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Desktop/MacAgent/AuthxMacOSAgent/AuthxMacOSAgent/AuthxSignIn.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "510"
+                  endingLineNumber = "510"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  uuid = "D252492B-3111-4493-9394-5D3B29917800 - 8c7accd6fb3a2875"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.String, inout Swift.Bool) -&gt; () in AuthxMacOSAgent.AuthxSignIn.load_app_setting() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Desktop/MacAgent/AuthxMacOSAgent/AuthxMacOSAgent/AuthxSignIn.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "557"
+                  endingLineNumber = "557"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  uuid = "D252492B-3111-4493-9394-5D3B29917800 - 8c7accd6fb3a29d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.String, inout Swift.Bool) -&gt; () in AuthxMacOSAgent.AuthxSignIn.load_app_setting() -&gt; ()"
+                  moduleName = "AuthxMacOSAgent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pkrishnan/Desktop/MacAgent/AuthxMacOSAgent/AuthxMacOSAgent/AuthxSignIn.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "560"
+                  endingLineNumber = "560"
+                  offsetFromSymbolStart = "8">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

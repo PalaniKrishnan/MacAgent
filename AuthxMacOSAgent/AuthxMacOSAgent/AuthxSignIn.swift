@@ -58,12 +58,19 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var txtUsername: NSTextField!
     @IBOutlet weak var txtPassword: NSTextField!
     
-    @IBOutlet weak var txtPin1: DSFSecureTextField!
-    @IBOutlet weak var txtPin2: NSSecureTextField!
-    @IBOutlet weak var txtPin3: NSSecureTextField!
-    @IBOutlet weak var txtPin4: NSSecureTextField!
-    @IBOutlet weak var txtPin5: NSSecureTextField!
-    @IBOutlet weak var txtPin6: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin1: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin2: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin3: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin4: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin5: NSSecureTextField!
+    @IBOutlet weak var txtSecurePin6: NSSecureTextField!
+    
+    @IBOutlet weak var txtPlainPin1: NSTextField!
+    @IBOutlet weak var txtPlainPin2: NSTextField!
+    @IBOutlet weak var txtPlainPin3: NSTextField!
+    @IBOutlet weak var txtPlainPin4: NSTextField!
+    @IBOutlet weak var txtPlainPin5: NSTextField!
+    @IBOutlet weak var txtPlainPin6: NSTextField!
     
     private var digit: Int?
 
@@ -102,6 +109,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     var bTResult=false
     var sRFID:String!="0"
     var isRFIDenrolled = false
+    var isSecurePin = true
+
 
     //@IBOutlet weak var sRFIDStatus: NSTextField!
     
@@ -133,12 +142,19 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 //        
 //        self.window?.makeKeyAndOrderFront(self)
         
-        txtPin1.delegate = self
-        txtPin2.delegate = self
-        txtPin3.delegate = self
-        txtPin4.delegate = self
-        txtPin5.delegate = self
-        txtPin6.delegate = self
+        txtSecurePin1.delegate = self
+        txtSecurePin2.delegate = self
+        txtSecurePin3.delegate = self
+        txtSecurePin4.delegate = self
+        txtSecurePin5.delegate = self
+        txtSecurePin6.delegate = self
+        
+        txtPlainPin1.delegate = self
+        txtPlainPin2.delegate = self
+        txtPlainPin3.delegate = self
+        txtPlainPin4.delegate = self
+        txtPlainPin5.delegate = self
+        txtPlainPin6.delegate = self
                                  
         self.pinCancelButton.wantsLayer = true
         self.pinCancelButton.layer?.borderColor = NSColor.white.cgColor
@@ -191,51 +207,53 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         }
     }
     
-    func moveMouseFocusBackward(textField:NSTextField) {
+    
+    
+    func moveMouseFocusBackward(textField:NSSecureTextField) {
         switch textField {
-        case txtPin2:
-            txtPin2.resignFirstResponder()
-            txtPin1.becomeFirstResponder()
-        case txtPin3:
-            txtPin3.resignFirstResponder()
-            txtPin2.becomeFirstResponder()
-        case txtPin4:
-            txtPin4.resignFirstResponder()
-            txtPin3.becomeFirstResponder()
-        case txtPin5:
-            txtPin5.resignFirstResponder()
-            txtPin4.becomeFirstResponder()
-        case txtPin6:
-            txtPin6.resignFirstResponder()
-            txtPin5.becomeFirstResponder()
+        case txtSecurePin2:
+            txtSecurePin2.resignFirstResponder()
+            txtSecurePin1.becomeFirstResponder()
+        case txtSecurePin3:
+            txtSecurePin3.resignFirstResponder()
+            txtSecurePin2.becomeFirstResponder()
+        case txtSecurePin4:
+            txtSecurePin4.resignFirstResponder()
+            txtSecurePin3.becomeFirstResponder()
+        case txtSecurePin5:
+            txtSecurePin5.resignFirstResponder()
+            txtSecurePin4.becomeFirstResponder()
+        case txtSecurePin6:
+            txtSecurePin6.resignFirstResponder()
+            txtSecurePin5.becomeFirstResponder()
         default:
             break
         }
     }
     
-    func moveMouseFocusForward(textField:NSTextField) {
+    func moveMouseFocusForward(textField:NSSecureTextField) {
         switch textField {
-        case txtPin1:
-            txtPin1.resignFirstResponder()
-            txtPin2.becomeFirstResponder()
-        case txtPin2:
-            txtPin2.resignFirstResponder()
-            txtPin3.becomeFirstResponder()
-        case txtPin3:
-            txtPin3.resignFirstResponder()
-            txtPin4.becomeFirstResponder()
-        case txtPin4:
-            txtPin4.resignFirstResponder()
-            txtPin5.becomeFirstResponder()
-        case txtPin5:
-            txtPin5.resignFirstResponder()
-            txtPin6.becomeFirstResponder()
-        case txtPin6:
-            txtPin6.resignFirstResponder()
-            guard !txtPin1.stringValue.isEmpty, !txtPin2.stringValue.isEmpty, !txtPin3.stringValue.isEmpty, !txtPin4.stringValue.isEmpty, !txtPin5.stringValue.isEmpty, !txtPin6.stringValue.isEmpty else {
+        case txtSecurePin1:
+            txtSecurePin1.resignFirstResponder()
+            txtSecurePin2.becomeFirstResponder()
+        case txtSecurePin2:
+            txtSecurePin2.resignFirstResponder()
+            txtSecurePin3.becomeFirstResponder()
+        case txtSecurePin3:
+            txtSecurePin3.resignFirstResponder()
+            txtSecurePin4.becomeFirstResponder()
+        case txtSecurePin4:
+            txtSecurePin4.resignFirstResponder()
+            txtSecurePin5.becomeFirstResponder()
+        case txtSecurePin5:
+            txtSecurePin5.resignFirstResponder()
+            txtSecurePin6.becomeFirstResponder()
+        case txtSecurePin6:
+            txtSecurePin6.resignFirstResponder()
+            guard !txtSecurePin1.stringValue.isEmpty, !txtSecurePin2.stringValue.isEmpty, !txtSecurePin3.stringValue.isEmpty, !txtSecurePin4.stringValue.isEmpty, !txtSecurePin5.stringValue.isEmpty, !txtSecurePin6.stringValue.isEmpty else {
                 return
             }
-            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtPin1.stringValue, txtPin2.stringValue,txtPin3.stringValue, txtPin4.stringValue,txtPin5.stringValue, txtPin6.stringValue)
+            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtSecurePin1.stringValue, txtSecurePin2.stringValue,txtSecurePin3.stringValue, txtSecurePin4.stringValue,txtSecurePin5.stringValue, txtSecurePin6.stringValue)
             self.submit_pin_authentication(value: oneTimeCode)
         default:
             break
@@ -243,38 +261,191 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
     }
                           
+    func moveMouseFocusForward(textField:NSTextField) {
+        switch textField {
+        case txtPlainPin1:
+            txtPlainPin1.resignFirstResponder()
+            txtPlainPin2.becomeFirstResponder()
+        case txtPlainPin2:
+            txtPlainPin2.resignFirstResponder()
+            txtPlainPin3.becomeFirstResponder()
+        case txtPlainPin3:
+            txtPlainPin3.resignFirstResponder()
+            txtPlainPin4.becomeFirstResponder()
+        case txtPlainPin4:
+            txtPlainPin4.resignFirstResponder()
+            txtPlainPin5.becomeFirstResponder()
+        case txtPlainPin5:
+            txtPlainPin5.resignFirstResponder()
+            txtPlainPin6.becomeFirstResponder()
+        case txtPlainPin6:
+            txtPlainPin6.resignFirstResponder()
+            guard !txtPlainPin1.stringValue.isEmpty, !txtPlainPin2.stringValue.isEmpty, !txtPlainPin3.stringValue.isEmpty, !txtPlainPin4.stringValue.isEmpty, !txtPlainPin5.stringValue.isEmpty, !txtPlainPin6.stringValue.isEmpty else {
+                return
+            }
+            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtPlainPin1.stringValue, txtPlainPin2.stringValue,txtPlainPin3.stringValue, txtPlainPin4.stringValue,txtPlainPin5.stringValue, txtPlainPin6.stringValue)
+            self.submit_pin_authentication(value: oneTimeCode)
+        default:
+            break
+        }
+
+    }
+    
+    func moveMouseFocusBackward(textField:NSTextField) {
+        switch textField {
+        case txtPlainPin2:
+            txtPlainPin2.resignFirstResponder()
+            txtPlainPin1.becomeFirstResponder()
+        case txtPlainPin3:
+            txtPlainPin3.resignFirstResponder()
+            txtPlainPin2.becomeFirstResponder()
+        case txtPlainPin4:
+            txtPlainPin4.resignFirstResponder()
+            txtPlainPin3.becomeFirstResponder()
+        case txtPlainPin5:
+            txtPlainPin5.resignFirstResponder()
+            txtPlainPin4.becomeFirstResponder()
+        case txtPlainPin6:
+            txtPlainPin6.resignFirstResponder()
+            txtPlainPin5.becomeFirstResponder()
+        default:
+            break
+        }
+    }
+    
+    func copyToPlainPinFields(txtField:NSSecureTextField) {
+        switch txtField {
+        case txtSecurePin1:
+            txtPlainPin1.stringValue = txtField.stringValue
+        case txtSecurePin2:
+            txtPlainPin2.stringValue = txtField.stringValue
+        case txtSecurePin3:
+            txtPlainPin3.stringValue = txtField.stringValue
+        case txtSecurePin4:
+            txtPlainPin4.stringValue = txtField.stringValue
+        case txtSecurePin5:
+            txtPlainPin5.stringValue = txtField.stringValue
+        case txtSecurePin6:
+            txtPlainPin6.stringValue = txtField.stringValue
+        default:
+            break
+        }
+    }
+    
+    func copyToSecurePinFields(txtField:NSTextField) {
+        switch txtField {
+        case txtPlainPin1:
+            txtSecurePin1.stringValue = txtField.stringValue
+        case txtPlainPin2:
+            txtSecurePin2.stringValue = txtField.stringValue
+        case txtPlainPin3:
+            txtSecurePin3.stringValue = txtField.stringValue
+        case txtPlainPin4:
+            txtSecurePin4.stringValue = txtField.stringValue
+        case txtPlainPin5:
+            txtSecurePin5.stringValue = txtField.stringValue
+        case txtPlainPin6:
+            txtSecurePin6.stringValue = txtField.stringValue
+        default:
+            break
+        }
+    }
+    
+    
     func controlTextDidChange(_ obj: Notification) {
-        let textField = obj.object as! NSTextField
-        print(textField.stringValue)
-        if textField.stringValue.isEmpty {
-            self.moveMouseFocusBackward(textField: textField)
-        } else if (textField.stringValue.count == 1 && Int(textField.stringValue) != nil) {
-            self.moveMouseFocusForward(textField: textField)
+        if !isSecurePin {
+            let textField = obj.object as! NSTextField
+            print(textField.stringValue)
+            if textField.stringValue.isEmpty {
+                self.moveMouseFocusBackward(textField: textField)
+                self.copyToSecurePinFields(txtField: textField)
+            } else if (textField.stringValue.count == 1 && Int(textField.stringValue) != nil) {
+                self.moveMouseFocusForward(textField: textField)
+                self.copyToSecurePinFields(txtField: textField)
             } else {
                 let firstChar = textField.stringValue.removeFirst()
                 if Int(String(firstChar)) != nil {
                     textField.stringValue = String(firstChar)
                     self.moveMouseFocusForward(textField: textField)
+                    self.copyToSecurePinFields(txtField: textField)
                 } else {
                     textField.stringValue = ""
                 }
             }
+        } else {
+            let textField = obj.object as! NSSecureTextField
+            print(textField.stringValue)
+            if textField.stringValue.isEmpty {
+                self.moveMouseFocusBackward(textField: textField)
+                self.copyToPlainPinFields(txtField: textField)
+            } else if (textField.stringValue.count == 1 && Int(textField.stringValue) != nil) {
+                self.moveMouseFocusForward(textField: textField)
+                self.copyToPlainPinFields(txtField: textField)
+            } else {
+                let firstChar = textField.stringValue.removeFirst()
+                if Int(String(firstChar)) != nil {
+                    textField.stringValue = String(firstChar)
+                    self.moveMouseFocusForward(textField: textField)
+                    self.copyToPlainPinFields(txtField: textField)
+                } else {
+                    textField.stringValue = ""
+                }
+            }
+        }
+    }
+    
+    
+    func hideSecurePinFields() {
+        txtSecurePin1.isHidden = true
+        txtSecurePin2.isHidden = true
+        txtSecurePin3.isHidden = true
+        txtSecurePin4.isHidden = true
+        txtSecurePin5.isHidden = true
+        txtSecurePin6.isHidden = true
+    }
+    
+    func showSecurePinFields() {
+        txtSecurePin1.isHidden = false
+        txtSecurePin2.isHidden = false
+        txtSecurePin3.isHidden = false
+        txtSecurePin4.isHidden = false
+        txtSecurePin5.isHidden = false
+        txtSecurePin6.isHidden = false
+    }
+    
+    func showPlainPinFields() {
+        txtPlainPin1.isHidden = false
+        txtPlainPin2.isHidden = false
+        txtPlainPin3.isHidden = false
+        txtPlainPin4.isHidden = false
+        txtPlainPin5.isHidden = false
+        txtPlainPin6.isHidden = false
+    }
+    
+    func hidePlainPinFields() {
+        txtPlainPin1.isHidden = true
+        txtPlainPin2.isHidden = true
+        txtPlainPin3.isHidden = true
+        txtPlainPin4.isHidden = true
+        txtPlainPin5.isHidden = true
+        txtPlainPin6.isHidden = true
     }
     
     @IBAction func hideShowClicked (_ sender: Any) {
-        print(txtPin1.visibility.rawValue)
-        txtPin1.allowPasswordInPlainText = true
-        txtPin1.visibility = .plainText
-
-       // if let btn = sender as? NSButton {
-//            txtPin1.stringValue = self
-//            txtPin2.delegate = self
-//            txtPin3.delegate = self
-//            txtPin4.delegate = self
-//            txtPin5.delegate = self
-//            txtPin6.delegate = self
-        //}
-        
+        guard let btn = sender as? NSButton else {
+            return
+        }
+        isSecurePin = !isSecurePin
+        print(btn.state.rawValue)
+        if isSecurePin {
+            btn.image = NSImage(named: "view-icon")
+            showSecurePinFields()
+            hidePlainPinFields()
+        } else {
+            btn.image = NSImage(named: "hidepswd")
+            showPlainPinFields()
+            hideSecurePinFields()
+        }
     }
     
     @IBAction func closeHelpClicked (_ sender: Any) {
@@ -906,12 +1077,19 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func cancel_pin_click(_ sender: Any) {
        // tabPassword.isHidden=false
-        self.txtPin1.stringValue = ""
-        self.txtPin2.stringValue = ""
-        self.txtPin3.stringValue = ""
-        self.txtPin4.stringValue = ""
-        self.txtPin5.stringValue = ""
-        self.txtPin6.stringValue = ""
+        self.txtSecurePin1.stringValue = ""
+        self.txtSecurePin2.stringValue = ""
+        self.txtSecurePin3.stringValue = ""
+        self.txtSecurePin4.stringValue = ""
+        self.txtSecurePin5.stringValue = ""
+        self.txtSecurePin6.stringValue = ""
+        
+        self.txtPlainPin1.stringValue = ""
+        self.txtPlainPin2.stringValue = ""
+        self.txtPlainPin3.stringValue = ""
+        self.txtPlainPin4.stringValue = ""
+        self.txtPlainPin5.stringValue = ""
+        self.txtPlainPin6.stringValue = ""
 
         tabPin.isHidden=true
         tabRFID.isHidden=true
@@ -963,7 +1141,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBAction func pin_click(_ sender: Any) {
         self.stopTimer()
         tabPin.isHidden=false
-        txtPin1.becomeFirstResponder()
+        isSecurePin = true
+        txtSecurePin1.becomeFirstResponder()
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -974,7 +1153,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBAction func passcode_click(_ sender: Any) {
         self.stopTimer()
         tabPin.isHidden=false
-        txtPin1.becomeFirstResponder()
+        isSecurePin = true
+        txtSecurePin1.becomeFirstResponder()
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -985,7 +1165,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     func displayedPhoneCallingAuthInstructions(completion: @escaping (Bool)->()) {
         DispatchQueue.main.async {
             self.tabPin.isHidden=false
-            self.txtPin1.becomeFirstResponder()
+            self.isSecurePin = true
+            self.txtSecurePin1.becomeFirstResponder()
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")
@@ -1018,7 +1199,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     func displayedPhoneSMSAuthInstructions(completion: @escaping (Bool)->()) {
         DispatchQueue.main.async {
             self.tabPin.isHidden=false
-            self.txtPin1.becomeFirstResponder()
+            self.isSecurePin = true
+            self.txtSecurePin1.becomeFirstResponder()
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")

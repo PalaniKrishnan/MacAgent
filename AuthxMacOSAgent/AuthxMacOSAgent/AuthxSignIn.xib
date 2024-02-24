@@ -37,12 +37,18 @@
                 <outlet property="tabRFID" destination="IcA-Hz-iiB" id="dTu-VX-rkV"/>
                 <outlet property="totpButton" destination="C2Z-Xh-WCf" id="MnT-Cc-kvr"/>
                 <outlet property="txtPassword" destination="5Yx-9a-Rzn" id="MX3-t4-KKw"/>
-                <outlet property="txtPin1" destination="Lrp-dB-Wcl" id="62M-93-wFf"/>
-                <outlet property="txtPin2" destination="gVb-3M-GcQ" id="Eun-xl-JMh"/>
-                <outlet property="txtPin3" destination="wrl-Mn-CvW" id="Ll8-eE-Me4"/>
-                <outlet property="txtPin4" destination="S7R-Xs-2Ff" id="Qr5-NL-iRD"/>
-                <outlet property="txtPin5" destination="NMv-ps-GoS" id="UKe-r9-Pvh"/>
-                <outlet property="txtPin6" destination="Te0-CU-Gqh" id="kB7-Ib-K5x"/>
+                <outlet property="txtPlainPin1" destination="44u-c0-Sqz" id="mWO-Jj-QuZ"/>
+                <outlet property="txtPlainPin2" destination="zhu-8C-M0B" id="cx7-ml-X0T"/>
+                <outlet property="txtPlainPin3" destination="Zhc-b7-UBx" id="Dk3-bJ-0Ld"/>
+                <outlet property="txtPlainPin4" destination="zhr-i9-lgX" id="Wxz-6G-Rqb"/>
+                <outlet property="txtPlainPin5" destination="0EJ-89-chv" id="kvP-JQ-XQQ"/>
+                <outlet property="txtPlainPin6" destination="PWH-D1-Mg6" id="DPg-Gf-Zj2"/>
+                <outlet property="txtSecurePin1" destination="Lrp-dB-Wcl" id="62M-93-wFf"/>
+                <outlet property="txtSecurePin2" destination="gVb-3M-GcQ" id="Eun-xl-JMh"/>
+                <outlet property="txtSecurePin3" destination="wrl-Mn-CvW" id="Ll8-eE-Me4"/>
+                <outlet property="txtSecurePin4" destination="S7R-Xs-2Ff" id="Qr5-NL-iRD"/>
+                <outlet property="txtSecurePin5" destination="NMv-ps-GoS" id="UKe-r9-Pvh"/>
+                <outlet property="txtSecurePin6" destination="Te0-CU-Gqh" id="kB7-Ib-K5x"/>
                 <outlet property="txtUsername" destination="6cY-RY-ryY" id="Sdw-f2-30a"/>
             </connections>
         </customObject>
@@ -51,7 +57,7 @@
         <window title="Auth Factors" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g" customClass="AppWindow" customModule="AuthxMacOSAgent" customModuleProvider="target">
             <windowStyleMask key="styleMask" fullSizeContentView="YES"/>
             <rect key="contentRect" x="196" y="0.0" width="878" height="811"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="878" height="811"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -249,7 +255,7 @@ Gw
                                                     <rect key="frame" x="0.0" y="0.0" width="687" height="84"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lrp-dB-Wcl" customClass="DSFSecureTextField" customModule="AuthxMacOSAgent" customModuleProvider="target">
+                                                        <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lrp-dB-Wcl">
                                                             <rect key="frame" x="241" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" usesSingleLineMode="YES" id="ZBB-3J-ymO">
@@ -264,6 +270,15 @@ Gw
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="allowPasswordInPlainText" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </secureTextField>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44u-c0-Sqz">
+                                                            <rect key="frame" x="241" y="48" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="6o4-cL-tOL">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
                                                         <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gVb-3M-GcQ">
                                                             <rect key="frame" x="276" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -276,6 +291,15 @@ Gw
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
                                                         </secureTextField>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhu-8C-M0B">
+                                                            <rect key="frame" x="276" y="48" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="mcF-ay-F7e">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
                                                         <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wrl-Mn-CvW">
                                                             <rect key="frame" x="311" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -288,6 +312,15 @@ Gw
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
                                                         </secureTextField>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zhc-b7-UBx">
+                                                            <rect key="frame" x="311" y="48" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="h1v-Kw-JHT">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
                                                         <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S7R-Xs-2Ff">
                                                             <rect key="frame" x="346" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -300,6 +333,15 @@ Gw
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
                                                         </secureTextField>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhr-i9-lgX">
+                                                            <rect key="frame" x="346" y="48" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="T9M-sM-dmZ">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
                                                         <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMv-ps-GoS">
                                                             <rect key="frame" x="381" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -312,6 +354,15 @@ Gw
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
                                                         </secureTextField>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0EJ-89-chv">
+                                                            <rect key="frame" x="381" y="48" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="aTc-KG-uBG">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
                                                         <secureTextField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-CU-Gqh">
                                                             <rect key="frame" x="416" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -324,10 +375,19 @@ Gw
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
                                                         </secureTextField>
-                                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HBQ-pg-7dJ">
-                                                            <rect key="frame" x="450" y="47" width="30" height="32"/>
+                                                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWH-D1-Mg6">
+                                                            <rect key="frame" x="416" y="48" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="eye" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Qow-rR-hIh">
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="wv8-Op-D5g">
+                                                                <font key="font" metaFont="system" size="19"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HBQ-pg-7dJ">
+                                                            <rect key="frame" x="450" y="49" width="30" height="28"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="view-icon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Qow-rR-hIh">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -614,7 +674,7 @@ Gw
                         <rect key="frame" x="239" y="196" width="400" height="420"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gle-8U-RJ6">
-                                <rect key="frame" x="162" y="327" width="77" height="23"/>
+                                <rect key="frame" x="162" y="326" width="77" height="24"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="authxLogo" id="KkS-CQ-Z2R"/>
                             </imageView>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AZ7-Xc-ufI">
@@ -721,7 +781,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="viM-5G-8lK">
-                                <rect key="frame" x="364" y="383" width="25" height="31"/>
+                                <rect key="frame" x="364" y="383" width="25" height="32"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="center" inset="2" id="R3E-Lh-d3b">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -778,12 +838,12 @@ Gw
         <image name="PIN_ICO" width="120" height="148"/>
         <image name="Push_ICO" width="115" height="143"/>
         <image name="RFID_ICO" width="115" height="143"/>
-        <image name="authxLogo" width="77" height="23"/>
-        <image name="eye" catalog="system" width="20" height="13"/>
+        <image name="authxLogo" width="77" height="23.5"/>
         <image name="hide_sidebar" width="512" height="512"/>
         <image name="message.fill" catalog="system" width="17" height="16"/>
         <image name="phone.and.waveform.fill" catalog="system" width="15" height="15"/>
         <image name="show_sidebar" width="512" height="512"/>
-        <image name="xmark.circle.fill" catalog="system" width="19" height="19"/>
+        <image name="view-icon" width="72" height="72"/>
+        <image name="xmark.circle.fill" catalog="system" width="20" height="20"/>
     </resources>
 </document>
