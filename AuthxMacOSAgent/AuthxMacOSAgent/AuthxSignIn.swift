@@ -952,7 +952,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                                         DispatchQueue.main.async {
                                             self.closeLeftSidebar()
                                             self.closeRightSideBar()
-                                            self.isRFIDenrolled = false
                                             self.enableAuthFactosWith(factor: factorValue)
                                         }
                                     }
@@ -1357,9 +1356,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 self.infoMsg.isHidden=false
                 self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID enrollment done"
-                self.isRFIDenrolled = true
-                self.rfidButton.isHidden = false
+                self.enableAuthFactosWith(factor: .Rfid)
             }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.rfid_click(self)
             }
