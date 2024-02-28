@@ -16,11 +16,11 @@
 		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
 		6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */; };
 		6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */; };
+		6FB1C7F52B8F4E8000C50FF4 /* libpcProxAPI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; };
+		6FB1C7F82B8F4EC900C50FF4 /* libpcProxAPI.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6FC4DCD72B7E3253001A9DDE /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC4DCD62B7E3253001A9DDE /* view.swift */; };
 		6FC4DDBE2B848B87001A9DDE /* pcProx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FC4DDBD2B848B87001A9DDE /* pcProx.cpp */; };
 		6FEFA7F72B8600C700202D8D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEFA7F62B8600C700202D8D /* Color.swift */; };
-		6FEFA8062B88BFFC00202D8D /* libpcProxAPI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FEFA8052B88BFFC00202D8D /* libpcProxAPI.dylib */; };
-		6FEFA8072B88C01C00202D8D /* libpcProxAPI.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6FEFA8052B88BFFC00202D8D /* libpcProxAPI.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		843B39AA296EBA7F00CE114B /* authModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39A8296EBA7F00CE114B /* authModes.swift */; };
 		843B39AB296EBA7F00CE114B /* authModes.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B39A9296EBA7F00CE114B /* authModes.xib */; };
 		843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B39AC296EBA9200CE114B /* enrollRFID.swift */; };
@@ -40,7 +40,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6FEFA8072B88C01C00202D8D /* libpcProxAPI.dylib in CopyFiles */,
+				6FB1C7F82B8F4EC900C50FF4 /* libpcProxAPI.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +70,12 @@
 		32FEF38625C6E67A001E8D03 /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
 		6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
 		6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWindowController.swift; sourceTree = "<group>"; };
+		6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcProxAPI.dylib; path = lib/libpcProxAPI.dylib; sourceTree = "<group>"; };
 		6FC4DC9A2B7B51A7001A9DDE /* AuthxMacOSAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AuthxMacOSAgent.entitlements; sourceTree = "<group>"; };
 		6FC4DCD62B7E3253001A9DDE /* view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
 		6FC4DDBC2B848B87001A9DDE /* pcProx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcProx.h; sourceTree = "<group>"; };
 		6FC4DDBD2B848B87001A9DDE /* pcProx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pcProx.cpp; sourceTree = "<group>"; };
 		6FEFA7F62B8600C700202D8D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		6FEFA8052B88BFFC00202D8D /* libpcProxAPI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcProxAPI.dylib; path = lib/libpcProxAPI.dylib; sourceTree = "<group>"; };
 		843B39A8296EBA7F00CE114B /* authModes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = authModes.swift; sourceTree = "<group>"; };
 		843B39A9296EBA7F00CE114B /* authModes.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = authModes.xib; sourceTree = "<group>"; };
 		843B39AC296EBA9200CE114B /* enrollRFID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrollRFID.swift; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FEFA8062B88BFFC00202D8D /* libpcProxAPI.dylib in Frameworks */,
+				6FB1C7F52B8F4E8000C50FF4 /* libpcProxAPI.dylib in Frameworks */,
 				32FEF38225C6D943001E8D03 /* Security.framework in Frameworks */,
 				32DFB1AB25BD6EFA00AD79B3 /* OpenDirectory.framework in Frameworks */,
 			);
@@ -154,7 +154,7 @@
 		32DFB1A925BD6EFA00AD79B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6FEFA8052B88BFFC00202D8D /* libpcProxAPI.dylib */,
+				6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */,
 				32FEF38125C6D943001E8D03 /* Security.framework */,
 				32DFB1AC25BD6F4300AD79B3 /* LDAP.framework */,
 				32DFB1AA25BD6EFA00AD79B3 /* OpenDirectory.framework */,

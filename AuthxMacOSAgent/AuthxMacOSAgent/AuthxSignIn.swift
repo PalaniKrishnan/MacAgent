@@ -53,10 +53,13 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     public var usertype : String = "local"
     public var domain : String = ""
     
+    @IBOutlet weak var txtUser_launch: NSTextField!
+    @IBOutlet weak var txtPswd_launch: NSTextField!
+    
     @IBOutlet weak var appContainerWindow: AppWindow!
 
-    @IBOutlet weak var txtUsername: NSTextField!
-    @IBOutlet weak var txtPassword: NSTextField!
+    @IBOutlet weak var txtUsername_networklogon: NSTextField!
+    @IBOutlet weak var txtPassword_networklogon: NSTextField!
     
     @IBOutlet weak var txtSecurePin1: NSSecureTextField!
     @IBOutlet weak var txtSecurePin2: NSSecureTextField!
@@ -130,6 +133,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var helpDeskField: NSTextField!
 
     @IBOutlet weak var contentWindow: AppWindow!
+    @IBOutlet weak var authCustomView: NSView!
 
     
     var guid = NSUUID().uuidString.lowercased()
@@ -191,9 +195,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.load_app_setting()
         self.tabPin.isHidden=true
         self.tabRFID.isHidden=true
-        self.txtUsername.becomeFirstResponder()
+        self.txtUsername_networklogon.becomeFirstResponder()
         
         self.updateUIwithAuthFactors()
+        self.logoUpdateListener()
 
         app_delegate = NSApplication.shared.delegate as? AppDelegate
         app_delegate?.appBecomingActive = {
@@ -201,27 +206,60 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         }
     }
     
-    func updateUIwithAuthFactors() {
-        self.getAuthXSettings()
-        self.getAuthXFactorsList()
-        DispatchQueue.main.async {
-            self.closeLeftSidebar()
-            self.closeRightSideBar()
-            self.logoUpdateListener()
-            self.rfid_click(self)
-            if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                self.appVersionField.stringValue = appVersion
-                self.machineNameField.stringValue = self.computerName
+    func add_app_setting() -> Bool {
+        
+        var UpdatedContent:String=""
+        let fileURL = NSURL(string: "file:///Users/Shared/authx_security.ini")
+        
+        do {
+            var newUser:String = self.sAppID + "," + self.sAppKey + "," + self.sAppURL
+            newUser = newUser + "," + txtUser_launch.stringValue + "," + txtPswd_launch.stringValue
+            UpdatedContent.append(newUser)
+            try UpdatedContent.write(to: fileURL! as URL, atomically: false, encoding: .utf8)
+        }
+        catch {/* error handling here */
+            return false
+        }
+        
+        return true;
+    }
+    
+    @IBAction func rbtnSave_click(_ sender: Any) {
+
+        let success = authenticateLocalUser(username: txtUser_launch.stringValue, password: txtPswd_launch.stringValue)
+        
+        if !success {
+            dialogOK(question: "User Authenticate", text: "Invalid username/password.", alterStyle:"error")
+            return
+        }
+        else
+        {
+            if add_app_setting() {
+                self.sPassword = self.txtPswd_launch.stringValue
+                self.getUserID()
             }
         }
     }
     
     
+    @IBAction func rbtnClose_click(_ sender: Any) {
+        NSApplication.shared.terminate(self)
+    }
+    
+    func updateUIwithAuthFactors() {
+        self.getAuthXSettings()
+        self.getAuthXFactorsList()
+    }
+    
+    
     func logoUpdateListener() {
-       
         appContainerWindow.helpClicks = {
             DispatchQueue.main.async {
                 self.helpView.isHidden = false
+                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                    self.appVersionField.stringValue = appVersion
+                    self.machineNameField.stringValue = self.computerName
+                }
             }
         }
     }
@@ -502,7 +540,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
 
     func openLeftSidebar () {
-        self.closeRightSideBar()
+      //  self.closeRightSideBar()
         let leftSideView = splitView.subviews[0] as NSView
         leftSideView.isHidden = false
         let containerFrame = splitView.frame
@@ -520,7 +558,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
    
     func openRightSideBar() {
-        self.closeLeftSidebar()
+       // self.closeLeftSidebar()
         let rightSideView = splitView.subviews[2] as NSView
         rightSideView.isHidden = false
         let containerFrame = splitView.frame
@@ -563,10 +601,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                                 DispatchQueue.main.async {
                                     self.UserName.stringValue = self.sUsername
                                 }
-                                self.getUserID(userName:self.sUsername)
+                                self.getUserID()
                             } else {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    exit(-1)
+                                DispatchQueue.main.async {
+                                    self.authCustomView.isHidden = false
                                 }
                             }
                         }
@@ -577,16 +615,31 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         catch {/* error handling here */}
     }
     
-    func dialogOKCancel(question: String, text: String) -> Void {
+//    func dialogOKCancel(question: String, text: String) -> Void {
+//        let alert = NSAlert()
+//        alert.messageText = question
+//        alert.informativeText = text
+//        alert.alertStyle = NSAlert.Style.critical
+//        alert.addButton(withTitle: "ok")
+//        alert.runModal()
+//    }
+ 
+    func dialogOK(question: String, text: String, alterStyle:String) -> Void {
         let alert = NSAlert()
         alert.messageText = question
         alert.informativeText = text
-        alert.alertStyle = NSAlert.Style.critical
+        
+        if(alterStyle=="error"){
+            alert.alertStyle = NSAlert.Style.critical
+        }
+        else if(alterStyle=="info"){
+            alert.alertStyle = NSAlert.Style.informational
+        }
         alert.addButton(withTitle: "ok")
         alert.runModal()
     }
     
-    func getUserID(userName:String) {
+    func getUserID() {
         //  var sUserID:String=""
           let APIUrl = sAppAPI + "Login/LoginAsync"
           let url = URL(string: APIUrl)
@@ -605,7 +658,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
           
           var body = Data()
-          let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Mac\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
+          let bodyContent = "{\"Username\":\""+sUsername+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Mac\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
           
           body.append(bodyContent.data(using: String.Encoding.utf8)!)
           
@@ -896,7 +949,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                             for factorDic in authFactors   {
                                 if let authFactorDic = factorDic as? Dictionary<String, Any>, let factor = authFactorDic["AuthFactor"] as? Int, let factorValue = AuthFactors(rawValue: factor) {
                                     DispatchQueue.main.async {
-                                        self.enableAuthFactosWith(factor: factorValue)
+                                        DispatchQueue.main.async {
+                                            self.closeLeftSidebar()
+                                            self.closeRightSideBar()
+                                            self.isRFIDenrolled = false
+                                            self.enableAuthFactosWith(factor: factorValue)
+                                        }
                                     }
                                 }
                             }
@@ -1075,8 +1133,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     @IBAction func cancel_password_click(_ sender: Any) {
-        self.txtUsername.stringValue = ""
-        self.txtPassword.stringValue = ""
+        self.txtUsername_networklogon.stringValue = ""
+        self.txtPassword_networklogon.stringValue = ""
         self.closeRightSideBar()
     }
     
@@ -1202,7 +1260,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     @objc func AuthenticatePhoneCall() {
-        // getUserID(userName: sUsername)
         let success = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "CALL")
          if(!success)
          {
@@ -1236,7 +1293,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     @objc func AuthenticatePhoneSMS() {
-        // getUserID(userName: sUsername)
         let success = self.getAuth(endUrl: "Authenticate", userID: self.sMainUserID, authID: "SMS")
          if(!success)
          {
@@ -1304,6 +1360,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 self.isRFIDenrolled = true
                 self.rfidButton.isHidden = false
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.rfid_click(self)
+            }
         }
     }
     
@@ -1362,9 +1421,26 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             else
             {
                 self.stopTimer()
-                self.instructionMsg.textColor = appFontColour
-                self.instructionMsg.stringValue = !self.isRFIDenrolled ? "Start enrolling, please wait." : "Start authenticating, please wait."
-                let success = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: String(nRFID))
+                var st = String(format:"%02X", nRFID)
+                if st.count == 5 {
+                    st = "0".appending(st)
+                }
+                print(st)
+                if st.count == 6 {
+                    var rfIdentifier = ""
+                    let firstTwo = st.suffix(2)
+                    let lastTwo = st.prefix(2)
+                    let startIdx = st.index(st.startIndex, offsetBy: 2)
+                    let endIdx = st.index(st.endIndex, offsetBy: -2)
+                    let range = startIdx..<endIdx
+                    let middleTwo = st[range]
+                    rfIdentifier = firstTwo.appending(middleTwo).appending(lastTwo)
+                    print(rfIdentifier)
+                    self.instructionMsg.textColor = appFontColour
+                    self.instructionMsg.stringValue = !self.isRFIDenrolled ? "Start enrolling, please wait." : "Start authenticating, please wait."
+                    _ = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: rfIdentifier)
+                }
+
             }
 
     }

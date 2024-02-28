@@ -40,6 +40,7 @@ int GetActiveRFID()
         //printf("\nReader not connected\n");
         return 1001;
     }
+    
 
     usleep(250000);
     unsigned char buf[32];
@@ -73,7 +74,7 @@ int GetActiveRFID()
 
                     sprintf(sHexData, "%02X", buf[i]);
                     s += sHexData;
-                    //printf("%02X ", buf[i]);
+                    printf("%02X ", buf[i]);
                 }
 
                 if (s.length() > 0)

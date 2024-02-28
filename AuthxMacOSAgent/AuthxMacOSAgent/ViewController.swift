@@ -100,7 +100,7 @@ class ViewController: NSViewController {
                         self.sUserUID = json["UniqueUserId"] as? String
                         self.sUserID = json["UserId"] as? String
                         self.sCompanyID = json["CompanyId"] as? String
-                        self.moveToAuthFactorsWindow(uname: userName, pswd: paswrd)
+                        self.moveToAuthFactorsWindow()
                         defer { sem.signal() }
                         
                     }
@@ -166,7 +166,7 @@ class ViewController: NSViewController {
         
     }
     
-    func moveToAuthFactorsWindow(uname:String, pswd:String) {
+    func moveToAuthFactorsWindow() {
         DispatchQueue.main.async {
             self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn")
             self.nAuthxSignIn?.showWindow (self)
@@ -205,7 +205,8 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         self.view.window?.center()
-        loadAppSetting()
+       // loadAppSetting()
+        moveToAuthFactorsWindow()
     }
     
     func dialogOK(question: String, text: String, alterStyle:String) -> Void {
@@ -256,42 +257,11 @@ class ViewController: NSViewController {
             setUserInfo(userName:txtUser.stringValue, paswrd: txtPassword.stringValue)
         }
         
-        //var nActiveID:Int = Int(GetRFIDActiveID());
-        
-        /*if(txtAppID.stringValue.isEmpty)
-        {
-            dialogOK(question: "Warning", text: "Please enter Application ID.",alterStyle:"error")
-            return
-        }
-        else if(txtAppKey.stringValue.isEmpty)
-        {
-            dialogOK(question: "Warning", text: "Please enter Application Key.",alterStyle:"error")
-            return
-        }
-        else if(txtAppURL.stringValue.isEmpty)
-        {
-            dialogOK(question: "Warning", text: "Please enter Application URL.",alterStyle:"error")
-            return
-        }
-        
-        //add_app_setting()
-        //dialogOK(question: "Information", text: "Application setting saved.",alterStyle:"info")
-        //NSApplication.shared.terminate(self)
-        
-        self.nLoginWindow = loginWindow(windowNibName: "loginWindow" )
-        self.nLoginWindow?.usertype = "local"
-        self.nLoginWindow?.showWindow (self)
-         */
     }
     
     
     @IBAction func rbtnClose_click(_ sender: Any) {
         NSApplication.shared.terminate(self)
-        
-        //self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn" )
-        //self.nAuthxSignIn?.showWindow (self)
-        //self.nAuthxSignIn?.becomeFirstResponder()
-        
     }
 }
 
