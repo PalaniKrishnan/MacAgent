@@ -92,6 +92,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
     @IBOutlet weak var authModeImageView: NSImageView!
     var companyLogoImage: NSImage?
+    var appBgImage: NSImage?
 
     @IBOutlet weak var rfidButton: NSButton!
     @IBOutlet weak var pushButton: NSButton!
@@ -108,7 +109,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
     var nRFID:Int32!
     var timer: Timer?
-    
     var isRFIDenrolled = false
     
     var isSecurePin : Bool = true {
@@ -134,11 +134,13 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     var guid = NSUUID().uuidString.lowercased()
     let computerName = ProcessInfo.processInfo.hostName
-
+    
+    var app_delegate:AppDelegate?
+    var appFontColour:NSColor = .black
     
     override func windowDidLoad() {
         super.windowDidLoad()
-                
+        
         self.helpView.backgroundColor = NSColor.white
         self.helpView.layer?.cornerRadius = 10
         self.helpView.layer?.masksToBounds = true
@@ -186,33 +188,40 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.rightView.wantsLayer = true
         self.rightView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.6).cgColor
         
-        load_app_setting()
-
-        tabPin.isHidden=true
-        tabRFID.isHidden=true
-        txtUsername.becomeFirstResponder()
+        self.load_app_setting()
+        self.tabPin.isHidden=true
+        self.tabRFID.isHidden=true
+        self.txtUsername.becomeFirstResponder()
         
-        self.getAuthXSettings()
-        self.getAuthXFactorsList()
-        self.closeLeftSidebar()
-        self.closeRightSideBar()
-        self.logoUpdateListener()
-        self.rfid_click(self)
+        self.updateUIwithAuthFactors()
+
+        app_delegate = NSApplication.shared.delegate as? AppDelegate
+        app_delegate?.appBecomingActive = {
+            self.updateUIwithAuthFactors()
+        }
     }
     
-    func logoUpdateListener() {
-        appContainerWindow.companyLogoUpdate = {
-            DispatchQueue.main.async {
-                self.appContainerWindow.companyLogoButton.image = self.companyLogoImage
+    func updateUIwithAuthFactors() {
+        self.getAuthXSettings()
+        self.getAuthXFactorsList()
+        DispatchQueue.main.async {
+            self.closeLeftSidebar()
+            self.closeRightSideBar()
+            self.logoUpdateListener()
+            self.rfid_click(self)
+            if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                self.appVersionField.stringValue = appVersion
+                self.machineNameField.stringValue = self.computerName
             }
         }
+    }
+    
+    
+    func logoUpdateListener() {
+       
         appContainerWindow.helpClicks = {
             DispatchQueue.main.async {
                 self.helpView.isHidden = false
-                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                    self.appVersionField.stringValue = appVersion
-                    self.machineNameField.stringValue = self.computerName
-                }
             }
         }
     }
@@ -596,7 +605,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
           
           var body = Data()
-          let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Windows\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
+          let bodyContent = "{\"Username\":\""+userName+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Mac\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
           
           body.append(bodyContent.data(using: String.Encoding.utf8)!)
           
@@ -702,7 +711,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                            "FacilityAccessCode":nil,
                            "CardId":nil,
                            "AuthFactor":nil,
-                           "SourceApplication":"Windows",
+                           "SourceApplication":"Mac",
                            "EventType":21,
                            "BioRequest":bioRequest,
                            "UserGeographics":userGeo,
@@ -731,7 +740,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             
             // Convert HTTP Response Data to a simple String
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
-               // print("Recevied Data: \(dataString)")
+                print("Recevied Data: \(dataString)")
                // var replaced = dataString.replacingOccurrences(of: "\\r\\n", with: "")
                                 
 //                let data1 = Data(replaced.utf8)
@@ -742,17 +751,36 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                     if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
                         if let response_code = json["code"] as?  Int, response_code == 1 {
                            // self.companyLogoImage = nil
-                            if let companyConfiguration = json["companyConfiguration"] as? Dictionary<String,AnyObject>, let companyLogoString = companyConfiguration["companyLogo"] as? String, let logoUrl = URL(string: companyLogoString), let appConfiguration = json["applicationConfiguration"] as?  Dictionary<String,AnyObject>, let advancedConfiguration = appConfiguration["advancedConfiguration"] as? NSArray, let configInfo = advancedConfiguration.firstObject as? Dictionary<String,AnyObject>, let logonBgColor = configInfo["logon_background_color"] as? String, let fontColor = configInfo["font_color"] as? String, let helpText = configInfo["help_text_login_screen"] as? String {
+                            if let companyConfiguration = json["companyConfiguration"] as? Dictionary<String,AnyObject>, let companyLogoString = companyConfiguration["companyLogo"] as? String, let appConfiguration = json["applicationConfiguration"] as?  Dictionary<String,AnyObject>, let advancedConfiguration = appConfiguration["advancedConfiguration"] as? NSArray, let configInfo = advancedConfiguration.firstObject as? Dictionary<String,AnyObject>, let logonBgColor_hex = configInfo["logon_background_color"] as? String, let fontColor_hex = configInfo["font_color"] as? String, let helpText = configInfo["help_text_login_screen"] as? String, let logon_screen_background_url_string = configInfo["logon_screen_background"] as? String {
                                 print(configInfo)
-                                print(logonBgColor)
-                                print(fontColor)
-                                print(helpText)
-                                let logoData = try Data(contentsOf: logoUrl)
-                                self.companyLogoImage = NSImage(data: logoData)
+                                
+                                let fontColour = NSColor(hex: fontColor_hex)
+                                self.appFontColour = fontColour
+                                
+                                let bgColour = NSColor(hex: logonBgColor_hex).cgColor
+                                
+                                if !companyLogoString.isEmpty, let logoUrl = URL(string: companyLogoString) {
+                                    let logoData = try Data(contentsOf: logoUrl)
+                                    self.companyLogoImage = NSImage(data: logoData)
+                                } else {
+                                    self.companyLogoImage = nil
+                                }
+                                
+                                if !logon_screen_background_url_string.isEmpty, let logon_background_image_url = URL(string: logon_screen_background_url_string) {
+                                    let bgImageData = try Data(contentsOf: logon_background_image_url)
+                                    let bgImage = NSImage(data: bgImageData)
+                                    self.appBgImage = bgImage
+                                } else {
+                                    self.appBgImage = nil
+                                }
+                                
                                 DispatchQueue.main.async {
                                     self.appContainerWindow.companyLogoButton.image = self.companyLogoImage
                                     self.helpDeskField.stringValue = helpText
-                                    self.contentWindow.contentView?.layer?.backgroundColor = NSColor(hex: logonBgColor).cgColor
+                                    self.contentWindow.contentView?.layer?.backgroundColor = bgColour
+                                    self.contentWindow.contentView?.layer?.contents = self.appBgImage
+                                    self.UserName.textColor = self.appFontColour
+                                    self.CompanyName.textColor = self.appFontColour
                                 }
                             }
                         }
@@ -822,7 +850,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                            "FacilityAccessCode":nil,
                            "CardId":nil,
                            "AuthFactor":nil,
-                           "SourceApplication":"Windows",
+                           "SourceApplication":"Mac",
                            "EventType":21,
                            "BioRequest":bioRequest,
                            "UserGeographics":userGeo,
@@ -1059,12 +1087,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         {
             print("authentication failed")
             self.infoMsg.isHidden=false
-            self.infoMsg.textColor = NSColor.red
+            self.infoMsg.textColor = appFontColour
             self.infoMsg.stringValue = "PIN authentication failed."
             
         } else {
             self.infoMsg.isHidden=false
-            self.infoMsg.textColor = NSColor.black
+            self.infoMsg.textColor = appFontColour
             self.infoMsg.stringValue = "PIN authentication done.Logging you in please wait."
             let userNametempdata = sUsername + "\0"
             let passwordTempdata = sPassword + "\0"
@@ -1099,7 +1127,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         DispatchQueue.main.async {
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "Push_ICO")
-            self.instructionMsg.textColor = NSColor.black
+            self.instructionMsg.textColor = self.appFontColour
             self.instructionMsg.stringValue = "Respond to the push notification on your phone"
             completion(true)
         }
@@ -1112,12 +1140,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
          {
              print("authentication failed")
              self.infoMsg.isHidden=false
-             self.infoMsg.textColor = NSColor.red
+             self.infoMsg.textColor = appFontColour
              self.infoMsg.stringValue = "PUSH authentication failed."
              
          } else {
              self.infoMsg.isHidden=false
-             self.infoMsg.textColor = NSColor.black
+             self.infoMsg.textColor = appFontColour
              self.infoMsg.stringValue = "PUSH authentication done.Logging you in please wait."
              let userNametempdata = sUsername + "\0"
              let passwordTempdata = sPassword + "\0"
@@ -1143,7 +1171,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
-        self.instructionMsg.textColor = NSColor.black
+        self.instructionMsg.textColor = appFontColour
         self.instructionMsg.stringValue = "Enter PIN"
     }
     
@@ -1155,7 +1183,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = NSImage(named: "PIN_ICO")
-        self.instructionMsg.textColor = NSColor.black
+        self.instructionMsg.textColor = appFontColour
         self.instructionMsg.stringValue = "Enter Passcode"
     }
     
@@ -1167,7 +1195,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")
-            self.instructionMsg.textColor = NSColor.black
+            self.instructionMsg.textColor = self.appFontColour
             self.instructionMsg.stringValue = "Enter the PIN from your phone call"
             completion(true)
         }
@@ -1201,7 +1229,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             self.tabRFID.isHidden=true
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "PIN_ICO")
-            self.instructionMsg.textColor = NSColor.black
+            self.instructionMsg.textColor = self.appFontColour
             self.instructionMsg.stringValue = "Enter the PIN from your phone"
             completion(true)
         }
@@ -1230,11 +1258,11 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     func grantPermissions() {
         if !IOHIDRequestAccess(kIOHIDRequestTypeListenEvent) {
             //print("Not granted input monitoring")
-            self.instructionMsg.textColor = NSColor.red
+            self.instructionMsg.textColor = appFontColour
             self.instructionMsg.stringValue = "Not granted input monitoring"
         } else {
             //print("Granted input monitoring")
-            self.instructionMsg.textColor = NSColor.black
+            self.instructionMsg.textColor = appFontColour
             self.instructionMsg.stringValue = "Granted input monitoring"
             self.startTimer()
         }
@@ -1246,7 +1274,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         tabRFID.isHidden=false
         grantPermissions()
         self.infoMsg.stringValue = ""
-        self.instructionMsg.textColor = NSColor.black
+        self.instructionMsg.textColor = appFontColour
         self.authModeImageView.image = NSImage(named: "RFID_ICO")
     }
     
@@ -1266,12 +1294,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             if(!success)
             {
                 self.infoMsg.isHidden=false
-                self.infoMsg.textColor = NSColor.red
+                self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID enrollment failed."
                 
             } else {
                 self.infoMsg.isHidden=false
-                self.infoMsg.textColor = NSColor.black
+                self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID enrollment done"
                 self.isRFIDenrolled = true
                 self.rfidButton.isHidden = false
@@ -1285,12 +1313,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             {
                 print("authentication failed")
                 self.infoMsg.isHidden=false
-                self.infoMsg.textColor = NSColor.red
+                self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID authentication failed."
                 
             } else {
                 self.infoMsg.isHidden=false
-                self.infoMsg.textColor = NSColor.black
+                self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID authentication done.Logging you in please wait."
                 let userNametempdata = self.sUsername + "\0"
                 let passwordTempdata = self.sPassword + "\0"
@@ -1323,18 +1351,18 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             print(nRFID as Any)
             if(nRFID==1001)
             {
-                self.instructionMsg.textColor = NSColor.red
+                self.instructionMsg.textColor = appFontColour
                 self.instructionMsg.stringValue = "Reader not connected"
             }
             else if(nRFID==0)
             {
-                self.instructionMsg.textColor = NSColor.blue
+                self.instructionMsg.textColor = appFontColour
                 self.instructionMsg.stringValue = "Tap your Card"
             }
             else
             {
                 self.stopTimer()
-                self.instructionMsg.textColor = NSColor.green
+                self.instructionMsg.textColor = appFontColour
                 self.instructionMsg.stringValue = !self.isRFIDenrolled ? "Start enrolling, please wait." : "Start authenticating, please wait."
                 let success = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: String(nRFID))
             }
@@ -1361,7 +1389,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         if(!success)
         {
             self.infoMsg.isHidden=false
-            self.infoMsg.textColor = NSColor.red
+            self.infoMsg.textColor = appFontColour
             self.infoMsg.stringValue = "The username/password you entered is invalid."
             //self.showNSAlert(message: "The password you entered is invalid. Please check password and try again.")
         }

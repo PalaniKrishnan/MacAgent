@@ -267,9 +267,6 @@ Gw
                                                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                                 </allowedInputSourceLocales>
                                                             </secureTextFieldCell>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="allowPasswordInPlainText" value="YES"/>
-                                                            </userDefinedRuntimeAttributes>
                                                         </secureTextField>
                                                         <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44u-c0-Sqz">
                                                             <rect key="frame" x="241" y="48" width="30" height="30"/>
@@ -431,16 +428,16 @@ Gw
                                         </tabViewItems>
                                     </tabView>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="txJ-0U-6lE">
-                                        <rect key="frame" x="188" y="479" width="100" height="29"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="TestUser" id="wL0-cz-hKN">
+                                        <rect key="frame" x="236" y="479" width="4" height="29"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" id="wL0-cz-hKN">
                                             <font key="font" metaFont="system" size="25"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="155-ed-sDN">
-                                        <rect key="frame" x="206" y="455" width="64" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" title="CERTIFY" id="bql-rg-jLf">
+                                        <rect key="frame" x="236" y="455" width="4" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" id="bql-rg-jLf">
                                             <font key="font" metaFont="system" size="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -675,7 +672,7 @@ Gw
                         <rect key="frame" x="239" y="196" width="400" height="420"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gle-8U-RJ6">
-                                <rect key="frame" x="162" y="326" width="77" height="24"/>
+                                <rect key="frame" x="162" y="327" width="77" height="23"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="authxLogo" id="KkS-CQ-Z2R"/>
                             </imageView>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AZ7-Xc-ufI">
@@ -687,7 +684,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEo-to-LHf">
-                                <rect key="frame" x="125" y="232" width="150" height="19"/>
+                                <rect key="frame" x="118" y="232" width="165" height="19"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppc-6a-nRF">
                                         <rect key="frame" x="-2" y="0.0" width="111" height="19"/>
@@ -698,8 +695,8 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bnt-ET-wUF">
-                                        <rect key="frame" x="113" y="0.0" width="39" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="1.0.0" id="uSH-rk-1fc">
+                                        <rect key="frame" x="113" y="0.0" width="54" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" id="uSH-rk-1fc">
                                             <font key="font" metaFont="systemMedium" size="16"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -716,7 +713,7 @@ Gw
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iDX-Gx-Pyv">
-                                <rect key="frame" x="114" y="208" width="172" height="19"/>
+                                <rect key="frame" x="115" y="208" width="171" height="19"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rvv-NX-4Ib">
                                         <rect key="frame" x="-2" y="0.0" width="117" height="19"/>
@@ -727,8 +724,8 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TRS-Uv-aAr">
-                                        <rect key="frame" x="119" y="0.0" width="55" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Certify" id="h5E-4J-4aQ">
+                                        <rect key="frame" x="119" y="0.0" width="54" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" id="h5E-4J-4aQ">
                                             <font key="font" metaFont="systemMedium" size="16"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -756,8 +753,8 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uRf-s2-LHl">
-                                        <rect key="frame" x="33" y="0.0" width="100" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="9080714728" id="dOC-0k-hBH">
+                                        <rect key="frame" x="56" y="0.0" width="54" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" id="dOC-0k-hBH">
                                             <font key="font" metaFont="systemMedium" size="16"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

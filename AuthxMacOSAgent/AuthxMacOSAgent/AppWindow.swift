@@ -14,7 +14,6 @@ import IOKit.pwr_mgt
 class AppWindow: NSWindow {
     
     var companyLogoButton: NSButton!
-    var companyLogoUpdate:(()->())? = nil
     var helpClicks:(()->())? = nil
     
     override var canBecomeKey: Bool {
@@ -24,8 +23,7 @@ class AppWindow: NSWindow {
             return false
         }
         self.contentView?.frame = NSRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-       // self.contentView?.layer?.contents = NSImage(named: "maxresdefault")
-       // self.contentView?.layer?.backgroundColor = NSColor.blue.cgColor
+       // self.contentView?.layer?.backgroundColor = NSColor.gray.cgColor
 
         
         let topViewFrame = NSRect(x: 0, y: frame.size.height-100, width: frame.size.width, height: 100)
@@ -47,7 +45,6 @@ class AppWindow: NSWindow {
         companyLogoButton.frame = NSRect(x: 20, y: frame.height-90, width: 80, height: 80)
         companyLogoButton.isBordered = false
         self.contentView?.addSubview(companyLogoButton)
-        self.companyLogoUpdate?()
         
         if let powerImage = NSImage(systemSymbolName: "power.circle", accessibilityDescription: nil)
         {
