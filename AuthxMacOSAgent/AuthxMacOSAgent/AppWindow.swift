@@ -15,7 +15,8 @@ class AppWindow: NSWindow {
     
     var companyLogoButton: NSButton!
     var helpClicks:(()->())? = nil
-    
+    var powerClicks:(()->())? = nil
+
     override var canBecomeKey: Bool {
         self.setFrame(self.screen!.frame, display: true)
         self.contentView?.wantsLayer = true
@@ -108,9 +109,10 @@ class AppWindow: NSWindow {
     }
     
     @objc func powerClicked() {
-        let port = IOPMFindPowerManagement(mach_port_t(MACH_PORT_NULL))
-        IOPMSleepSystem(port)
-        IOServiceClose(port)
+        self.powerClicks?()
+//        let port = IOPMFindPowerManagement(mach_port_t(MACH_PORT_NULL))
+//        IOPMSleepSystem(port)
+//        IOServiceClose(port)
         print("power clicked")
     }
     

@@ -146,22 +146,24 @@ class ViewController: NSViewController {
                         if arrayWithHost.count > 2 {
                             self.sAppHost = arrayWithHost[0]
                             self.sAppAPI = splitedArr[0]+"."+arrayWithHost[1]+"."+arrayWithHost[2]
-                            print(cols[3])
-                            print(cols[4])
-                            if (!cols[3].isEmpty) && (!cols[4].isEmpty) {
-                                self.setUserInfo(userName:cols[3], paswrd: cols[4])
-                            } else {
-                                self.authCustomView.isHidden = false
-                                self.view.window?.makeFirstResponder(self.txtUser)
-                            }
+//                            if (!cols[3].isEmpty) && (!cols[4].isEmpty) {
+//                                self.setUserInfo(userName:cols[3], paswrd: cols[4])
+//                            } else {
+//                                self.authCustomView.isHidden = false
+//                                self.view.window?.makeFirstResponder(self.txtUser)
+//                            }
+                            self.moveToAuthFactorsWindow()
+                        } else {
+                                NSApplication.shared.terminate(self)
                         }
+                    } else {
+                        NSApplication.shared.terminate(self)
                     }
                 }
             }
         }
         catch {
-            
-            /* error handling here */
+            NSApplication.shared.terminate(self)
         }
         
     }
@@ -205,8 +207,8 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         self.view.window?.center()
-       // loadAppSetting()
-        moveToAuthFactorsWindow()
+        loadAppSetting()
+       // moveToAuthFactorsWindow()
     }
     
     func dialogOK(question: String, text: String, alterStyle:String) -> Void {

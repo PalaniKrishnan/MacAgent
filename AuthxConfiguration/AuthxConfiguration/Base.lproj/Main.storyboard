@@ -783,6 +783,9 @@
 Gw
 </string>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="rbtnClose_click:" target="XfG-lQ-9wD" id="3gH-SL-oOC"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jbn-zc-dPD">
                                 <rect key="frame" x="180" y="97" width="138" height="23"/>

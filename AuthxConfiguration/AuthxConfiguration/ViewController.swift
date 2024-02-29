@@ -160,11 +160,11 @@ class ViewController: NSViewController {
     
     
     @IBAction func rbtnClose_click(_ sender: Any) {
-        //NSApplication.shared.terminate(self)
+        NSApplication.shared.terminate(self)
         
-        self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn" )
-        self.nAuthxSignIn?.showWindow (self)
-        self.nAuthxSignIn?.becomeFirstResponder()
+//        self.nAuthxSignIn = AuthxSignIn(windowNibName: "AuthxSignIn" )
+//        self.nAuthxSignIn?.showWindow (self)
+//        self.nAuthxSignIn?.becomeFirstResponder()
         
     }
     

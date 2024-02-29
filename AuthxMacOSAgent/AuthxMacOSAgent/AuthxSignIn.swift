@@ -92,6 +92,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var middleView: NSView!
     @IBOutlet weak var rightView: NSView!
     @IBOutlet weak var helpView: NSView!
+    @IBOutlet weak var powerHandleView: NSView!
 
     @IBOutlet weak var authModeImageView: NSImageView!
     var companyLogoImage: NSImage?
@@ -103,6 +104,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var pinButton: NSButton!
     @IBOutlet weak var smsButton: NSButton!
     @IBOutlet weak var callButton: NSButton!
+    
+    @IBOutlet weak var rightButton: NSButton!
+    @IBOutlet weak var leftButton: NSButton!
     
     @IBOutlet weak var pinCancelButton: NSButton!
     @IBOutlet weak var localAuthSubmitButton: NSButton!
@@ -148,6 +152,14 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.helpView.backgroundColor = NSColor.white
         self.helpView.layer?.cornerRadius = 10
         self.helpView.layer?.masksToBounds = true
+        
+        self.powerHandleView.backgroundColor = NSColor.white
+        self.powerHandleView.layer?.cornerRadius = 10
+        self.powerHandleView.layer?.masksToBounds = true
+        
+        self.authCustomView.backgroundColor = NSColor.lightGray
+        self.authCustomView.layer?.cornerRadius = 10
+        self.authCustomView.layer?.masksToBounds = true
         
 //        self.window?.level = .screenSaver
 //        self.window?.orderFrontRegardless()
@@ -196,13 +208,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.tabPin.isHidden=true
         self.tabRFID.isHidden=true
         self.txtUsername_networklogon.becomeFirstResponder()
-        
-        self.updateUIwithAuthFactors()
-        self.logoUpdateListener()
 
         app_delegate = NSApplication.shared.delegate as? AppDelegate
         app_delegate?.appBecomingActive = {
-            self.updateUIwithAuthFactors()
+            self.load_app_setting()
         }
     }
     
@@ -234,9 +243,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         }
         else
         {
+            self.authCustomView.isHidden = true
             if add_app_setting() {
-                self.sPassword = self.txtPswd_launch.stringValue
-                self.getUserID()
+                load_app_setting()
             }
         }
     }
@@ -252,7 +261,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     
-    func logoUpdateListener() {
+    func addListener() {
         appContainerWindow.helpClicks = {
             DispatchQueue.main.async {
                 self.helpView.isHidden = false
@@ -260,6 +269,11 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                     self.appVersionField.stringValue = appVersion
                     self.machineNameField.stringValue = self.computerName
                 }
+            }
+        }
+        appContainerWindow.powerClicks = {
+            DispatchQueue.main.async {
+                self.powerHandleView.isHidden = !self.powerHandleView.isHidden
             }
         }
     }
@@ -529,6 +543,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
     }
     
+    @IBAction func networkLogonClicked (_ sender: Any) {
+        self.rightSideBarBtnClicked(self.rightButton as Any)
+    }
+    
     func closeLeftSidebar () {
         let leftSideView = splitView.subviews[0] as NSView
         let centerView = splitView.subviews[1] as NSView
@@ -568,6 +586,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     func load_app_setting() -> Void{
     
+        self.closeLeftSidebar()
+        self.closeRightSideBar()
+        
         let fileURL = NSURL(string: "file:///Users/Shared/authx_security.ini")
         
         //writing
@@ -602,6 +623,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                                     self.UserName.stringValue = self.sUsername
                                 }
                                 self.getUserID()
+                                self.addListener()
+                                self.updateUIwithAuthFactors()
                             } else {
                                 DispatchQueue.main.async {
                                     self.authCustomView.isHidden = false
@@ -1420,13 +1443,14 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             else
             {
                 self.stopTimer()
+                var rfIdentifier = ""
                 var st = String(format:"%02X", nRFID)
                 if st.count == 5 {
                     st = "0".appending(st)
                 }
                 print(st)
                 if st.count == 6 {
-                    var rfIdentifier = ""
+                    
                     let firstTwo = st.suffix(2)
                     let lastTwo = st.prefix(2)
                     let startIdx = st.index(st.startIndex, offsetBy: 2)
@@ -1435,11 +1459,36 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                     let middleTwo = st[range]
                     rfIdentifier = firstTwo.appending(middleTwo).appending(lastTwo)
                     print(rfIdentifier)
-                    self.instructionMsg.textColor = appFontColour
-                    self.instructionMsg.stringValue = !self.isRFIDenrolled ? "Start enrolling, please wait." : "Start authenticating, please wait."
-                    _ = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: rfIdentifier)
-                }
+                    
+                } else if st.count == 8 {
+                    
+                    let firstTwo = st.suffix(2)
+                    let lastTwo = st.prefix(2)
+                    
+                    let start4Idx = st.index(st.startIndex, offsetBy: 4)
+                    let end2Idx = st.index(st.endIndex, offsetBy: -2)
+                    let midrange1 = start4Idx..<end2Idx
+                    
+                    let start2Idx = st.index(st.startIndex, offsetBy: 2)
+                    let end4Idx = st.index(st.endIndex, offsetBy: -4)
+                    let midrange2 = start2Idx..<end4Idx
 
+                    let firstMiddleTwo = st[midrange1]
+                    let secondMiddleTwo = st[midrange2]
+
+                    rfIdentifier = firstTwo.appending(firstMiddleTwo).appending(secondMiddleTwo).appending(lastTwo)
+                    print(rfIdentifier)
+                }
+                
+                guard rfIdentifier != "" else {
+                    self.instructionMsg.stringValue = "Something went wrong with rfid"
+                    return
+                }
+                
+                self.instructionMsg.textColor = appFontColour
+                self.instructionMsg.stringValue = !self.isRFIDenrolled ? "Start enrolling, please wait." : "Start authenticating, please wait."
+                _ = self.getAuth(endUrl: !self.isRFIDenrolled ? "EnrollRFID" : "AuthenticateRFID", userID: self.sMainUserID, authID: rfIdentifier)
+                
             }
 
     }
@@ -1498,10 +1547,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             } else {
                 self.window?.orderOut(self)
                 self.window?.close()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    exit(-1)
-                }
+                NSApplication.shared.terminate(self)
             }
         }
     }
