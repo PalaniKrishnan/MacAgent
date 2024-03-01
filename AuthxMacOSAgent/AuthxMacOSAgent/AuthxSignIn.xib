@@ -232,19 +232,16 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="687" height="84"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tJR-oW-rTz">
-                                                            <rect key="frame" x="278" y="31" width="132" height="32"/>
-                                                            <buttonCell key="cell" type="push" title="Network logon &gt;" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tpz-G3-911">
+                                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="tJR-oW-rTz">
+                                                            <rect key="frame" x="288" y="41" width="111" height="16"/>
+                                                            <buttonCell key="cell" type="bevel" title="Network Logon" bezelStyle="regularSquare" image="arrow.forward.circle" catalog="system" imagePosition="trailing" alignment="center" imageScaling="proportionallyDown" inset="2" id="tpz-G3-911">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                                 <string key="keyEquivalent" base64-UTF8="YES">
 Gw
 </string>
                                                             </buttonCell>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="FDK-CK-Yia"/>
-                                                                <constraint firstAttribute="width" constant="120" id="r8m-Cx-Eab"/>
-                                                            </constraints>
+                                                            <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <connections>
                                                                 <action selector="networkLogonClicked:" target="-2" id="nOa-4F-G05"/>
                                                             </connections>
@@ -588,7 +585,7 @@ Gw
                                                         </secureTextField>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="97L-uT-Yy2">
                                                             <rect key="frame" x="7" y="67" width="186" height="30"/>
-                                                            <buttonCell key="cell" type="bevel" title="SUBMIT" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="bkr-H0-pmg">
+                                                            <buttonCell key="cell" type="bevel" title="Submit" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="bkr-H0-pmg">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -598,12 +595,12 @@ Gw
                                                                 <constraint firstAttribute="height" constant="30" id="sA1-vp-rYr"/>
                                                             </constraints>
                                                             <connections>
-                                                                <action selector="submit_password_click:" target="-2" id="oKG-1J-jKL"/>
+                                                                <action selector="submit_network_logon:" target="-2" id="oKG-1J-jKL"/>
                                                             </connections>
                                                         </button>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="hNa-dL-2Gg">
                                                             <rect key="frame" x="7" y="27" width="186" height="30"/>
-                                                            <buttonCell key="cell" type="bevel" title="CANCEL" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="7Qy-UW-R8k">
+                                                            <buttonCell key="cell" type="bevel" title="Clear Fields" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="7Qy-UW-R8k">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -616,7 +613,7 @@ Gw
                                                                 <constraint firstAttribute="height" constant="30" id="k2x-OR-kml"/>
                                                             </constraints>
                                                             <connections>
-                                                                <action selector="cancel_password_click:" target="-2" id="nWO-we-Idh"/>
+                                                                <action selector="clearFields:" target="-2" id="nWO-we-Idh"/>
                                                             </connections>
                                                         </button>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="agJ-bn-K5N">
@@ -941,11 +938,11 @@ Gw
                         </constraints>
                     </customView>
                     <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asA-ZN-f1U">
-                        <rect key="frame" x="15" y="91" width="183" height="107"/>
+                        <rect key="frame" x="15" y="80" width="183" height="200"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SXh-tD-kV2">
-                                <rect key="frame" x="31" y="64" width="122" height="32"/>
-                                <buttonCell key="cell" type="push" title="Shut down" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rn7-EO-Bwx">
+                            <button tag="4" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SXh-tD-kV2">
+                                <rect key="frame" x="31" y="154" width="122" height="32"/>
+                                <buttonCell key="cell" type="push" title="Sleep" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rn7-EO-Bwx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -956,10 +953,13 @@ Gw
                                     <constraint firstAttribute="height" constant="20" id="0tv-OH-uFx"/>
                                     <constraint firstAttribute="width" constant="110" id="97p-RE-PRi"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="systemEventBtnClicked:" target="-2" id="LDB-xr-NG3"/>
+                                </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qbg-CB-fbt">
-                                <rect key="frame" x="31" y="23" width="122" height="32"/>
-                                <buttonCell key="cell" type="push" title="Restart" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rie-7Q-1bU">
+                            <button tag="3" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qbg-CB-fbt">
+                                <rect key="frame" x="31" y="114" width="122" height="32"/>
+                                <buttonCell key="cell" type="push" title="Logout" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rie-7Q-1bU">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -970,15 +970,56 @@ Gw
                                     <constraint firstAttribute="height" constant="20" id="sVO-qN-1cn"/>
                                     <constraint firstAttribute="width" constant="110" id="soY-Vh-ext"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="systemEventBtnClicked:" target="-2" id="paL-Tc-wJR"/>
+                                </connections>
+                            </button>
+                            <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4qt-u9-YKa">
+                                <rect key="frame" x="31" y="74" width="122" height="32"/>
+                                <buttonCell key="cell" type="push" title="Shut down" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WzI-eU-5QN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="T7s-Db-iu5"/>
+                                    <constraint firstAttribute="width" constant="110" id="wAm-o2-tEb"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="systemEventBtnClicked:" target="-2" id="BFH-hz-0FM"/>
+                                </connections>
+                            </button>
+                            <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-qM-cRo">
+                                <rect key="frame" x="31" y="34" width="122" height="32"/>
+                                <buttonCell key="cell" type="push" title="Restart" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DLa-nJ-dtJ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="110" id="3Zg-jA-NmJ"/>
+                                    <constraint firstAttribute="height" constant="20" id="FeK-mT-Iee"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="systemEventBtnClicked:" target="-2" id="5XR-P6-Sxb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="0QI-qM-cRo" firstAttribute="centerX" secondItem="asA-ZN-f1U" secondAttribute="centerX" id="66p-Xj-Rma"/>
+                            <constraint firstItem="0QI-qM-cRo" firstAttribute="top" secondItem="4qt-u9-YKa" secondAttribute="bottom" constant="20" id="GF4-0F-fSK"/>
                             <constraint firstAttribute="width" constant="183" id="HJy-nh-HSA"/>
                             <constraint firstItem="Qbg-CB-fbt" firstAttribute="centerX" secondItem="asA-ZN-f1U" secondAttribute="centerX" id="LeQ-HJ-yNY"/>
+                            <constraint firstItem="4qt-u9-YKa" firstAttribute="top" secondItem="Qbg-CB-fbt" secondAttribute="bottom" constant="20" id="QBW-3o-OhT"/>
                             <constraint firstItem="SXh-tD-kV2" firstAttribute="centerX" secondItem="asA-ZN-f1U" secondAttribute="centerX" id="TrL-qD-VHs"/>
-                            <constraint firstItem="Qbg-CB-fbt" firstAttribute="top" secondItem="SXh-tD-kV2" secondAttribute="bottom" constant="21" id="USM-5r-AqU"/>
-                            <constraint firstAttribute="height" constant="107" id="Z8b-vh-aEN"/>
-                            <constraint firstItem="SXh-tD-kV2" firstAttribute="top" secondItem="asA-ZN-f1U" secondAttribute="top" constant="17" id="aQa-BD-5HF"/>
+                            <constraint firstItem="Qbg-CB-fbt" firstAttribute="top" secondItem="SXh-tD-kV2" secondAttribute="bottom" constant="20" id="USM-5r-AqU"/>
+                            <constraint firstAttribute="height" constant="200" id="Z8b-vh-aEN"/>
+                            <constraint firstItem="SXh-tD-kV2" firstAttribute="top" secondItem="asA-ZN-f1U" secondAttribute="top" constant="20" id="aQa-BD-5HF"/>
+                            <constraint firstItem="4qt-u9-YKa" firstAttribute="centerX" secondItem="asA-ZN-f1U" secondAttribute="centerX" id="iD7-bs-FsM"/>
                         </constraints>
                     </customView>
                 </subviews>
@@ -991,7 +1032,7 @@ Gw
                     <constraint firstItem="pJq-Fx-VIj" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="i8A-jd-Esb"/>
                     <constraint firstItem="LzF-WS-vnn" firstAttribute="centerY" secondItem="EiT-Mj-1SZ" secondAttribute="centerY" id="kVi-bJ-QMm"/>
                     <constraint firstItem="pJq-Fx-VIj" firstAttribute="centerY" secondItem="EiT-Mj-1SZ" secondAttribute="centerY" id="lDI-zJ-GSW"/>
-                    <constraint firstAttribute="bottom" secondItem="asA-ZN-f1U" secondAttribute="bottom" constant="91" id="mqu-kw-ieK"/>
+                    <constraint firstAttribute="bottom" secondItem="asA-ZN-f1U" secondAttribute="bottom" constant="80" id="mqu-kw-ieK"/>
                     <constraint firstItem="pJq-Fx-VIj" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="100" id="tnz-1A-ZAv"/>
                     <constraint firstItem="EYb-hC-abg" firstAttribute="centerY" secondItem="EiT-Mj-1SZ" secondAttribute="centerY" id="z6y-0x-XB0"/>
                 </constraints>
@@ -1003,6 +1044,7 @@ Gw
         <image name="PIN_ICO" width="120" height="148"/>
         <image name="Push_ICO" width="115" height="143"/>
         <image name="RFID_ICO" width="115" height="143"/>
+        <image name="arrow.forward.circle" catalog="system" width="15" height="15"/>
         <image name="authxLogo" width="77" height="23.5"/>
         <image name="hide_sidebar" width="512" height="512"/>
         <image name="message.fill" catalog="system" width="17" height="16"/>

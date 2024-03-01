@@ -139,7 +139,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @IBOutlet weak var contentWindow: AppWindow!
     @IBOutlet weak var authCustomView: NSView!
 
-    
+    let systemEvents = RestartShutdownLogout()
+
     var guid = NSUUID().uuidString.lowercased()
     let computerName = ProcessInfo.processInfo.hostName
     
@@ -148,7 +149,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
+                
         self.helpView.backgroundColor = NSColor.white
         self.helpView.layer?.cornerRadius = 10
         self.helpView.layer?.masksToBounds = true
@@ -276,6 +277,13 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 self.powerHandleView.isHidden = !self.powerHandleView.isHidden
             }
         }
+    }
+    
+    @IBAction func systemEventBtnClicked(_ sender: Any)  {
+        guard let btn = sender as? NSButton else {
+            return
+        }
+        systemEvents.sendSystemEvent(Int32(btn.tag))
     }
     
     
@@ -1148,16 +1156,16 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     
-    @IBAction func submit_password_click(_ sender: Any) {
-        let userNametempdata = sUsername + "\0"
-        let passwordTempdata = sPassword + "\0"
+    @IBAction func submit_network_logon(_ sender: Any) {
+        let userNametempdata = txtUsername_networklogon.stringValue + "\0"
+        let passwordTempdata = txtPassword_networklogon.stringValue + "\0"
         self.process_login(userName:userNametempdata,passWord:passwordTempdata)
     }
     
-    @IBAction func cancel_password_click(_ sender: Any) {
+    @IBAction func clearFields(_ sender: Any) {
         self.txtUsername_networklogon.stringValue = ""
         self.txtPassword_networklogon.stringValue = ""
-        self.closeRightSideBar()
+       // self.closeRightSideBar()
     }
     
     func submit_pin_authentication(value:String) {
@@ -1180,8 +1188,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         }
     }
     
-    @IBAction func cancel_pin_click(_ sender: Any) {
-       // tabPassword.isHidden=false
+    func clearAllPinEntries() {
         self.txtSecurePin1.stringValue = ""
         self.txtSecurePin2.stringValue = ""
         self.txtSecurePin3.stringValue = ""
@@ -1195,12 +1202,17 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.txtPlainPin4.stringValue = ""
         self.txtPlainPin5.stringValue = ""
         self.txtPlainPin6.stringValue = ""
-
+    }
+    
+    @IBAction func cancel_pin_click(_ sender: Any) {
+        self.clearAllPinEntries()
         tabPin.isHidden=true
         tabRFID.isHidden=true
         self.infoMsg.stringValue = ""
         self.authModeImageView.image = nil
         self.instructionMsg.stringValue = ""
+        self.rfid_click(self)
+
     }
     
     func displayedPushAuthInstructions(completion: @escaping (Bool)->()) {
@@ -1245,6 +1257,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func pin_click(_ sender: Any) {
         self.stopTimer()
+        self.clearAllPinEntries()
         tabPin.isHidden=false
         isSecurePin = true
         txtSecurePin1.becomeFirstResponder()
@@ -1257,6 +1270,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func passcode_click(_ sender: Any) {
         self.stopTimer()
+        self.clearAllPinEntries()
         tabPin.isHidden=false
         isSecurePin = true
         txtSecurePin1.becomeFirstResponder()
@@ -1293,6 +1307,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func call_click(_ sender: Any) {
         self.stopTimer()
+        self.clearAllPinEntries()
         self.displayedPhoneCallingAuthInstructions { displayed in
             if displayed == true {
                 self.perform(#selector(self.AuthenticatePhoneCall), with: nil, afterDelay: 0.2)
@@ -1326,6 +1341,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func sms_click(_ sender: Any) {
         self.stopTimer()
+        self.clearAllPinEntries()
         self.displayedPhoneSMSAuthInstructions { displayed in
             if displayed == true {
                 self.perform(#selector(self.AuthenticatePhoneSMS), with: nil, afterDelay: 0.2)
@@ -1447,6 +1463,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 var st = String(format:"%02X", nRFID)
                 if st.count == 5 {
                     st = "0".appending(st)
+                } else if st.count == 7 {
+                    st = "0".appending(st)
                 }
                 print(st)
                 if st.count == 6 {
@@ -1565,5 +1583,6 @@ extension AuthxSignIn: NSSplitViewDelegate {
     }
     
 }
+
 
 
