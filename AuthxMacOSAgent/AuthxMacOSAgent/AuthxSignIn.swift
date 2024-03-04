@@ -977,18 +977,17 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                         //sUserID = json["UniqueUserId"] as! String
                         if(response_code==1), let authFactors = json["UserAuthFactor"] as? Array<AnyObject> {
                              print(authFactors)
-                            for factorDic in authFactors   {
+                            DispatchQueue.main.async {
+                                self.hideAllAuthFactors()
+                              for factorDic in authFactors   {
                                 if let authFactorDic = factorDic as? Dictionary<String, Any>, let factor = authFactorDic["AuthFactor"] as? Int, let factorValue = AuthFactors(rawValue: factor) {
-                                    DispatchQueue.main.async {
-                                        DispatchQueue.main.async {
-                                            self.closeLeftSidebar()
-                                            self.closeRightSideBar()
-                                            self.enableAuthFactosWith(factor: factorValue)
-                                        }
+                                        self.closeLeftSidebar()
+                                        self.closeRightSideBar()
+                                        self.enableAuthFactosWith(factor: factorValue)
                                     }
                                 }
                             }
-                        }
+                          }
                         defer { sem.signal() }
                         
                     }
@@ -1001,6 +1000,16 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         
         task.resume()
         sem.wait()
+    }
+    
+    func hideAllAuthFactors() {
+        self.isRFIDenrolled = false
+        self.pushButton.isHidden = true
+        self.totpButton.isHidden = true
+        self.pinButton.isHidden = true
+        self.rfidButton.isHidden = true
+        self.smsButton.isHidden = true
+        self.callButton.isHidden = true
     }
     
     func enableAuthFactosWith(factor:AuthFactors) {
@@ -1445,7 +1454,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     @objc func loop() {
 
            nRFID = GetActiveRFID()
-            print(nRFID as Any)
+          //  print(nRFID as Any)
             if(nRFID==1001)
             {
                 self.instructionMsg.textColor = appFontColour
