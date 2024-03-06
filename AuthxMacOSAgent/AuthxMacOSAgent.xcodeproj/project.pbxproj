@@ -16,6 +16,7 @@
 		32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEF38625C6E67A001E8D03 /* CryptLib.m */; };
 		6F0AE8A92B91EE97004C4EE7 /* RestartShutdownLogout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0AE8A82B91EE97004C4EE7 /* RestartShutdownLogout.m */; };
 		6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */; };
+		6F3D6C872B98AA1200556C2D /* NoLoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3D6C862B98AA1100556C2D /* NoLoWindow.swift */; };
 		6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */; };
 		6FB1C7F52B8F4E8000C50FF4 /* libpcProxAPI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; };
 		6FB1C7F82B8F4EC900C50FF4 /* libpcProxAPI.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -72,6 +73,7 @@
 		6F0AE8A72B91EE97004C4EE7 /* RestartShutdownLogout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestartShutdownLogout.h; sourceTree = "<group>"; };
 		6F0AE8A82B91EE97004C4EE7 /* RestartShutdownLogout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestartShutdownLogout.m; sourceTree = "<group>"; };
 		6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
+		6F3D6C862B98AA1100556C2D /* NoLoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoLoWindow.swift; sourceTree = "<group>"; };
 		6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWindowController.swift; sourceTree = "<group>"; };
 		6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcProxAPI.dylib; path = lib/libpcProxAPI.dylib; sourceTree = "<group>"; };
 		6FC4DC9A2B7B51A7001A9DDE /* AuthxMacOSAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AuthxMacOSAgent.entitlements; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				32FEF38625C6E67A001E8D03 /* CryptLib.m */,
 				32FEF38425C6E662001E8D03 /* CryptLib.h */,
 				6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */,
+				6F3D6C862B98AA1100556C2D /* NoLoWindow.swift */,
 				32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */,
 				32B57C6A234F3DB800B6EAA4 /* ViewController.swift */,
 				6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */,
@@ -254,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3D6C872B98AA1200556C2D /* NoLoWindow.swift in Sources */,
 				6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */,
 				843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */,
 				32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */,

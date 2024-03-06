@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E4C8EDF3-E969-4CD9-BB6D-F1A5704CF492"
+            uuid = "DE0CE8C0-6D86-410A-893D-6FCB12165726"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AuthxMacOSAgent/AuthxSignIn.swift"
+            filePath = "AuthxMacOSAgent/RestartShutdownLogout.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
-            landmarkName = "systemEventBtnClicked(_:)"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-sendSystemEvent:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E23C4D4A-22AE-4175-982B-E7D99E8EA938"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AuthxMacOSAgent/RestartShutdownLogout.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "-sendSystemEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

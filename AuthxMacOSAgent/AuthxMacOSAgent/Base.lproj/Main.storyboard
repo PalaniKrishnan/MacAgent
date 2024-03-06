@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -665,7 +665,7 @@
             <objects>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="B8D-0N-5wS" customClass="FullScreenWindowController" customModule="AuthxMacOSAgent" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Authx MacOS Agent" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA" userLabel="Authx Configuration" customClass="AppWindow" customModule="AuthxMacOSAgent" customModuleProvider="target">
+                    <window key="window" title="Authx MacOS Agent" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA" userLabel="Authx Configuration" customClass="NoLoWindow" customModule="AuthxMacOSAgent" customModuleProvider="target">
                         <windowStyleMask key="styleMask" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="581" y="346" width="600" height="341"/>
@@ -694,7 +694,7 @@
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVC-Oa-DHd">
                                 <rect key="frame" x="104" y="64" width="456" height="394"/>
                                 <subviews>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-ba-xD4">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-ba-xD4">
                                         <rect key="frame" x="85" y="20" width="286" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Copyright © 2024 AuthX | All Rights Reserved" id="JIi-2x-08s">
                                             <font key="font" metaFont="system"/>
@@ -736,7 +736,7 @@ Gw
                                                     <constraint firstAttribute="width" constant="110" id="hUQ-1g-SlW"/>
                                                 </constraints>
                                             </button>
-                                            <textField focusRingType="none" verticalHuggingPriority="750" contentType="name" translatesAutoresizingMaskIntoConstraints="NO" id="83a-ab-4GV">
+                                            <textField verticalHuggingPriority="750" contentType="name" translatesAutoresizingMaskIntoConstraints="NO" id="83a-ab-4GV">
                                                 <rect key="frame" x="67" y="105" width="241" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="241" id="2m5-P4-0u4"/>
@@ -748,7 +748,7 @@ Gw
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <secureTextField focusRingType="none" verticalHuggingPriority="750" contentType="password" translatesAutoresizingMaskIntoConstraints="NO" id="hBz-bO-eDb">
+                                            <secureTextField verticalHuggingPriority="750" contentType="password" translatesAutoresizingMaskIntoConstraints="NO" id="hBz-bO-eDb">
                                                 <rect key="frame" x="67" y="63" width="241" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="241" id="71N-dm-Yf8"/>

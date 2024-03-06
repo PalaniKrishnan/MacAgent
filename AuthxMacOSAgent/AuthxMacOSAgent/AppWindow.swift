@@ -13,9 +13,6 @@ import IOKit.pwr_mgt
 
 class AppWindow: NSWindow {
     
-    var companyLogoButton: NSButton!
-    var helpClicks:(()->())? = nil
-    var powerClicks:(()->())? = nil
 
     override var canBecomeKey: Bool {
         self.setFrame(self.screen!.frame, display: true)
@@ -24,15 +21,7 @@ class AppWindow: NSWindow {
             return false
         }
         self.contentView?.frame = NSRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-       // self.contentView?.layer?.backgroundColor = NSColor.gray.cgColor
-
-        
-        let topViewFrame = NSRect(x: 0, y: frame.size.height-100, width: frame.size.width, height: 100)
-        let topView = NSView(frame: topViewFrame)
-        topView.wantsLayer = true
-        topView.layer?.backgroundColor = .white
-        self.contentView?.addSubview(topView)
-        
+      
         
         let bottomViewFrame = NSRect(x: 0, y: 0, width: frame.size.width, height: 100)
         let bottomView = NSView(frame: bottomViewFrame)
@@ -41,40 +30,7 @@ class AppWindow: NSWindow {
         self.contentView?.addSubview(bottomView)
         
        
-        companyLogoButton = NSButton(title: "", target: self, action: #selector(authLogoClicked))
-        companyLogoButton.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-        companyLogoButton.frame = NSRect(x: 20, y: frame.height-90, width: 80, height: 80)
-        companyLogoButton.isBordered = false
-        self.contentView?.addSubview(companyLogoButton)
-        
-        if let powerImage = NSImage(systemSymbolName: "power.circle", accessibilityDescription: nil)
-        {
-            let button = NSButton(image: powerImage, target: self, action: #selector(powerClicked))
-            button.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-            button.frame = NSRect(x: 10, y: 10, width: 60, height: 60)
-            button.isBordered = false
-            self.contentView?.addSubview(button)
-        }
-        
-        if let helpImage = NSImage(systemSymbolName: "questionmark.circle", accessibilityDescription: nil)
-        {
-            let button = NSButton(image: helpImage, target: self, action: #selector(helpClicked))
-            button.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-            button.isBordered = false
-            button.frame = NSRect(x: 70, y: 10, width: 60, height: 60)
-            self.contentView?.addSubview(button)
-        }
-        
-        let bottomMsgLbl = NSTextField(frame: NSRect(x: (frame.width/2) - 100, y: 10, width: 200, height: 60))
-        bottomMsgLbl.font = NSFont(name: "helvetica", size: 14)
-        bottomMsgLbl.alignment = .center
-        bottomMsgLbl.isEditable = false
-        bottomMsgLbl.lineBreakMode = .byWordWrapping
-        bottomMsgLbl.textColor = .gray
-        bottomMsgLbl.isBordered = false
-        bottomMsgLbl.stringValue = "This is for authorized personnel only"
-        self.contentView?.addSubview(bottomMsgLbl)
-        
+
         if let wifiImage = NSImage(systemSymbolName: "wifi", accessibilityDescription: nil)
         {
             let wifiImageView = NSImageView(image: wifiImage)
@@ -104,22 +60,6 @@ class AppWindow: NSWindow {
         return true
     }
     
-    @objc func authLogoClicked() {
-        print("authLogo clicked")
-    }
-    
-    @objc func powerClicked() {
-        self.powerClicks?()
-//        let port = IOPMFindPowerManagement(mach_port_t(MACH_PORT_NULL))
-//        IOPMSleepSystem(port)
-//        IOServiceClose(port)
-        print("power clicked")
-    }
-    
-    @objc func helpClicked() {
-        print("help clicked")
-        self.helpClicks?()
-    }
     
 }
 
