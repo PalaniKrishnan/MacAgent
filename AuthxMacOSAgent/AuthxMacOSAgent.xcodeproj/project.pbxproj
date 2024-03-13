@@ -18,6 +18,7 @@
 		6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */; };
 		6F3D6C872B98AA1200556C2D /* NoLoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3D6C862B98AA1100556C2D /* NoLoWindow.swift */; };
 		6F9B6AB32AD84167009483C1 /* FullScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */; };
+		6FB185282B9F1DC7006EC87D /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB185272B9F1DC7006EC87D /* CameraManager.swift */; };
 		6FB1C7F52B8F4E8000C50FF4 /* libpcProxAPI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; };
 		6FB1C7F82B8F4EC900C50FF4 /* libpcProxAPI.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6FC4DCD72B7E3253001A9DDE /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC4DCD62B7E3253001A9DDE /* view.swift */; };
@@ -75,6 +76,7 @@
 		6F1D05752AEAAD16000D6EB7 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
 		6F3D6C862B98AA1100556C2D /* NoLoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoLoWindow.swift; sourceTree = "<group>"; };
 		6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWindowController.swift; sourceTree = "<group>"; };
+		6FB185272B9F1DC7006EC87D /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		6FB1C7F42B8F4E8000C50FF4 /* libpcProxAPI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcProxAPI.dylib; path = lib/libpcProxAPI.dylib; sourceTree = "<group>"; };
 		6FC4DC9A2B7B51A7001A9DDE /* AuthxMacOSAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AuthxMacOSAgent.entitlements; sourceTree = "<group>"; };
 		6FC4DCD62B7E3253001A9DDE /* view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				32B57C68234F3DB800B6EAA4 /* AppDelegate.swift */,
 				32B57C6A234F3DB800B6EAA4 /* ViewController.swift */,
 				6F9B6AB22AD84167009483C1 /* FullScreenWindowController.swift */,
+				6FB185272B9F1DC7006EC87D /* CameraManager.swift */,
 				32B57C6C234F3DB800B6EAA4 /* Assets.xcassets */,
 				32B57C6E234F3DB800B6EAA4 /* Main.storyboard */,
 				84AAD50129291C0A0046E835 /* AuthxSignIn.xib */,
@@ -259,6 +262,7 @@
 			files = (
 				6F3D6C872B98AA1200556C2D /* NoLoWindow.swift in Sources */,
 				6F1D05762AEAAD16000D6EB7 /* AppWindow.swift in Sources */,
+				6FB185282B9F1DC7006EC87D /* CameraManager.swift in Sources */,
 				843B39B2296EBA9300CE114B /* enrollRFID.swift in Sources */,
 				32FEF38725C6E67A001E8D03 /* CryptLib.m in Sources */,
 				6F0AE8A92B91EE97004C4EE7 /* RestartShutdownLogout.m in Sources */,
@@ -410,7 +414,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AuthxMacOSAgent/AuthxMacOSAgent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0;
@@ -450,7 +454,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AuthxMacOSAgent/AuthxMacOSAgent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0;
