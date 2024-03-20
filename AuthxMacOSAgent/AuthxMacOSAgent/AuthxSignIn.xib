@@ -716,7 +716,7 @@ Gw
                         <rect key="frame" x="256" y="126" width="400" height="420"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gle-8U-RJ6">
-                                <rect key="frame" x="162" y="327" width="77" height="23"/>
+                                <rect key="frame" x="162" y="326" width="77" height="24"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="authxLogo" id="KkS-CQ-Z2R"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AZ7-Xc-ufI">

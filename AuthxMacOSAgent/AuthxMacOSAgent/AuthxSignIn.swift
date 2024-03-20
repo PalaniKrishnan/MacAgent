@@ -114,6 +114,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
 
     var companyLogoImage: NSImage?
     var appBgImage: NSImage?
+    var faceImage: NSImage?
 
     @IBOutlet weak var faceButton: NSButton!
     @IBOutlet weak var rfidButton: NSButton!
@@ -132,6 +133,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     var timer: Timer?
     var isRFIDenrolled = false
     var canAllowRfidEnroll = false
+    var rfidEnrollIsInProgress = false
+    var rfIdentifierStr = ""
 
     var isSecurePin : Bool = true {
         didSet {
@@ -160,7 +163,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     
     var app_delegate:AppDelegate?
     var appFontColour:NSColor = .black
-    
+    var applicationName:String = ""
     var defaults = NSUserDefaultsController.shared.defaults
     
     private var cameraManager: CameraManagerProtocol!
@@ -319,6 +322,15 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.helpBtn.isHidden = true
     }
     
+    func setLoggedOnSession() {
+        self.defaults.setValue(Date(), forKey: "loggedon_date")
+        self.authCustomView.isHidden = true
+        self.leftButton.isHidden = false
+        self.rightButton.isHidden = false
+        self.powerBtn.isHidden = false
+        self.helpBtn.isHidden = false
+    }
+    
     @IBAction func rbtnSave_click(_ sender: Any) {
 
         let success = authenticateLocalUser(username: txtUser_launch.stringValue, password: txtPswd_launch.stringValue)
@@ -327,14 +339,13 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             dialogOK(question: "User Authenticate", text: "Invalid username/password.", alterStyle:"error")
             return
         }
-        else
-        {
-            self.defaults.setValue(Date(), forKey: "loggedon_date")
-            self.authCustomView.isHidden = true
-            self.leftButton.isHidden = false
-            self.rightButton.isHidden = false
-            self.powerBtn.isHidden = false
-            self.helpBtn.isHidden = false
+        else if self.rfidEnrollIsInProgress == true {
+            self.rfidEnrollIsInProgress = false
+            self.setLoggedOnSession()
+            self.instructionMsg.stringValue = "Started enrolling, please wait."
+            _ = self.getAuth(endUrl: "EnrollRFID", userID: self.sMainUserID, authID: self.rfIdentifierStr)
+        } else {
+            self.setLoggedOnSession()
             if add_app_setting() {
                 load_app_setting()
             }
@@ -421,8 +432,11 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             guard !txtSecurePin1.stringValue.isEmpty, !txtSecurePin2.stringValue.isEmpty, !txtSecurePin3.stringValue.isEmpty, !txtSecurePin4.stringValue.isEmpty, !txtSecurePin5.stringValue.isEmpty, !txtSecurePin6.stringValue.isEmpty else {
                 return
             }
-            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtSecurePin1.stringValue, txtSecurePin2.stringValue,txtSecurePin3.stringValue, txtSecurePin4.stringValue,txtSecurePin5.stringValue, txtSecurePin6.stringValue)
-            self.submit_pin_authentication(value: oneTimeCode)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let oneTimeCode = String(format: "%@%@%@%@%@%@", self.txtSecurePin1.stringValue, self.txtSecurePin2.stringValue,self.txtSecurePin3.stringValue, self.txtSecurePin4.stringValue,self.txtSecurePin5.stringValue, self.txtSecurePin6.stringValue)
+                self.submit_pin_authentication(value: oneTimeCode)
+            }
+            
         default:
             break
         }
@@ -451,8 +465,10 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             guard !txtPlainPin1.stringValue.isEmpty, !txtPlainPin2.stringValue.isEmpty, !txtPlainPin3.stringValue.isEmpty, !txtPlainPin4.stringValue.isEmpty, !txtPlainPin5.stringValue.isEmpty, !txtPlainPin6.stringValue.isEmpty else {
                 return
             }
-            let oneTimeCode = String(format: "%@%@%@%@%@%@", txtPlainPin1.stringValue, txtPlainPin2.stringValue,txtPlainPin3.stringValue, txtPlainPin4.stringValue,txtPlainPin5.stringValue, txtPlainPin6.stringValue)
-            self.submit_pin_authentication(value: oneTimeCode)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let oneTimeCode = String(format: "%@%@%@%@%@%@", self.txtPlainPin1.stringValue, self.txtPlainPin2.stringValue,self.txtPlainPin3.stringValue, self.txtPlainPin4.stringValue,self.txtPlainPin5.stringValue, self.txtPlainPin6.stringValue)
+                self.submit_pin_authentication(value: oneTimeCode)
+            }
         default:
             break
         }
@@ -777,12 +793,36 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
           request.setValue(guid, forHTTPHeaderField: "PcIdentifier")
           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
           
-          var body = Data()
-          let bodyContent = "{\"Username\":\""+sUsername+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Mac\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
+//          var body = Data()
+//          let bodyContent = "{\"Username\":\""+sUsername+"\",\"ApplicationKey\":\""+sAppID+"\",\"SecretKey\":\""+sAppKey+"\",\"HostName\":\""+sAppHost+"\",\"SourceApplication\":\"Windows\",\"DeviceInfo\":{\"OS\":\"Windows10\",\"OsVersion\":\"10.0.19044\",\"Certify_App_Version\":\"2.3.367.0\",\"MachineName\":\""+computerName+"\",\"local_network_name\":\"2.3.367.0\",\"local_network_ip\":\"2.3.367.0\"}}"
+//          
+//          body.append(bodyContent.data(using: String.Encoding.utf8)!)
+        
+        let deviceData = ["OS":"Microsoft Windows 10 Pro",
+                          "OsVersion":"10.0.19045",
+                          "Certify_App_Version":"2.4.23.1",
+                          "MachineName":computerName,
+                          "local_network_name":"CERTIFY",
+                          "local_network_ip":"2.3.367.0"
+                          ] as [String : AnyObject]
+        
+        let parameters =  ["Username":sUsername ?? "",
+                           "ApplicationKey":self.sAppID,
+                           "SecretKey":sAppKey,
+                           "HostName":sAppHost,
+                           "SourceApplication":"Windows",
+                           "DeviceInfo": deviceData] as [String : AnyObject]
+        print(url as Any)
+        print(parameters)
+            
+        guard let postData = (try? JSONSerialization.data(withJSONObject: parameters, options: [])) else  {
+            return
+        }
+            
+        request.httpBody = postData
+        
           
-          body.append(bodyContent.data(using: String.Encoding.utf8)!)
-          
-          request.httpBody = body
+       //   request.httpBody = body
           print(request.allHTTPHeaderFields)
           let str = String(decoding: request.httpBody!, as: UTF8.self)
           print(str)
@@ -816,13 +856,21 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                           self.sUserID = json["UserId"] as? String
                           self.sCompanyID = json["CompanyId"] as? String
                           self.accessToken = json["access_token"] as? String
-                          
                           defer { sem.signal() }
-                          
+
+                      } else {
+                          DispatchQueue.main.async {
+                              self.dialogOK(question: "User Authenticate", text: dataString, alterStyle:"error")
+                              self.resetLogonPage()
+                          }
                       }
                   } catch let error as NSError {
                       defer { sem.signal() }
                       print("Failed to load: \(error.localizedDescription)")
+                      DispatchQueue.main.async {
+                          self.dialogOK(question: "User Authenticate", text: dataString, alterStyle:"error")
+                          self.resetLogonPage()
+                      }
                   }
               }
           }
@@ -869,8 +917,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         let bioRequest = ["bioIndex":nil] as [String : AnyObject]
 
         
-        let parameters =  ["Username":"",
-                           "UserId":nil,
+        let parameters =  ["Username":self.sMainUserID,
+                           "UserId":self.sUserID,
                            "CompanyName":nil,
                            "CompanyId":nil,
                            "UserType":"Admin",
@@ -879,12 +927,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                            "Password":nil,
                            "grant_type":nil,
                            "ClientKey":nil,
-                           "SessionId":nil,
+                           "SessionId":self.accessToken,
                            "Totp":nil,
                            "FacilityAccessCode":nil,
                            "CardId":nil,
                            "AuthFactor":nil,
-                           "SourceApplication":"Mac",
+                           "SourceApplication":"Windows",
                            "EventType":21,
                            "BioRequest":bioRequest,
                            "UserGeographics":userGeo,
@@ -925,11 +973,11 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                         if let response_code = json["code"] as?  Int, response_code == 1 {
                            // self.companyLogoImage = nil
                             if let companyConfiguration = json["companyConfiguration"] as? Dictionary<String,AnyObject>, let appConfiguration = json["applicationConfiguration"] as?  Dictionary<String,AnyObject>, let advancedConfiguration = appConfiguration["advancedConfiguration"] as? NSArray, let configInfo = advancedConfiguration.firstObject as? Dictionary<String,AnyObject>, let logonBgColor_hex = configInfo["logon_background_color"] as? String, let fontColor_hex = configInfo["font_color"] as? String, let helpText = configInfo["help_text_login_screen"] as? String, let logon_screen_background_url_string = configInfo["logon_screen_background"] as? String, let is_allow_badge_enrollment = configInfo["allow_badge_enrollment"]?.boolValue, let disclaimer_string = configInfo["disclaimer"] as? String, let does_display_powerbtn_loginscreen = configInfo["display_powerbtn_loginscreen"] as? Bool, let does_username_display_on_screen = configInfo["username_display_on_screen"] as? Bool, let password_expiry_hours_minutes = configInfo["password_expiry_hours_minutes"] as? 
-                                String, let password_authentication = configInfo["password_authentication"] as? Int, let password_authentication_expiry = configInfo["password_authentication_expiry"] as? Int {
+                                String, let password_authentication = configInfo["password_authentication"] as? Int, let password_authentication_expiry = configInfo["password_authentication_expiry"] as? Int, let appname = appConfiguration["applicationName"] as? String {
                                 print(configInfo)
                                 let fontColour = NSColor(hex: fontColor_hex)
                                 self.appFontColour = fontColour
-                                
+                                self.applicationName = appname
                                 DispatchQueue.main.async {
                                     if let logged_on_date = self.defaults.value(forKey: "loggedon_date") as? Date {
                                     print(logged_on_date)
@@ -1004,6 +1052,8 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                                     }
                                 
                                 DispatchQueue.main.async {
+                                    self.instructionMsg.textColor = self.appFontColour
+                                    self.infoMsg.textColor = self.appFontColour
                                     self.appLogoBtn.image = self.companyLogoImage
                                     self.helpDeskField.stringValue = helpText
                                     self.displayTextFieldOnLogonScreen.stringValue = disclaimer_string
@@ -1094,12 +1144,12 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                            "Password":nil,
                            "grant_type":nil,
                            "ClientKey":nil,
-                           "SessionId":nil,
+                           "SessionId":self.accessToken,
                            "Totp":nil,
                            "FacilityAccessCode":nil,
                            "CardId":nil,
                            "AuthFactor":nil,
-                           "SourceApplication":"Mac",
+                           "SourceApplication":"Windows",
                            "EventType":21,
                            "BioRequest":bioRequest,
                            "UserGeographics":userGeo,
@@ -1169,124 +1219,6 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         sem.wait()
     }
     
-    
-    
-    
-    func sendFaceData(process_type:Int, faceData:NSData) {
-        let APIUrl = sAppAPI + "ProcessBiometric"
-        let url = URL(string: APIUrl)
-        //let guid = NSUUID().uuidString.lowercased()
-        guard let requestUrl = url else { fatalError() }
-        // Create URL Request
-        var request = URLRequest(url: requestUrl)
-        // Specify HTTP Method to use
-        request.httpMethod = "POST"
-        // Send HTTP Request
-        request.timeoutInterval=30.0
-        request.setValue(sAppID, forHTTPHeaderField: "ApplicationId")
-        request.setValue(sAppKey, forHTTPHeaderField: "ApplicationKey")
-        request.setValue(sAppHost, forHTTPHeaderField: "CompanyHostName")
-        request.setValue(guid, forHTTPHeaderField: "PcIdentifier")
-        request.setValue(guid, forHTTPHeaderField: "TraceId")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                
-        guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String  else {
-            return
-        }
-        
-        let deviceData = ["browser_name":"",
-                          "browser_version":"",
-                          "os":"Microsoft Windows 10 Pro",
-                          "os_version":"10.0.19045",
-                          "app_version":appVersion,
-                          "device_name":computerName,
-                          "local_domain":"CERTIFY",
-                          "ad_domain":"CERTIFY",
-                          "src_user_id":self.sUserID,
-                          "ip":nil,
-                          "loggedon_user":self.sUsername,
-                          "local_network_name":nil,
-                          "local_network_ip":nil,
-                          "signon_application":"Mac Agent",
-                          "plugin_version":nil,
-                          "oftr":false] as [String : AnyObject]
-        
-        
-        let applicationParameters = ["application_key":sAppID,"secret_key":sAppKey,"host_name":sAppHost,"biometric_session_id":self.accessToken] as [String : AnyObject]
-
-        let parameters =  ["Username":String(self.sMainUserID),
-                           "process_type":process_type,
-                           "authentication_id":2,
-                           "correlation_id":self.guid,
-                           "unique_id":String(self.sMainUserID),
-                           "applicationType":"Mac",
-                           "Apptype":"MacAgent",
-                           "device_data":deviceData] as [String : AnyObject]
-        
-        
-        print(url as Any)
-        print(parameters)
-            
-        guard let postData = (try? JSONSerialization.data(withJSONObject: parameters, options: [])) else  {
-            return
-        }
-            
-        request.httpBody = postData
-        
-        let sem = DispatchSemaphore.init(value: 0)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            //self.lblProcessing.isHidden=true
-            // Check if Error took place
-            
-            if let error = error {
-                defer { sem.signal() }
-                print("Error took place \(error)")
-                //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
-                return
-            }
-            
-            // Convert HTTP Response Data to a simple String
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Recevied Data: \(dataString)")
-               // var replaced = dataString.replacingOccurrences(of: "\\r\\n", with: "")
-                                
-//                let data1 = Data(replaced.utf8)
-//                print("Recevied Data: \(replaced)")
-
-                do {
-                    // make sure this JSON is in the format we expect
-                    if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
-                        let response_code = json["Code"] as! Int
-                        //sUserID = json["UniqueUserId"] as! String
-                        if(response_code==1), let authFactors = json["UserAuthFactor"] as? Array<AnyObject> {
-                             print(authFactors)
-                            DispatchQueue.main.async {
-                                self.hideAllAuthFactors()
-                              for factorDic in authFactors   {
-                                if let authFactorDic = factorDic as? Dictionary<String, Any>, let factor = authFactorDic["AuthFactor"] as? Int, let factorValue = AuthFactors(rawValue: factor) {
-                                        self.closeLeftSidebar()
-                                        self.closeRightSideBar()
-                                        self.authModeImageView.isHidden = false
-                                        self.instructionMsg.isHidden = false
-                                        self.enableAuthFactosWith(factor: factorValue)
-                                    }
-                                }
-                            }
-                          }
-                        defer { sem.signal() }
-                        
-                    }
-                } catch let error as NSError {
-                    defer { sem.signal() }
-                    print("Failed to load: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        task.resume()
-        sem.wait()
-    }
     
     func hideAllAuthFactors() {
         self.isRFIDenrolled = false
@@ -1358,7 +1290,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                           "local_domain":"CERTIFY",
                           "pushTypeSCE":0,
                           "oftr":false,
-                          "signon_application":"WinLoginProcess"] as [String : AnyObject]
+                          "signon_application":applicationName] as [String : AnyObject]
         
         let parameters =  ["user_name": userID,
                            "authentication_id": authID,
@@ -1513,7 +1445,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
             self.infoMsg.stringValue = ""
             self.authModeImageView.image = NSImage(named: "Push_ICO")
             self.instructionMsg.textColor = self.appFontColour
-            self.instructionMsg.stringValue = "Capture your face"
+            self.instructionMsg.stringValue = "Started authenticating, please wait."
             completion(true)
         }
     }
@@ -1549,7 +1481,16 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
     }
     
     @IBAction func face_continue_click(_ sender: Any) {
-        
+        DispatchQueue.main.async {
+            self.faceCaptureView.isHidden = true
+            self.retakeButton.isHidden = true
+            self.continueButton.isHidden = true
+            self.faceImageView.isHidden = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            guard let faceImg = self.faceImage else { return }
+            self.postFaceRequest(image: faceImg, process_type: 2)
+        }
     }
     
     
@@ -1557,6 +1498,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
         self.faceCaptureView.isHidden = true
         self.retakeButton.isHidden = true
         self.continueButton.isHidden = true
+        self.faceImageView.isHidden = true
         do {
           try cameraManager.stopSession()
         } catch {
@@ -1743,7 +1685,7 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 self.enableAuthFactosWith(factor: .Rfid)
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.rfid_click(self)
             }
         }
@@ -1757,6 +1699,9 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                 self.infoMsg.isHidden=false
                 self.infoMsg.textColor = self.appFontColour
                 self.infoMsg.stringValue = "RFID authentication failed."
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.rfid_click(self)
+                }
                 
             } else {
                 self.infoMsg.isHidden=false
@@ -1848,13 +1793,20 @@ class AuthxSignIn: NSWindowController, NSTextFieldDelegate {
                     return
                 }
                 
+                self.rfIdentifierStr = rfIdentifier
                 self.instructionMsg.textColor = appFontColour
-                if self.canAllowRfidEnroll == true, self.isRFIDenrolled == false {
-                    self.instructionMsg.stringValue = "Start enrolling, please wait."
-                    _ = self.getAuth(endUrl: "EnrollRFID", userID: self.sMainUserID, authID: rfIdentifier)
-
+                if self.isRFIDenrolled == false {
+                    if self.canAllowRfidEnroll == true {
+                        self.rfidEnrollIsInProgress = true
+                        self.resetLogonPage()
+                    } else {
+                        self.instructionMsg.stringValue = "Policy denied. RFID enrollment is not permitted"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            self.rfid_click(self)
+                        }
+                    }
                 } else {
-                    self.instructionMsg.stringValue = "Start authenticating, please wait."
+                    self.instructionMsg.stringValue = "Started authenticating, please wait."
                     _ = self.getAuth(endUrl: "AuthenticateRFID", userID: self.sMainUserID, authID: rfIdentifier)
                 }
                 
@@ -1964,7 +1916,7 @@ extension AuthxSignIn: CameraManagerDelegate {
              let observation = observations[0]
              
              DispatchQueue.main.async {
-             if observation.confidence > 0.9{
+             if observation.confidence > 0.9 {
                  do {
                      try self.cameraManager.stopSession()
                  } catch {
@@ -1972,12 +1924,17 @@ extension AuthxSignIn: CameraManagerDelegate {
                    print(error.localizedDescription)
                  }
                  let myNsImage = NSImage(cgImage: image, size: .zero)
-                     self.retakeButton.isHidden = false
-                     self.continueButton.isHidden = false
+                     
+//                     self.retakeButton.isHidden = false
+//                     self.continueButton.isHidden = false
                      self.faceImageView.image = myNsImage
                      self.faceImageView.isHidden = false
-                     if let faceData = myNsImage.tiffRepresentation {
-                         self.uploadFile(file:faceData, fileName: "biometricdata", process_type: 2)
+                 
+                     self.faceImage = myNsImage
+                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                         self.faceCaptureView.isHidden = true
+                         guard let faceImg = self.faceImage else { return }
+                         self.postFaceRequest(image: faceImg, process_type: 2)
                      }
                  }
                  
@@ -1986,76 +1943,9 @@ extension AuthxSignIn: CameraManagerDelegate {
          }
   }
     
-    func uploadFile(file:Data, fileName: String, process_type:Int) {
-        
-        var mimeType = "image/jpg"
-        let APIUrl = sAppAPI + "ProcessBiometric"
-
-        var request = MultipartFormDataRequest(url: URL(string: APIUrl)!)
-        request.addOtherParameters(signIn: self, processType: process_type)
-        request.addDataField(fieldName:  "biometricdata", fileName: fileName, data: file, mimeType: mimeType)
-        let sem = DispatchSemaphore.init(value: 0)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            //self.lblProcessing.isHidden=true
-            // Check if Error took place
-            
-            if let error = error {
-                defer { sem.signal() }
-                print("Error took place \(error)")
-                //self.dialogOKCancel(question: "Validate Product Key", text: "Error took place \(error)" )
-                return
-            }
-            
-            // Convert HTTP Response Data to a simple String
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Recevied Data: \(dataString)")
-               // var replaced = dataString.replacingOccurrences(of: "\\r\\n", with: "")
-                                
-//                let data1 = Data(replaced.utf8)
-//                print("Recevied Data: \(replaced)")
-
-                do {
-                    // make sure this JSON is in the format we expect
-                    if let json = try JSONSerialization.jsonObject(with: data, options:.allowFragments) as? [String: Any] {
-                        print(json)
-                        if let response_code = json["response_code"] as?  Int, response_code == 1 {
-                            
-                        } else if let response_text = json["response_text"] as? String {
-                            
-                        }
-                    }
-                } catch let error as NSError {
-                    defer { sem.signal() }
-                    print("Failed to load: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        task.resume()
-        sem.wait()
-    }
-
-}
-
-
-
-
-struct MultipartFormDataRequest {
     
-    private let boundary: String = UUID().uuidString
-    var httpBody = NSMutableData()
-    let url: URL
-    var authxSigningIn:AuthxSignIn!
-    var process_type:Int!
-    
-    init(url: URL) {
-        self.url = url
-    }
-    
-    mutating func addOtherParameters(signIn:AuthxSignIn, processType:Int) {
-        self.authxSigningIn = signIn
-        self.process_type = processType
+    func postFaceRequest(image:NSImage, process_type:Int) {
+        
         guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String  else {
             return
         }
@@ -2065,119 +1955,217 @@ struct MultipartFormDataRequest {
                           "os":"Microsoft Windows 10 Pro",
                           "os_version":"10.0.19045",
                           "app_version":appVersion,
-                          "device_name":authxSigningIn.computerName,
+                          "device_name":self.computerName,
                           "local_domain":"CERTIFY",
                           "ad_domain":"CERTIFY",
-                          "src_user_id":authxSigningIn.sUserID,
-                          "ip":nil,
-                          "loggedon_user":authxSigningIn.sUsername,
-                          "local_network_name":nil,
-                          "local_network_ip":nil,
-                          "signon_application":"WindowsAgent",
-                          "plugin_version":nil,
+                          "src_user_id":self.sUserID ?? "",
+                          "loggedon_user":self.sUsername ?? "",
+                          "signon_application":applicationName,
                           "oftr":false] as [String : AnyObject]
         
         
-        let applicationParameters = ["application_key":authxSigningIn?.sAppID,"secret_key":authxSigningIn?.sAppKey,"host_name":authxSigningIn?.sAppHost,"biometric_session_id":authxSigningIn?.accessToken] as [String : AnyObject]
+        let applicationParameters = ["application_key":self.sAppID,"secret_key":self.sAppKey,"host_name":self.sAppHost,"biometric_session_id":self.accessToken] as [String : AnyObject]
 
-        let parameters =  ["Username":authxSigningIn.sMainUserID ?? "",
+        let userParameters =  ["user_name":self.sMainUserID ?? "",
                            "process_type":process_type,
                            "authentication_id":2,
-                           "correlation_id":authxSigningIn.guid,
-                           "unique_id":authxSigningIn.sMainUserID ?? "",
+                           "correlation_id":self.guid,
+                           "unique_id":self.sMainUserID ?? "",
                            "applicationType":"Windows",
-                           "Apptype":"WindowsAgent",
+                           "Apptype":applicationName,
                            "application_parameters":applicationParameters,
                            "device_data":deviceData] as [String : AnyObject]
         
+            
+            guard let mediaImage = Media(withImage: image, forKey: "biometricdata") else { return }
+            
+            let APIUrl = sAppAPI + "ProcessBiometric"
+
+            guard let url = URL(string: APIUrl) else { return }
         
-        print(url as Any)
-        print(parameters)
         
-        guard let postData = (try? JSONSerialization.data(withJSONObject: parameters, options: [])) else  {
-            return
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            let boundary = generateBoundary()
+            
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+            request.setValue(self.sAppID, forHTTPHeaderField: "ApplicationId")
+            request.setValue(self.sAppKey, forHTTPHeaderField: "ApplicationKey")
+            request.setValue(self.sAppHost, forHTTPHeaderField: "CompanyHostName")
+            request.setValue(self.guid, forHTTPHeaderField: "PcIdentifier")
+            request.setValue(self.guid, forHTTPHeaderField: "TraceId")
+                    
+            let dataBody = createDataBody(withParameters: userParameters, media: [mediaImage], boundary: boundary)
+        
+            let sem = DispatchSemaphore.init(value: 0)
+
+            URLSession.shared.uploadTask(with: request, from: dataBody, completionHandler: { responseData, response, error in
+                if error == nil {
+                    let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
+                    if let json = jsonData as? [String: Any] {
+                        if let response_code = json["response_code"] as? Int, response_code == 1 {
+                            DispatchQueue.main.async {
+                                self.infoMsg.stringValue = "Face authentication done.Logging you in please wait."
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    let userNametempdata = self.sUsername + "\0"
+                                    let passwordTempdata = self.sPassword + "\0"
+                                    self.process_login(userName:userNametempdata,passWord:passwordTempdata)
+                                }
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.infoMsg.stringValue = "Face authentication failed."
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.rfid_click(self)
+                            }
+                        }
+                        do { sem.signal() }
+                    }
+                } else {
+                    do { sem.signal() }
+                }
+            }).resume()
+        
+            
+//            let session = URLSession.shared
+//            session.dataTask(with: request) { (data, response, error) in
+//                if let response = response {
+//                    print(response)
+//                }
+//                
+//                if let data = data {
+//                    do {
+//                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                        print(json)
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//                }.resume()
         }
         
-        let decoded = String(data: postData, encoding: .utf8)!
+    func generateBoundary() -> String {
+        return "Boundary-\(NSUUID().uuidString)"
+    }
         
-        addTextField(named: "processBiometrics", value: decoded)
-      //  let data = NSMutableData(data: postData)
+    func createDataBody(withParameters params: [String:AnyObject]?, media: [Media]?, boundary: String) -> Data {
+        
+        let lineBreak = "\r\n"
+        var body = Data()
+        
+//        if let parameters = params {
+//            for (key, value) in parameters {
+//                if let val = value as? Dictionary<String,Any> {
+//                    for (key2, value2) in val {
+//                        if let val2 = value2 as? Dictionary<String,Any> {
+//                            for (key3, value3) in val2 {
+//                               // if let val3 = value3 as? String {
+//                                    body.append("--\(boundary + lineBreak)")
+//                                    body.append("Content-Disposition: form-data; name=\"\(key3)\"\(lineBreak + lineBreak)")
+//                                    body.append("\(value3)\(lineBreak)")
+//                                    print("\(key3)\(value3)")
+//                              //  }
+//                            }
+//                        } else {
+//                           // if let val2 = value2 as? String {
+//                                body.append("--\(boundary + lineBreak)")
+//                                body.append("Content-Disposition: form-data; name=\"\(key2)\"\(lineBreak + lineBreak)")
+//                                body.append("\(value2)\(lineBreak)")
+//                                print("\(key2)\(value2)")
+//                           // }
+//                        }
+//                    }
+//                } else {
+//                    //if let val = value as? String {
+//                        body.append("--\(boundary + lineBreak)")
+//                        body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+//                        body.append("\(value)\(lineBreak)")
+//                        print("\(key)\(value)")
+//                   // }
+//                }
+//            }
+//          }
+//        
+        guard let parameters = params else {
+            return body
+        }
 
-      //  self.httpBody = data
-    }
+        let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
+        let decoded = String(data: jsonData, encoding: .utf8)!
+        print(decoded)
+        let key = "processBiometrics"
+       // if let parameters = params {
+           // for (key, value) in parameters {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+                body.append("\(decoded)\(lineBreak)")
+                print("\(key)\(decoded)")
+//            }
+//        }
+            
+            if let media = media {
+                for photo in media {
+                    body.append("--\(boundary + lineBreak)")
+                    body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
+                    body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+                    body.append(photo.data)
+                    body.append(lineBreak)
+                }
+            }
+            
+            body.append("--\(boundary)--\(lineBreak)")
+            return body
+        }
     
-    func addTextField(named name: String, value: String) {
-        httpBody.appendString(textFormField(named: name, value: value))
-    }
-    
-    private func textFormField(named name: String, value: String) -> String {
-        var fieldString = "--\(boundary)\r\n"
-        fieldString += "Content-Disposition: form-data; name=\"\(name)\"\r\n"
-        fieldString += "Content-Type: application/json;charset=utf-8\r\n"
-        fieldString += "Content-Transfer-Encoding: 8bit\r\n"
-        fieldString += "\r\n"
-        fieldString += "\(value)\r\n"
-        
-        return fieldString
-    }
-    
-    
-    func addDataField(fieldName: String, fileName: String, data: Data, mimeType: String) {
-        httpBody.append(dataFormField(fieldName: fieldName,fileName:fileName,data: data, mimeType: mimeType))
-    }
-    
-    private func dataFormField(fieldName: String,
-                               fileName: String,
-                               data: Data,
-                               mimeType: String) -> Data {
-        let fieldData = NSMutableData()
-        
-        fieldData.appendString("--\(boundary)\r\n")
-        fieldData.appendString("Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName)\"\r\n")
-        fieldData.appendString("Content-Type: application/json;charset=utf-8\r\n")
-        fieldData.appendString("\r\n")
-        fieldData.append(data)
-        fieldData.appendString("\r\n")
-        return fieldData as Data
-    }
-    
-    func asURLRequest() -> URLRequest {
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "POST"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-       // request.timeoutInterval=30.0
-        request.setValue(authxSigningIn.sAppID, forHTTPHeaderField: "ApplicationId")
-        request.setValue(authxSigningIn.sAppKey, forHTTPHeaderField: "ApplicationKey")
-        request.setValue(authxSigningIn.sAppHost, forHTTPHeaderField: "CompanyHostName")
-        request.setValue(authxSigningIn.guid, forHTTPHeaderField: "PcIdentifier")
-        request.setValue(authxSigningIn.guid, forHTTPHeaderField: "TraceId")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        httpBody.appendString("--\(boundary)--")
-        let data = Data(httpBody)
-        request.httpBody = data
-        return request
-    }
-
 }
 
 
 
-extension NSMutableData {
-    func appendString(_ string: String) {
+extension Data {
+    mutating func append(_ string: String) {
         if let data = string.data(using: .utf8) {
-            self.append(data)
+            append(data)
         }
     }
 }
 
 
-extension URLSession {
-    func dataTask(with request: MultipartFormDataRequest,
-                  completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
-    -> URLSessionDataTask {
-        return dataTask(with: request.asURLRequest(), completionHandler: completionHandler)
+struct Media {
+    let key: String
+    let filename: String
+    let data: Data
+    let mimeType: String
+    
+    init?(withImage image: NSImage, forKey key: String) {
+        self.key = key
+        self.mimeType = "image/jpeg"
+        self.filename = "biometricData.jpg"
+        guard let data = image.compressUnderMegaBytes(megabytes: 0.2) else { return nil }
+        print(data.count)
+        self.data = data
+    }
+    
+}
+
+extension NSImage {
+    func compressUnderMegaBytes(megabytes: CGFloat) -> Data? {
+
+        var compressionRatio = 1.0
+        guard let tiff = self.tiffRepresentation, let imageRep = NSBitmapImageRep(data: tiff) else { return nil }
+        var compressedData = imageRep.representation(using: .jpeg, properties: [.compressionFactor : compressionRatio])!
+        while CGFloat(compressedData.count) > megabytes * 1024 * 1024 {
+            compressionRatio = compressionRatio * 0.9
+            compressedData = imageRep.representation(using: .png, properties:  [.compressionFactor : compressionRatio])!
+            if compressionRatio <= 0.4 {
+                break
+            }
+        }
+        return compressedData
     }
 }
+
+
+
